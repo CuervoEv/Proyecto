@@ -70,7 +70,13 @@
           "builder": "@angular/build:unit-test"
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "name": "GitHub Pages Deploy Bot",
+            "email": "deploy@github.com",
+            "message": "Deploy de cambios",
+            "push": true
+          }
         }
       }
     }
