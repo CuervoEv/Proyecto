@@ -1,4 +1,4 @@
-# 🔐 Autenticación
+<!-- # 🔐 Autenticación
 
 ## Login
 Formulario para iniciar sesión con email y contraseña.
@@ -9,9 +9,9 @@ Formulario para crear una cuenta nueva.
 ## Recuperar contraseña
 Formulario para restablecer contraseña olvidada.
 
----
+--- -->
 
-# 👤 Área de Usuario
+<!-- # 👤 Área de Usuario
 
 ## Dashboard
 Página principal después de login. Muestra resumen y estadísticas.
@@ -22,7 +22,7 @@ Ver y editar información personal del usuario.
 ## Configuración
 Ajustes de tema, notificaciones y preferencias.
 
----
+--- -->
 
 # ⚙️ Módulo Principal
 

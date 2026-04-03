@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="container">
+  <div class="card">
+    <div class="icon">🏠</div>
+    <h1>Administración del Hogar</h1>
+
+    <div class="box">
+      <h2>Bienvenido</h2>
+      <p>Ingresa tu nombre para continuar</p>
+
+      <input type="text" placeholder="Escribe tu nombre aquí" [(ngModel)]="nombre">
+
+      <button (click)="entrar()"> Entrar al Proyecto</button>
+
+      <p class="link">
+        <a routerLink="/recover">¿Olvidaste tu contraseña?</a>
+      </p>
+
+      <p class="divider">O accede como</p>
+
+      <button class="btn padre"> Padre/Madre (Administrador)</button>
+      <button class="btn hijo"> Hijo/Hija (Miembro)</button>
+      <button class="btn familiar"> Familiar (Colaborador)</button>
+    </div>
+  </div>
+</div>

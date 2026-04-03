@@ -1,1 +1,30 @@
-<p>profile works!</p>
+<div class="container">
+
+  <div class="card">
+
+    <h1>👤 Perfil</h1>
+
+    <label>Nombre</label>
+    <input type="text" [(ngModel)]="usuario.nombre">
+
+    <label>Correo</label>
+    <input type="email" [(ngModel)]="usuario.correo">
+
+    <label>Teléfono</label>
+    <input type="text" [(ngModel)]="usuario.telefono">
+
+    <label>Rol</label>
+    <select [(ngModel)]="usuario.rol">
+      <option value="Administrador">Administrador</option>
+      <option value="Miembro">Miembro</option>
+      <option value="Familiar">Familiar</option>
+    </select>
+
+    <p><strong>Fecha de creación:</strong> {{ usuario.fechaCreacion }}</p>
+
+    <button (click)="guardar()">💾 Guardar cambios</button>
+    <button (click)="volver()">⬅ Volver</button>
+
+  </div>
+
+</div>

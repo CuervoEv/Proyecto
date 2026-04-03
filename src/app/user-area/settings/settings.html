@@ -1,1 +1,28 @@
-<p>settings works!</p>
+<div class="container">
+
+  <div class="card">
+
+    <h1>⚙️ Configuración</h1>
+
+    <label>Tema</label>
+    <select [(ngModel)]="configuracion.tema">
+      <option value="claro">🌞 Claro</option>
+      <option value="oscuro">🌙 Oscuro</option>
+    </select>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="configuracion.notificaciones">
+      Activar notificaciones 🔔
+    </label>
+
+    <label>Idioma</label>
+    <select [(ngModel)]="configuracion.idioma">
+      <option value="es">Español</option>
+      <option value="en">Inglés</option>
+    </select>
+
+    <button (click)="guardar()">💾 Guardar</button>
+
+  </div>
+
+</div>
