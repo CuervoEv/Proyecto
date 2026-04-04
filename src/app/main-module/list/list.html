@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Mis Casas</title>
+    <link rel="stylesheet" href="list.css">
 </head>
 <body>
     <div class="header">
         <h1>Mis Casas</h1>
-        <button class="btn-agregar" onclick="agregarCard()">+ agregar Casa</button>
+        <button class="btn-agregar" id="btnAgregar">+ Agregar Casa</button>
     </div>
 
     <div class="cards-container" id="cardsContainer">
-        <!-- Card 1 -->
         <div class="card" data-id="1">
             <div class="card-header" style="background-color: #1967d2;">
                 <div class="card-title"></div>
@@ -27,10 +27,79 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn-entrar" onclick="entrarCard(this)">Entrar</button>
+                <button class="btn-entrar">Entrar</button>
                 <div class="card-actions">
-                    <button class="btn-editar" onclick="editarCard(this)">✏️editar</button>
-                    <button class="btn-eliminar" onclick="eliminarCard(this)">🗑️eliminar</button>
+                    <button class="btn-editar"> editar</button>
+                    <button class="btn-eliminar"> eliminar</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        // Todo tu código JavaScript aquí (lo que iba en el .ts pero convertido a JS)
+        let nextId = 2;
+
+        function agregarCard() {
+            const container = document.getElementById('cardsContainer');
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.setAttribute('data-id', nextId);
+            newCard.innerHTML = `
+                <div class="card-header" style="background-color: ${getRandomColor()};">
+                    <div class="card-title" contenteditable="true"></div>
+                    <div class="card-subtitle" contenteditable="true"></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-code" contenteditable="true"></div>
+                    <div class="card-desc" contenteditable="true"></div>
+                    <div class="card-meta">
+                        <span contenteditable="true"></span>
+                        <span contenteditable="true"></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn-entrar">Entrar</button>
+                    <div class="card-actions">
+                        <button class="btn-editar"> editar</button>
+                        <button class="btn-eliminar"> eliminar</button>
+                    </div>
+                </div>
+            `;
+
+            newCard.querySelector('.btn-entrar').onclick = () => entrarCard(newCard);
+            newCard.querySelector('.btn-editar').onclick = () => editarCard(newCard);
+            newCard.querySelector('.btn-eliminar').onclick = () => eliminarCard(newCard);
+
+            container.appendChild(newCard);
+            nextId++;
+        }
+
+        function entrarCard(card) {
+            const titulo = card.querySelector('.card-title')?.textContent || 'Sin título';
+            alert(`Entrando a: ${titulo}`);
+        }
+
+        function editarCard(card) {
+            const titulo = card.querySelector('.card-title');
+            const subtitulo = card.querySelector('.card-subtitle');
+            titulo.setAttribute('contenteditable', 'true');
+            subtitulo.setAttribute('contenteditable', 'true');
+            titulo.focus();
+        }
+
+        function eliminarCard(card) {
+            if (confirm('¿Eliminar esta card?')) {
+                card.remove();
+            }
+        }
+
+        function getRandomColor() {
+            const colores = ['#1967d2', '#34a853', '#ea4335', '#fbbc04', '#9334e6', '#00acc1'];
+            return colores[Math.floor(Math.random() * colores.length)];
+        }
+
+        document.getElementById('btnAgregar').onclick = agregarCard;
+    </script>
+</body>
+</html>

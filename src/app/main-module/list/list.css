@@ -1,0 +1,71 @@
+.card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    width: 300px;
+    margin: 16px;
+    display: inline-block;
+}
+
+.card-header {
+    background-color: #1967d2;
+    padding: 20px 16px;
+    color: white;
+}
+
+.card-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+}
+
+.card-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.card-footer {
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.btn-entrar {
+    background-color: #1967d2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-editar {
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-agregar {
+    background-color: #1967d2;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 16px;
+}
