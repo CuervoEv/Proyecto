@@ -1,1 +1,19 @@
-<p>about works!</p>
+<h2>Información sobre nosotros</h2>
+
+<form (ngSubmit)="guardar()">
+
+  <label>Título</label>
+  <input type="text" [(ngModel)]="about.titulo" name="titulo">
+
+  <label>Descripción</label>
+  <textarea [(ngModel)]="about.descripcion" name="descripcion"></textarea>
+
+  <label>Misión</label>
+  <textarea [(ngModel)]="about.mision" name="mision"></textarea>
+
+  <label>Visión</label>
+  <textarea [(ngModel)]="about.vision" name="vision"></textarea>
+
+  <button type="submit">Guardar</button>
+
+</form>
