@@ -1,22 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <!-- Ruedita de ajustes a la izquierda -->
+    <!-- Botón del Sidebar (hamburguesa) -->
+    <button class="menu-toggle" type="button" (click)="onToggleSidebar()">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Ajustes izquierda -->
     <div class="navbar-nav me-auto">
-      <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+      <a class="nav-link" routerLink="/settings" routerLinkActive="active" *ngIf="isLoggedIn">
         <i class="bi bi-gear-fill"></i> Ajustes
       </a>
     </div>
 
-    <!-- Botón hamburguesa para móvil -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Botón hamburguesa -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú principal (centrado) -->
+    <!-- Menú central -->
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" routerLink="/hogares" routerLinkActive="active">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/list" routerLinkActive="active" *ngIf="isLoggedIn">
             <i class="bi bi-house-door-fill"></i> Hogares
           </a>
         </li>
@@ -38,16 +43,15 @@
       </ul>
     </div>
 
-    <!-- Perfil en icono circular a la derecha -->
+    <!-- Perfil derecha -->
     <div class="navbar-nav ms-auto" *ngIf="isLoggedIn">
       <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://ui-avatars.com/api/?background=667eea&color=fff&rounded=true&bold=true&size=32" 
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+          <img src="https://ui-avatars.com/api/?background=2d6a4f&color=fff&rounded=true&bold=true&size=32" 
                alt="Perfil" 
-               class="rounded-circle" 
-               style="width: 35px; height: 35px; object-fit: cover;">
+               class="rounded-circle">
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" routerLink="/profile">
             <i class="bi bi-person-circle"></i> Mi Perfil
           </a></li>
@@ -60,6 +64,13 @@
           </a></li>
         </ul>
       </div>
+    </div>
+
+    <!-- Login si no está logueado -->
+    <div class="navbar-nav ms-auto" *ngIf="!isLoggedIn">
+      <a class="nav-link" routerLink="/login">
+        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+      </a>
     </div>
   </div>
 </nav>
