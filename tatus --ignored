@@ -1,0 +1,90 @@
+[33mcommit e772413ff074a6e787d86df7a13b1ee257b29750[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Sat Apr 4 16:03:55 2026 -0500
+
+    ggg
+
+[33mcommit b4793158e3f0dcce8363bbd5f46d01d5751988c6[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Sat Apr 4 15:58:47 2026 -0500
+
+    tt
+
+[33mcommit 8f7ce08445f9d6306c828aed01fbc99f2f742a22[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Sat Apr 4 13:36:47 2026 -0500
+
+    auto-deploy
+
+[33mcommit 9485e09060ded44b934d16b7f6cd326a43224e2b[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Sat Apr 4 10:57:03 2026 -0500
+
+    auto-deploy
+
+[33mcommit 6471522cf3006b5bf50895729713423a727a3607[m
+Author: soulmateafk <etdjohancerinza@gmail.com>
+Date:   Fri Apr 3 16:34:38 2026 -0500
+
+    Primer commit
+
+[33mcommit ac56fa8e4cecb7af76e534ff86b55bb64242b9cd[m
+Merge: 4f81987 34d742b
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:49:25 2026 -0500
+
+    Resolver conflicto de merge en README.md
+
+[33mcommit 4f819873ff9cd902b7293bbd43b9e452773e925f[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:48:33 2026 -0500
+
+    auto-deploy
+
+[33mcommit 34d742bd8a3a6b4d740edeb3a0421cd4b871452f[m
+Author: Cuervo <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:44:29 2026 -0500
+
+    :C
+
+[33mcommit 90430328ed0e5a8c48b7c212c871288af61fe09e[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:43:45 2026 -0500
+
+    Mover header y footer a carpeta componentes
+
+[33mcommit 061d4d47f43700734f7f50507c6616af0bcd5731[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:24:16 2026 -0500
+
+    aaa
+
+[33mcommit 455d4cea8ffac67301e34446633a53af9b6d48ed[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:19:29 2026 -0500
+
+    Configurar ng deploy para commit automático
+
+[33mcommit 1dfb7d56d9f63c9fed1b2ac8ba505105aae5feea[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:14:48 2026 -0500
+
+    Actualizar cambios
+
+[33mcommit 12180724dff94235309bf0e9d440a3a4772510d7[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 11:01:04 2026 -0500
+
+    Usar hash routing para compatibilidad con GitHub Pages
+
+[33mcommit c17851d388593fdbd55fd9b469ee321505f5b850[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 10:50:43 2026 -0500
+
+    Configuración sin SSR para GitHub Pages y componentes header/footer
+
+[33mcommit 09f77bc98f5b6e4e968a40b4edd1aaef6b4d906a[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: CuervoEv <juliandavidcuervomartinez@gmail.com>
+Date:   Fri Apr 3 10:21:57 2026 -0500
+
+    Commit inicial del proyecto Angular

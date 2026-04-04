@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -11,20 +11,21 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class HeaderComponent {
 
+  @Output() toggleSidebar = new EventEmitter<void>();  // 👈 AÑADE ESTO
+
   constructor(private router: Router) {}
 
   get isLoggedIn(): boolean {
     return !!localStorage.getItem('usuario');
   }
 
+  onToggleSidebar() {
+    this.toggleSidebar.emit();  // 👈 EMITE EL EVENTO
+  }
+
   logout() {
-    // Limpiar localStorage o sesión
     localStorage.removeItem('usuario');
-    
-    // Redirigir al login
     this.router.navigate(['/login']);
-    
-    // Opcional: mostrar mensaje
     alert('Sesión cerrada correctamente');
   }
 }

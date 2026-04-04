@@ -1,0 +1,57 @@
+<!-- Overlay (fondo oscuro) -->
+<div class="sidebar-overlay" [class.active]="isOpen" (click)="close()"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" [class.open]="isOpen">
+  
+  <!-- Header del Sidebar -->
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <i class="bi bi-house-heart-fill"></i>
+      <span>HogarApp</span>
+    </div>
+    <button class="sidebar-close" (click)="close()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Perfil del usuario -->
+  <div class="sidebar-user" *ngIf="isLoggedIn">
+    <div class="user-avatar">
+      {{ (usuarioActual?.usuario?.charAt(0) || 'U') }}
+    </div>
+    <div class="user-info">
+      <h4>{{ usuarioActual?.usuario || 'Usuario' }}</h4>
+      <p>{{ usuarioActual?.rol || 'Miembro' }}</p>
+    </div>
+  </div>
+
+  <!-- Menú de navegación -->
+  <nav class="sidebar-nav">
+    <ul class="nav-menu">
+      <li *ngFor="let item of menuItems">
+        <a (click)="navigateTo(item.path)">
+          <i [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer del Sidebar -->
+  <div class="sidebar-footer" *ngIf="isLoggedIn">
+    <button class="logout-btn" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Cerrar Sesión</span>
+    </button>
+  </div>
+
+  <!-- Footer para no logueados -->
+  <div class="sidebar-footer" *ngIf="!isLoggedIn">
+    <button class="login-btn" (click)="navigateTo('/login')">
+      <i class="bi bi-box-arrow-in-right"></i>
+      <span>Iniciar Sesión</span>
+    </button>
+  </div>
+
+</div>
