@@ -1,43 +1,70 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })
 export class RegisterComponent {
 
+  // Datos personales
   nombre: string = '';
-  correo: string = '';
-  password: string = '';
-  telefono: string = '';
-  rol: string = '';
+  segundoNombre: string = '';
+  apellido: string = '';
+  segundoApellido: string = '';
+  usuario: string = '';
 
   constructor(private router: Router) {}
 
-  registrar() {
-    if (!this.nombre || !this.correo || !this.password) {
-      alert('Completa todos los campos');
+  obtenerNombreCompleto(): string {
+    let nombreCompleto = this.nombre;
+    
+    if (this.segundoNombre) {
+      nombreCompleto += ' ' + this.segundoNombre;
+    }
+    if (this.apellido) {
+      nombreCompleto += ' ' + this.apellido;
+    }
+    if (this.segundoApellido) {
+      nombreCompleto += ' ' + this.segundoApellido;
+    }
+    
+    return nombreCompleto;
+  }
+
+  entrar() {
+    // Validaciones
+    if (!this.nombre.trim()) {
+      alert('Por favor escribe tu nombre');
       return;
     }
-
-    const usuario = {
-    nombre: this.nombre,
-    correo: this.correo,
-    telefono: this.telefono,
-    rol: this.rol,
-    fechaCreacion: new Date().toLocaleDateString()
-  };
-
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-
-    alert('Usuario registrado correctamente 🚀');
-
-
+    
+    if (!this.apellido.trim()) {
+      alert('Por favor escribe tu apellido');
+      return;
+    }
+    
+    if (!this.usuario.trim()) {
+      alert('Por favor escribe tu usuario');
+      return;
+    }
+    
+    const datosUsuario = {
+      nombre: this.nombre,
+      segundoNombre: this.segundoNombre,
+      apellido: this.apellido,
+      segundoApellido: this.segundoApellido,
+      nombreCompleto: this.obtenerNombreCompleto(),
+      usuario: this.usuario
+    };
+    
+    localStorage.setItem('usuario', JSON.stringify(datosUsuario));
+    
+    // Redirige al dashboard
     this.router.navigate(['/dashboard']);
   }
 }
