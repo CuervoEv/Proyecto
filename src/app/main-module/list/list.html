@@ -1,1 +1,36 @@
-<p>list works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <div class="header">
+        <h1>Mis Casas</h1>
+        <button class="btn-agregar" onclick="agregarCard()">+ agregar Casa</button>
+    </div>
+
+    <div class="cards-container" id="cardsContainer">
+        <!-- Card 1 -->
+        <div class="card" data-id="1">
+            <div class="card-header" style="background-color: #1967d2;">
+                <div class="card-title"></div>
+                <div class="card-subtitle"></div>
+            </div>
+            <div class="card-body">
+                <div class="card-code"></div>
+                <div class="card-desc"></div>
+                <div class="card-meta">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn-entrar" onclick="entrarCard(this)">Entrar</button>
+                <div class="card-actions">
+                    <button class="btn-editar" onclick="editarCard(this)">✏️editar</button>
+                    <button class="btn-eliminar" onclick="eliminarCard(this)">🗑️eliminar</button>
+                </div>
+            </div>
+        </div>
