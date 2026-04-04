@@ -1,1 +1,13 @@
-<p>services works!</p>
+<h2>Nuestros Servicios</h2>
+
+<div>
+  <input type="text" [(ngModel)]="nuevoServicio" name="nuevoServicio" placeholder="Nuevo servicio">
+  <button (click)="agregarServicio()">Agregar</button>
+</div>
+
+<ul>
+  <li *ngFor="let servicio of servicios; let i = index">
+    {{ servicios }}
+    <button (click)="eliminarServicio(i)">Eliminar</button>
+  </li>
+</ul>

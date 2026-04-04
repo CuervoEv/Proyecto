@@ -13,7 +13,6 @@ import { Services } from './info-pages/services/services';
 import { Contact } from './info-pages/contact/contact';
 
 
-
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
