@@ -1,11 +1,15 @@
-<app-header>
-</app-header>
+<!-- Header con evento para toggle sidebar -->
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
 
+<!-- Sidebar -->
+<app-sidebar 
+  [isOpen]="sidebarOpen" 
+  (closeSidebar)="closeSidebar()">
+</app-sidebar>
+
+<!-- Contenido principal -->
 <main>
-  
-  <router-outlet>
-
-  </router-outlet>
+  <router-outlet></router-outlet>
 </main>
-<app-footer>
-</app-footer>
+
+<app-footer></app-footer>
