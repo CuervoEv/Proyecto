@@ -4,102 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Casas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Tu CSS aparte -->
     <link rel="stylesheet" href="list.css">
 </head>
-<body>
-    <div class="header">
-        <h1>Mis Casas</h1>
-        <button class="btn-agregar" id="btnAgregar">+ Agregar Casa</button>
-    </div>
+<body class="bg-light">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-primary">Mis Casas</h1>
+            <button class="btn btn-primary" id="btnAgregar">
+                <i class="bi bi-plus-lg"></i> Agregar Casa
+            </button>
+        </div>
 
-    <div class="cards-container" id="cardsContainer">
-        <div class="card" data-id="1">
-            <div class="card-header" style="background-color: #1967d2;">
-                <div class="card-title"></div>
-                <div class="card-subtitle"></div>
-            </div>
-            <div class="card-body">
-                <div class="card-code"></div>
-                <div class="card-desc"></div>
-                <div class="card-meta">
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn-entrar">Entrar</button>
-                <div class="card-actions">
-                    <button class="btn-editar"> editar</button>
-                    <button class="btn-eliminar"> eliminar</button>
+        <div class="row" id="cardsContainer">
+            <!-- Card 1 -->
+            <div class="col-md-4 col-lg-3 mb-4" data-id="1">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header" style="background-color: #1967d2; color: white;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title mb-1" contenteditable="false">Casa de Playa</h5>
+                                <p class="card-subtitle mb-0 small" contenteditable="false">Mario López</p>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical fs-5"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#" onclick="editarCard(this)"><i class="bi bi-pencil me-2"></i>Editar</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="eliminarCard(this)"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-code small text-muted" contenteditable="false">REF: CP-001</p>
+                        <p class="card-desc" contenteditable="false">Hermosa casa frente al mar con piscina</p>
+                        <div class="d-flex justify-content-between mt-3 text-muted small">
+                            <span contenteditable="false"><i class="bi bi-geo-alt"></i> Santa Marta</span>
+                            <span contenteditable="false"><i class="bi bi-coin"></i> $250.000.000</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <button class="btn btn-success w-100" onclick="entrarCard(this)">
+                            <i class="bi bi-box-arrow-in-right"></i> Entrar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Todo tu código JavaScript aquí (lo que iba en el .ts pero convertido a JS)
         let nextId = 2;
 
         function agregarCard() {
             const container = document.getElementById('cardsContainer');
-            const newCard = document.createElement('div');
-            newCard.className = 'card';
-            newCard.setAttribute('data-id', nextId);
-            newCard.innerHTML = `
-                <div class="card-header" style="background-color: ${getRandomColor()};">
-                    <div class="card-title" contenteditable="true"></div>
-                    <div class="card-subtitle" contenteditable="true"></div>
-                </div>
-                <div class="card-body">
-                    <div class="card-code" contenteditable="true"></div>
-                    <div class="card-desc" contenteditable="true"></div>
-                    <div class="card-meta">
-                        <span contenteditable="true"></span>
-                        <span contenteditable="true"></span>
+            const col = document.createElement('div');
+            col.className = 'col-md-4 col-lg-3 mb-4';
+            col.setAttribute('data-id', nextId);
+            
+            col.innerHTML = `
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header" style="background-color: ${getRandomColor()}; color: white;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title mb-1" contenteditable="false">Nueva Casa</h5>
+                                <p class="card-subtitle mb-0 small" contenteditable="false">Dueño Nuevo</p>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots-vertical fs-5"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#" onclick="editarCard(this)"><i class="bi bi-pencil me-2"></i>Editar</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="eliminarCard(this)"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn-entrar">Entrar</button>
-                    <div class="card-actions">
-                        <button class="btn-editar"> editar</button>
-                        <button class="btn-eliminar"> eliminar</button>
+                    <div class="card-body">
+                        <p class="card-code small text-muted" contenteditable="false">REF: NUEVA-001</p>
+                        <p class="card-desc" contenteditable="false">Descripción de la nueva casa</p>
+                        <div class="d-flex justify-content-between mt-3 text-muted small">
+                            <span contenteditable="false"><i class="bi bi-geo-alt"></i> Ubicación</span>
+                            <span contenteditable="false"><i class="bi bi-coin"></i> $0</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <button class="btn btn-success w-100" onclick="entrarCard(this)">
+                            <i class="bi bi-box-arrow-in-right"></i> Entrar
+                        </button>
                     </div>
                 </div>
             `;
-
-            newCard.querySelector('.btn-entrar').onclick = () => entrarCard(newCard);
-            newCard.querySelector('.btn-editar').onclick = () => editarCard(newCard);
-            newCard.querySelector('.btn-eliminar').onclick = () => eliminarCard(newCard);
-
-            container.appendChild(newCard);
+            
+            container.appendChild(col);
             nextId++;
         }
 
-        function entrarCard(card) {
-            const titulo = card.querySelector('.card-title')?.textContent || 'Sin título';
+        function entrarCard(btn) {
+            const card = btn.closest('.col-md-4');
+            const titulo = card.querySelector('.card-title').innerText;
             alert(`Entrando a: ${titulo}`);
         }
 
-        function editarCard(card) {
+        function editarCard(opcion) {
+            const card = opcion.closest('.col-md-4');
             const titulo = card.querySelector('.card-title');
             const subtitulo = card.querySelector('.card-subtitle');
-            titulo.setAttribute('contenteditable', 'true');
-            subtitulo.setAttribute('contenteditable', 'true');
-            titulo.focus();
+            const codigo = card.querySelector('.card-code');
+            const desc = card.querySelector('.card-desc');
+            const metas = card.querySelectorAll('.card-body span');
+            
+            const editable = titulo.getAttribute('contenteditable') === 'true';
+            
+            if (editable) {
+                titulo.setAttribute('contenteditable', 'false');
+                subtitulo.setAttribute('contenteditable', 'false');
+                codigo.setAttribute('contenteditable', 'false');
+                desc.setAttribute('contenteditable', 'false');
+                metas.forEach(meta => meta.setAttribute('contenteditable', 'false'));
+                opcion.innerHTML = '<i class="bi bi-pencil me-2"></i>Editar';
+            } else {
+                titulo.setAttribute('contenteditable', 'true');
+                subtitulo.setAttribute('contenteditable', 'true');
+                codigo.setAttribute('contenteditable', 'true');
+                desc.setAttribute('contenteditable', 'true');
+                metas.forEach(meta => meta.setAttribute('contenteditable', 'true'));
+                opcion.innerHTML = '<i class="bi bi-check-lg me-2"></i>Guardar';
+                titulo.focus();
+            }
         }
 
-        function eliminarCard(card) {
-            if (confirm('¿Eliminar esta card?')) {
+        function eliminarCard(opcion) {
+            const card = opcion.closest('.col-md-4');
+            if (confirm('¿Eliminar esta casa?')) {
                 card.remove();
             }
         }
 
         function getRandomColor() {
-            const colores = ['#1967d2', '#34a853', '#ea4335', '#fbbc04', '#9334e6', '#00acc1'];
+            const colores = ['#1967d2', '#34a853', '#ea4335', '#fbbc04', '#9334e6', '#00acc1', '#e67e22', '#1abc9c'];
             return colores[Math.floor(Math.random() * colores.length)];
         }
 
-        document.getElementById('btnAgregar').onclick = agregarCard;
+        document.getElementById('btnAgregar').addEventListener('click', agregarCard);
     </script>
 </body>
 </html>
