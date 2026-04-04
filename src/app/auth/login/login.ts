@@ -11,58 +11,35 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
 
-  usuario: string = '';  // Cambiado de 'nombre' a 'usuario'
-  rolSeleccionado: string = '';
+  usuario: string = '';
+  contrasena: string = '';  // Añadida la variable para la contraseña
 
   constructor(private router: Router) {}
 
-  seleccionarRol(rol: string) {
-    this.rolSeleccionado = rol;
-  }
-
-  obtenerNombreRol(): string {
-    const roles: {[key: string]: string} = {
-      'padre': 'Administrador',
-      'hijo': 'Miembro', 
-      'familiar': 'Colaborador'
-    };
-    return roles[this.rolSeleccionado] || '';
-  }
-
   entrar() {
-    // Validación para usuario (no nombre)
+    // Validación de usuario
     if (!this.usuario.trim()) {
       alert('Por favor escribe tu usuario');
       return;
     }
     
-    if (!this.rolSeleccionado) {
-      alert('Por favor selecciona un rol');
+    // Validación de contraseña
+    if (!this.contrasena.trim()) {
+      alert('Por favor escribe tu contraseña');
       return;
     }
     
+    // Aquí iría la lógica de autenticación con un backend
+    // Por ahora es una simulación
     const datosUsuario = {
-      usuario: this.usuario,  // Cambiado de 'nombre' a 'usuario'
-      rol: this.rolSeleccionado
+      usuario: this.usuario,
+      contrasena: this.contrasena,  // En un caso real, no guardes la contraseña así
+      fechaLogin: new Date().toISOString()
     };
     
     localStorage.setItem('usuario', JSON.stringify(datosUsuario));
     
-    // Redirige según el rol
-    switch(this.rolSeleccionado) {
-      case 'padre':
-        this.router.navigate(['/admin']);
-        break;
-      case 'hijo':
-        this.router.navigate(['/miembro']);
-        break;
-      case 'familiar':
-        this.router.navigate(['/colaborador']);
-        break;
-    }
-  }
-
-  continuarConRol() {
-    this.entrar();
+    // Redirige al dashboard o página principal
+    this.router.navigate(['/dashboard']);
   }
 }

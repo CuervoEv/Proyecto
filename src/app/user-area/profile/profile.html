@@ -1,30 +1,101 @@
-<div class="container">
+<div class="profile-container">
+  <div class="profile-card">
+    
+    <!-- Header del perfil -->
+    <div class="profile-header">
+      <div class="avatar-container">
+        <div class="avatar">
+          {{ (usuario.nombre?.charAt(0) || 'U') + (usuario.apellido?.charAt(0) || '') }}
+        </div>
+        <button class="btn-edit-avatar" *ngIf="editMode">
+          <i class="bi bi-camera-fill"></i>
+        </button>
+      </div>
+      <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+      <p class="rol-badge">{{ usuario.rol }}</p>
+      <p class="miembro-desde">Miembro desde {{ usuario.fechaRegistro }}</p>
+    </div>
 
-  <div class="card">
+    <!-- Indicador de carga -->
+    <div class="loading" *ngIf="cargando">
+      <div class="spinner"></div>
+      <p>Cargando perfil...</p>
+    </div>
 
-    <h1>👤 Perfil</h1>
+    <!-- Formulario de perfil -->
+    <div class="profile-body" *ngIf="!cargando">
+      
+      <div class="info-section">
+        <h3>
+          <i class="bi bi-person-badge"></i> Información Personal
+          <button class="btn-edit" (click)="toggleEditMode()" *ngIf="!editMode">
+            <i class="bi bi-pencil-fill"></i> Editar
+          </button>
+        </h3>
+        
+        <div class="info-grid">
+          <!-- Nombre -->
+          <div class="info-field">
+            <label>Nombre</label>
+            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.nombre">
+            <p *ngIf="!editMode">{{ usuario.nombre }}</p>
+          </div>
 
-    <label>Nombre</label>
-    <input type="text" [(ngModel)]="usuario.nombre">
+          <!-- Segundo Nombre -->
+          <div class="info-field">
+            <label>Segundo Nombre</label>
+            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoNombre">
+            <p *ngIf="!editMode">{{ usuario.segundoNombre || '—' }}</p>
+          </div>
 
-    <label>Correo</label>
-    <input type="email" [(ngModel)]="usuario.correo">
+          <!-- Apellido -->
+          <div class="info-field">
+            <label>Apellido</label>
+            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.apellido">
+            <p *ngIf="!editMode">{{ usuario.apellido }}</p>
+          </div>
 
-    <label>Teléfono</label>
-    <input type="text" [(ngModel)]="usuario.telefono">
+          <!-- Segundo Apellido -->
+          <div class="info-field">
+            <label>Segundo Apellido</label>
+            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoApellido">
+            <p *ngIf="!editMode">{{ usuario.segundoApellido || '—' }}</p>
+          </div>
 
-    <label>Rol</label>
-    <select [(ngModel)]="usuario.rol">
-      <option value="Administrador">Administrador</option>
-      <option value="Miembro">Miembro</option>
-      <option value="Familiar">Familiar</option>
-    </select>
+          <!-- Email -->
+          <div class="info-field">
+            <label>Correo Electrónico</label>
+            <input *ngIf="editMode" type="email" [(ngModel)]="usuario.email">
+            <p *ngIf="!editMode">{{ usuario.email }}</p>
+          </div>
 
-    <p><strong>Fecha de creación:</strong> {{ usuario.fechaCreacion }}</p>
+          <!-- Teléfono -->
+          <div class="info-field">
+            <label>Teléfono</label>
+            <input *ngIf="editMode" type="tel" [(ngModel)]="usuario.telefono">
+            <p *ngIf="!editMode">{{ usuario.telefono || '—' }}</p>
+          </div>
 
-    <button (click)="guardar()">💾 Guardar cambios</button>
-    <button (click)="volver()">⬅ Volver</button>
+        </div>
+      </div>
 
+      <!-- Botones de acción en modo edición -->
+      <div class="action-buttons" *ngIf="editMode">
+        <button class="btn-cancel" (click)="cancelarEdicion()">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </button>
+        <button class="btn-save" (click)="guardarCambios()">
+          <i class="bi bi-check-circle"></i> Guardar Cambios
+        </button>
+      </div>
+
+      <!-- Botón de cerrar sesión -->
+      <div class="logout-section" *ngIf="!editMode">
+        <button class="btn-logout" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+        </button>
+      </div>
+
+    </div>
   </div>
-
 </div>

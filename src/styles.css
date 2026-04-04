@@ -8,3 +8,27 @@ body.claro {
   background: white;
   color: black;
 }
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Eliminar bordes de focus en algunos elementos */
+button:focus, 
+a:focus,
+input:focus {
+  outline: none;
+}

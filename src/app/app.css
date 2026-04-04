@@ -1,0 +1,18 @@
+/* Estructura principal */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1; /* Esto hace que el main ocupe el espacio restante */
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+/* Asegurar que header y footer no tengan márgenes no deseados */
+app-header,
+app-footer {
+  display: block;
+}

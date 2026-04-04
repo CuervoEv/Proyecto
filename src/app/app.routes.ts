@@ -1,11 +1,17 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 import { LoginComponent } from './auth/login/login';
 import { RegisterComponent } from './auth/register/register';
-import { RecoverPasswordComponent } from './auth/recover-password/recover-password';
+import { RecoverComponent } from './auth/recover-password/recover-password';
 import { DashboardComponent } from './user-area/dashboard/dashboard';
 import { ProfileComponent } from './user-area/profile/profile';
 import { SettingsComponent } from './user-area/settings/settings';
+import { List } from './main-module/list/list';
+import { About } from './info-pages/about/about';
+import { Services } from './info-pages/services/services';
+import { Contact } from './info-pages/contact/contact';
+
 
 
 export const routes: Routes = [
@@ -13,10 +19,15 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'recover', component: RecoverPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'recover', component: RecoverComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'list', redirectTo: 'hogares', pathMatch: 'full' },
+  { path: 'hogares', component: List, canActivate: [AuthGuard] },
+  { path: 'about', component: About },
+  { path: 'services', component: Services },
+  { path: 'contact', component: Contact },
 
   { path: '**', redirectTo: 'login' }
 ];
