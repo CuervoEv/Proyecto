@@ -117,7 +117,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     if db.query(Usuario).filter(Usuario.correo == usuario.correo).first():
         raise HTTPException(400, "El correo ya está registrado")
-    hashed = get_password_hash(usuario.contraseña)
+    hashed = get_password_hash(usuario.contrasena)
     db_usuario = Usuario(nombre=usuario.nombre, correo=usuario.correo, contrasena=hashed)
     db.add(db_usuario)
     db.commit()
@@ -128,7 +128,7 @@ def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     usuario = authenticate_user(db, form_data.username, form_data.password)
     if not usuario:
-        raise HTTPException(401, "Correo o contraseña incorrectos")
+        raise HTTPException(401, "Correo o contrasena incorrectos")
     
     access_token = create_access_token(data={"sub": usuario.id_usuario})
     refresh_token = create_refresh_token(data={"sub": usuario.id_usuario})
@@ -178,7 +178,7 @@ def verify_password_endpoint(
     db: Session = Depends(get_db)
 ):
     if not verify_password(data.password, current_user.contrasena):
-        raise HTTPException(401, "Contraseña incorrecta")
+        raise HTTPException(401, "Contrasena incorrecta")
     return {"message": "Contraseña correcta"}
 
 @router.get("/me", response_model=UsuarioSchema)
@@ -193,7 +193,7 @@ def update_user(
 ):
     # Verificar contraseña actual
     if not verify_password(update_data.current_password, current_user.contrasena):
-        raise HTTPException(400, "Contraseña actual incorrecta")
+        raise HTTPException(400, "Contrasena actual incorrecta")
     
     if update_data.nombre:
         current_user.nombre = update_data.nombre
@@ -202,8 +202,8 @@ def update_user(
             if db.query(Usuario).filter(Usuario.correo == update_data.correo).first():
                 raise HTTPException(400, "Correo ya en uso")
         current_user.correo = update_data.correo
-    if update_data.contraseña:
-        current_user.contrasena = get_password_hash(update_data.contraseña)
+    if update_data.contrasena:
+        current_user.contrasena = get_password_hash(update_data.contrasena)
     
     db.commit()
     db.refresh(current_user)
