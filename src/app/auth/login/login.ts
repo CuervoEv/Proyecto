@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../servicesAPI/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,31 +12,31 @@ import { AuthService } from '../../servicesAPI/auth.service';
 export class LoginComponent {
 
   usuario: string = '';
-  contrasena: string = '';
-  cargando: boolean = false;
+  contrasena: string = ''; 
 
-
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router) {}
 
   entrar() {
+
     if (!this.usuario.trim()) {
       alert('Por favor escribe tu usuario');
       return;
     }
+    
+
     if (!this.contrasena.trim()) {
       alert('Por favor escribe tu contraseña');
       return;
     }
-    this.cargando = true;
-    this.authService.login(this.usuario, this.contrasena).subscribe({
-      next: (resp) => {
-        this.cargando = false;
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.cargando = false;
-        alert('Error de autenticación: ' + (err.error?.detail || 'Verifica tus credenciales'));
-      }
-    });
+    
+    const datosUsuario = {
+      usuario: this.usuario,
+      contrasena: this.contrasena, 
+      fechaLogin: new Date().toISOString()
+    };
+    
+    localStorage.setItem('usuario', JSON.stringify(datosUsuario));
+
+    this.router.navigate(['/dashboard']);
   }
 }

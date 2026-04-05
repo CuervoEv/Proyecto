@@ -12,7 +12,7 @@ class Usuario(Base):
     id_usuario = Column(Integer, primary_key=True, index=True)
     nombre = Column(String(50), nullable=False)
     correo = Column(String(150), unique=True, nullable=False)
-    contraseña = Column(String(255), nullable=False)  # luego se hashea
+    contrasena = Column(String(255), nullable=False)
     fecha_registro = Column(TIMESTAMP, default=datetime.utcnow)
 
 
