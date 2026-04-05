@@ -1,0 +1,101 @@
+/* Contenedor principal del login */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec); /* Gradiente pastel azul y rosa */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Formulario de login */
+.login-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-form h2 {
+  color: #4a90e2; /* Azul pastel */
+  margin-bottom: 20px;
+}
+
+/* Campos de entrada */
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #b3e5fc; /* Azul claro */
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  border-color: #81c784; /* Verde pastel */
+  outline: none;
+}
+
+/* Botón de login */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #a5d6a7, #ce93d8); /* Verde y morado pastel */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(45deg, #81c784, #ba68c8); /* Tonos más oscuros al hover */
+}
+
+/* Enlaces para forgot password y register */
+.login-links {
+  margin-top: 20px;
+}
+
+.login-links a {
+  color: #ffb3ba; /* Rosa pastel */
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.login-links a:hover {
+  color: #ff8a80; /* Rosa más intenso */
+}
+
+/* Sección de forgot password (oculta por defecto, mostrar con JS si es necesario) */
+.forgot-password {
+  display: none;
+  margin-top: 20px;
+}
+
+.forgot-password.show {
+  display: block;
+}
+
+/* Sección de register (oculta por defecto) */
+.register {
+  display: none;
+  margin-top: 20px;
+}
+
+.register.show {
+  display: block;
+}
