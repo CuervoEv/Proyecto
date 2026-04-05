@@ -3,6 +3,7 @@
   border-radius: 1rem;
   margin-bottom: 1rem;
   font-weight: bold;
+  white-space: pre-line;
 }
 .accordion-button {
   background-color: rgb(201, 248, 197);
@@ -11,6 +12,14 @@
   font-weight: bold;
   transition: transform 0.8s ease;
 }
-.accordion-button:hover {
-  transform: scale(0.98);
+code {
+  font-size: 1.2rem;
+}
+.accordion-body {
+  white-space: pre-line;
+  line-height: 1.6;     
+  display: flex;
+  flex-direction: column; 
+  gap: 0.5rem;            
+  font-weight: normal;   
 }

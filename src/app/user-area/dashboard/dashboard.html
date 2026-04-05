@@ -1,59 +1,47 @@
 <div class="container">
 
   <div class="card main">
-
-    <h1>🏠 Dashboard</h1>
-
+    <h1>📊 Estadísticas</h1>
     <p *ngIf="usuario">
-      Bienvenido, <strong>{{ usuario.nombre }}</strong> 👋
+      Bienvenido, <strong>{{ usuario.nombre }}</strong>. Aquí puedes ver tus estadísticas de gestión del hogar y mejorar tu organización diaria.
     </p>
-
-    <button (click)="logout()">Cerrar Sesión</button>
-
-    <button routerLink="/settings">⚙️ Configuración</button>
   </div>
-
 
   <div class="card">
     <h2>Administración del Hogar</h2>
-    <p>
-      Cómo aplicar principios de gestión para un hogar más organizado y feliz
-    </p>
+    <p>Cómo aplicar principios de gestión para un hogar más organizado y feliz</p>
   </div>
 
- 
   <div class="card">
     <h2>El Hogar como Sistema Administrativo</h2>
-    <p>
-      Un hogar funciona como una organización: planificación, recursos y coordinación.
-    </p>
+    <p>Un hogar funciona como una organización: planificación, recursos y coordinación.</p>
   </div>
-
 
   <div class="card">
     <h2>Áreas Principales</h2>
     <ul>
-      <li> Finanzas</li>
-      <li> Limpieza</li>
-      <li> Alimentación</li>
-      <li> Tiempo</li>
+      <li>Contabilidad</li>
+      <li>Actividades</li>
+      <li>Recetas</li>
+      <li>Tiempo</li>
     </ul>
   </div>
 
- <div class="card stats">
-  <div> <strong>{{ estadisticas.ahorro }}%</strong><br>Ahorro</div>
-  <div> <strong>{{ estadisticas.tiempo }}h</strong><br>Tiempo</div>
-  <div> <strong>{{ estadisticas.conflictos }}%</strong><br>Conflictos</div>
-  <div> <strong>{{ estadisticas.calidad }}%</strong><br>Calidad</div>
-</div>
-
+<div class="stats-wrapper">
   <div class="card stats">
-    <div> <strong>30%</strong><br>Ahorro</div>
-    <div> <strong>2-3h</strong><br>Tiempo</div>
-    <div> <strong>60%</strong><br>Conflictos</div>
-    <div> <strong>85%</strong><br>Calidad de vida</div>
+    <div><strong>0%</strong><br>Ahorro</div>
+    <div><strong>0h</strong><br>Tiempo</div>
+    <div><strong>0%</strong><br>Conflictos</div>
+    <div><strong>0%</strong><br>Calidad</div>
   </div>
 
+  <div class="card stats">
+    <div><strong>30%</strong><br>Ahorro</div>
+    <div><strong>2-3h</strong><br>Tiempo</div>
+    <div><strong>60%</strong><br>Conflictos</div>
+    <div><strong>85%</strong><br>Calidad de vida</div>
+  </div>
+</div>
 
   <div class="card">
     <h2>Problemas comunes</h2>
@@ -65,26 +53,16 @@
     </ul>
   </div>
 
-
   <div class="card">
     <h2>Estrategias</h2>
     <ul>
-      <li> Calendario compartido</li>
-      <li> Lista semanal</li>
-      <li> Presupuesto</li>
-      <li> Reuniones familiares</li>
+      <li>Calendario compartido</li>
+      <li>Lista semanal</li>
+      <li>Presupuesto</li>
+      <li>Reuniones familiares</li>
     </ul>
   </div>
 
-<button routerLink="/profile">👤 Ir a Perfil</button>
-
-  <div class="card">
-    <h2>Conclusión</h2>
-    <p>
-      Un hogar organizado mejora la convivencia, reduce el estrés y optimiza el tiempo.
-    </p>
-  </div>
-
-  
+  <button routerLink="/profile">👤 Ir a Perfil</button>
 
 </div>
