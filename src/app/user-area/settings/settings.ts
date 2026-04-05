@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -62,84 +61,63 @@ export class SettingsComponent implements OnInit {
     this.activeSection = section;
   }
 
-  goBack() {
-    this.router.navigate(['/dashboard']);
-  }
-
   loadSettings() {
-    const saved = localStorage.getItem('misCasasSettings');
-    if (saved) {
-      this.settings = { ...this.settings, ...JSON.parse(saved) };
+    const savedSettings = localStorage.getItem('misCasasSettings');
+    if (savedSettings) {
+      try {
+        const parsed = JSON.parse(savedSettings);
+        this.settings = { ...this.settings, ...parsed };
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
     }
-    this.applyFontSize(this.settings.fontSize);
   }
 
   saveSettings() {
     localStorage.setItem('misCasasSettings', JSON.stringify(this.settings));
-    this.applySettings();
+    alert('Configuración guardada exitosamente');
   }
 
   selectColor(color: string) {
     this.settings.primaryColor = color;
     this.settings.primaryTextColor = this.pastelColors[color] || '#2c5f4e';
-    this.saveSettings();
-  }
-
-  isColorSelected(color: string): boolean {
-    return this.settings.primaryColor === color;
-  }
-
-  applyFontSize(size: string) {
-    document.body.classList.remove('font-small', 'font-medium', 'font-large');
-    document.body.classList.add(`font-${size}`);
-  }
-
-  applySettings() {
-    this.applyFontSize(this.settings.fontSize);
-    localStorage.setItem('cardsPerRow', this.settings.cardsPerRow);
-    localStorage.setItem('showAnimations', this.settings.showAnimations.toString());
-    localStorage.setItem('primaryColor', this.settings.primaryColor);
-    localStorage.setItem('primaryTextColor', this.settings.primaryTextColor);
   }
 
   exportData() {
-    const cards = localStorage.getItem('misCasasCards');
-    const settings = localStorage.getItem('misCasasSettings');
     const data = {
-      cards: cards ? JSON.parse(cards) : [],
-      settings: settings ? JSON.parse(settings) : {},
-      exportDate: new Date().toISOString()
+      settings: this.settings,
+      casas: JSON.parse(localStorage.getItem('casas') || '[]'),
+      timestamp: new Date().toISOString()
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `mis_casas_backup_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `mis-casas-backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
-  onFileSelected(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.importData(file);
-    }
-  }
+  importData(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-  importData(file: File) {
     const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
+    reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target?.result as string);
-        if (data.cards) {
-          localStorage.setItem('misCasasCards', JSON.stringify(data.cards));
-        }
         if (data.settings) {
-          localStorage.setItem('misCasasSettings', JSON.stringify(data.settings));
-          this.loadSettings();
+          this.settings = { ...this.settings, ...data.settings };
+          this.saveSettings();
         }
-        alert('Datos importados correctamente');
+        if (data.casas) {
+          localStorage.setItem('casas', JSON.stringify(data.casas));
+        }
+        alert('Datos importados exitosamente');
+        window.location.reload();
       } catch (error) {
         alert('Error al importar los datos');
       }
@@ -148,9 +126,9 @@ export class SettingsComponent implements OnInit {
   }
 
   resetData() {
-    if (confirm('¿Estás seguro de que quieres restablecer todos los valores? Esta acción no se puede deshacer.')) {
-      localStorage.removeItem('misCasasCards');
+    if (confirm('¿Estás seguro de que quieres restablecer toda la configuración?')) {
       localStorage.removeItem('misCasasSettings');
+      localStorage.removeItem('casas');
       this.settings = {
         userName: '',
         language: 'es',
@@ -165,5 +143,9 @@ export class SettingsComponent implements OnInit {
       };
       alert('Configuración restablecida');
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/hogares']);
   }
 }

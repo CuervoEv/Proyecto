@@ -1,188 +1,193 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajustes - Mis Casas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="settings.css">
-</head>
-<body>
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <a href="list.html" class="btn btn-outline-secondary me-2">
-                    <i class="bi bi-arrow-left"></i> Volver
-                </a>
-                <h1 class="d-inline-block" style="color: #2c5f4e;">Ajustes</h1>
-            </div>
-        </div>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Volver
+      </button>
+      <h1 class="d-inline-block" style="color: #2c5f4e;">Ajustes</h1>
+    </div>
+    <button class="btn btn-success" (click)="saveSettings()">
+      <i class="bi bi-check-lg"></i> Guardar Cambios
+    </button>
+  </div>
 
-        <div class="row">
-            <div class="col-md-3 mb-4">
-                <div class="list-group" id="settingsMenu">
-                    <button class="list-group-item list-group-item-action active" data-section="general">
-                        <i class="bi bi-sliders2"></i> General
-                    </button>
-                    <button class="list-group-item list-group-item-action" data-section="apariencia">
-                        <i class="bi bi-palette"></i> Apariencia
-                    </button>
-                    <button class="list-group-item list-group-item-action" data-section="tarjetas">
-                        <i class="bi bi-grid"></i> Tarjetas
-                    </button>
-                    <button class="list-group-item list-group-item-action" data-section="datos">
-                        <i class="bi bi-database"></i> Datos
-                    </button>
-                    <button class="list-group-item list-group-item-action" data-section="acerca">
-                        <i class="bi bi-info-circle"></i> Acerca de
-                    </button>
-                </div>
-            </div>
-
-            <div class="col-md-9">
-                <!-- Panel General -->
-                <div id="section-general" class="settings-section">
-                    <div class="card shadow-sm">
-                        <div class="card-header" style="background-color: #B8E0D2; color: #2c5f4e;">
-                            <h5 class="mb-0"><i class="bi bi-sliders2"></i> Configuración General</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #2c5f4e;">Nombre del usuario</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Ej: Juan Pérez">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #2c5f4e;">Idioma</label>
-                                <select class="form-select" id="language">
-                                    <option value="es">Español</option>
-                                    <option value="en">English</option>
-                                    <option value="fr">Français</option>
-                                </select>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="notifications">
-                                <label class="form-check-label" for="notifications" style="color: #2c5f4e;">Activar notificaciones</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel Apariencia -->
-                <div id="section-apariencia" class="settings-section" style="display: none;">
-                    <div class="card shadow-sm">
-                        <div class="card-header" style="background-color: #FFD6B5; color: #8b5a2b;">
-                            <h5 class="mb-0"><i class="bi bi-palette"></i> Apariencia</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #8b5a2b;">Tema</label>
-                                <select class="form-select" id="theme">
-                                    <option value="light">☀️ Claro</option>
-                                    <option value="pastel">🎨 Pastel</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #8b5a2b;">Color principal de las cards</label>
-                                <div class="d-flex gap-2 flex-wrap" id="colorPresets">
-                                    <div class="color-option pastel-1" data-color="#B8E0D2" data-text="#2c5f4e" style="background-color: #B8E0D2;"></div>
-                                    <div class="color-option pastel-2" data-color="#FFD6B5" data-text="#8b5a2b" style="background-color: #FFD6B5;"></div>
-                                    <div class="color-option pastel-3" data-color="#FFB5C2" data-text="#8b3a4a" style="background-color: #FFB5C2;"></div>
-                                    <div class="color-option pastel-4" data-color="#C9E4DE" data-text="#2c5f4e" style="background-color: #C9E4DE;"></div>
-                                    <div class="color-option pastel-5" data-color="#E8D1C5" data-text="#6b3e2a" style="background-color: #E8D1C5;"></div>
-                                    <div class="color-option pastel-6" data-color="#D4E0F0" data-text="#2c3e6b" style="background-color: #D4E0F0;"></div>
-                                    <div class="color-option pastel-7" data-color="#FCE1B3" data-text="#8b6b2a" style="background-color: #FCE1B3;"></div>
-                                    <div class="color-option pastel-8" data-color="#E0D4E8" data-text="#4a2a6b" style="background-color: #E0D4E8;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #8b5a2b;">Tamaño de fuente</label>
-                                <select class="form-select" id="fontSize">
-                                    <option value="small">Pequeño</option>
-                                    <option value="medium" selected>Mediano</option>
-                                    <option value="large">Grande</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel Tarjetas -->
-                <div id="section-tarjetas" class="settings-section" style="display: none;">
-                    <div class="card shadow-sm">
-                        <div class="card-header" style="background-color: #C9E4DE; color: #2c5f4e;">
-                            <h5 class="mb-0"><i class="bi bi-grid"></i> Configuración de Tarjetas</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label" style="color: #2c5f4e;">Tarjetas por fila</label>
-                                <select class="form-select" id="cardsPerRow">
-                                    <option value="3">3 tarjetas</option>
-                                    <option value="4">4 tarjetas</option>
-                                    <option value="6">6 tarjetas</option>
-                                </select>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="showAnimations" checked>
-                                <label class="form-check-label" for="showAnimations" style="color: #2c5f4e;">Activar animaciones</label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="showEmptyCards">
-                                <label class="form-check-label" for="showEmptyCards" style="color: #2c5f4e;">Mostrar tarjetas vacías</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel Datos -->
-                <div id="section-datos" class="settings-section" style="display: none;">
-                    <div class="card shadow-sm">
-                        <div class="card-header" style="background-color: #E8D1C5; color: #6b3e2a;">
-                            <h5 class="mb-0"><i class="bi bi-database"></i> Gestión de Datos</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <button class="btn w-100 mb-2" id="exportData" style="background-color: #B8E0D2; color: #2c5f4e; border: none;">
-                                    <i class="bi bi-download"></i> Exportar datos (JSON)
-                                </button>
-                                <button class="btn w-100 mb-2" id="importDataBtn" style="background-color: #D4E0F0; color: #2c3e6b; border: none;">
-                                    <i class="bi bi-upload"></i> Importar datos
-                                </button>
-                                <input type="file" id="importFile" accept=".json" style="display: none;">
-                                <button class="btn w-100" id="resetData" style="background-color: #FFB5C2; color: #8b3a4a; border: none;">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Restablecer valores
-                                </button>
-                            </div>
-                            <div class="alert" style="background-color: #FCE1B3; color: #8b6b2a; border: none;">
-                                <i class="bi bi-exclamation-triangle"></i> Al importar datos, se sobrescribirán las tarjetas actuales.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel Acerca de -->
-                <div id="section-acerca" class="settings-section" style="display: none;">
-                    <div class="card shadow-sm">
-                        <div class="card-header" style="background-color: #E0D4E8; color: #4a2a6b;">
-                            <h5 class="mb-0"><i class="bi bi-info-circle"></i> Acerca de</h5>
-                        </div>
-                        <div class="card-body text-center">
-                            <i class="bi bi-house-heart" style="font-size: 64px; color: #B8E0D2;"></i>
-                            <h4 class="mt-3" style="color: #2c5f4e;">Mis Casas</h4>
-                            <p class="text-muted">Versión 1.0.0</p>
-                            <p style="color: #6b3e2a;">Una aplicación para gestionar tus propiedades de manera fácil y rápida.</p>
-                            <hr style="background-color: #E8D1C5;">
-                            <p class="small text-muted">
-                                © 2024 Mis Casas - Todos los derechos reservados
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <!-- Menú lateral -->
+    <div class="col-md-3 mb-4">
+      <div class="list-group">
+        <button
+          class="list-group-item list-group-item-action"
+          [class.active]="activeSection === 'general'"
+          (click)="setActiveSection('general')">
+          <i class="bi bi-sliders2"></i> General
+        </button>
+        <button
+          class="list-group-item list-group-item-action"
+          [class.active]="activeSection === 'apariencia'"
+          (click)="setActiveSection('apariencia')">
+          <i class="bi bi-palette"></i> Apariencia
+        </button>
+        <button
+          class="list-group-item list-group-item-action"
+          [class.active]="activeSection === 'tarjetas'"
+          (click)="setActiveSection('tarjetas')">
+          <i class="bi bi-grid"></i> Tarjetas
+        </button>
+        <button
+          class="list-group-item list-group-item-action"
+          [class.active]="activeSection === 'datos'"
+          (click)="setActiveSection('datos')">
+          <i class="bi bi-database"></i> Datos
+        </button>
+        <button
+          class="list-group-item list-group-item-action"
+          [class.active]="activeSection === 'acerca'"
+          (click)="setActiveSection('acerca')">
+          <i class="bi bi-info-circle"></i> Acerca de
+        </button>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="settings.js"></script>
-</body>
-</html>
+    <!-- Panel de contenido -->
+    <div class="col-md-9">
+
+      <!-- Panel General -->
+      <div *ngIf="activeSection === 'general'">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background-color: #B8E0D2; color: #2c5f4e;">
+            <h5 class="mb-0"><i class="bi bi-sliders2"></i> Configuración General</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label" style="color: #2c5f4e;">Nombre del usuario</label>
+              <input type="text" class="form-control" [(ngModel)]="settings.userName" placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" style="color: #2c5f4e;">Idioma</label>
+              <select class="form-select" [(ngModel)]="settings.language">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+              </select>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="settings.notifications">
+              <label class="form-check-label" style="color: #2c5f4e;">Activar notificaciones</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel Apariencia -->
+      <div *ngIf="activeSection === 'apariencia'">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background-color: #FFD6B5; color: #8b5a2b;">
+            <h5 class="mb-0"><i class="bi bi-palette"></i> Apariencia</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label" style="color: #8b5a2b;">Tema</label>
+              <select class="form-select" [(ngModel)]="settings.theme">
+                <option value="light">☀️ Claro</option>
+                <option value="pastel">🎨 Pastel</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" style="color: #8b5a2b;">Color principal de las cards</label>
+              <div class="d-flex gap-2 flex-wrap">
+                <div
+                  *ngFor="let color of pastelColors | keyvalue"
+                  class="color-option"
+                  [style.background-color]="color.key"
+                  [class.selected]="settings.primaryColor === color.key"
+                  (click)="selectColor(color.key)">
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" style="color: #8b5a2b;">Tamaño de fuente</label>
+              <select class="form-select" [(ngModel)]="settings.fontSize">
+                <option value="small">Pequeño</option>
+                <option value="medium">Mediano</option>
+                <option value="large">Grande</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel Tarjetas -->
+      <div *ngIf="activeSection === 'tarjetas'">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background-color: #C9E4DE; color: #2c5f4e;">
+            <h5 class="mb-0"><i class="bi bi-grid"></i> Configuración de Tarjetas</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label" style="color: #2c5f4e;">Tarjetas por fila</label>
+              <select class="form-select" [(ngModel)]="settings.cardsPerRow">
+                <option value="3">3 tarjetas</option>
+                <option value="4">4 tarjetas</option>
+                <option value="6">6 tarjetas</option>
+              </select>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="settings.showAnimations">
+              <label class="form-check-label" style="color: #2c5f4e;">Activar animaciones</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="settings.showEmptyCards">
+              <label class="form-check-label" style="color: #2c5f4e;">Mostrar tarjetas vacías</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel Datos -->
+      <div *ngIf="activeSection === 'datos'">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background-color: #E8D1C5; color: #6b3e2a;">
+            <h5 class="mb-0"><i class="bi bi-database"></i> Gestión de Datos</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <button class="btn w-100 mb-2" (click)="exportData()" style="background-color: #B8E0D2; color: #2c5f4e; border: none;">
+                <i class="bi bi-download"></i> Exportar datos (JSON)
+              </button>
+              <label class="btn w-100 mb-2" style="background-color: #D4E0F0; color: #2c3e6b; border: none;">
+                <i class="bi bi-upload"></i> Importar datos
+                <input type="file" accept=".json" (change)="importData($event)" style="display: none;">
+              </label>
+              <button class="btn w-100" (click)="resetData()" style="background-color: #FFB5C2; color: #8b3a4a; border: none;">
+                <i class="bi bi-arrow-counterclockwise"></i> Restablecer valores
+              </button>
+            </div>
+            <div class="alert" style="background-color: #FCE1B3; color: #8b6b2a; border: none;">
+              <i class="bi bi-exclamation-triangle"></i> Al importar datos, se sobrescribirán las tarjetas actuales.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel Acerca de -->
+      <div *ngIf="activeSection === 'acerca'">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background-color: #E0D4E8; color: #4a2a6b;">
+            <h5 class="mb-0"><i class="bi bi-info-circle"></i> Acerca de</h5>
+          </div>
+          <div class="card-body text-center">
+            <i class="bi bi-house-heart" style="font-size: 64px; color: #B8E0D2;"></i>
+            <h4 class="mt-3" style="color: #2c5f4e;">Mis Hogares</h4>
+            <p class="text-muted">Versión 1.0.0</p>
+            <p style="color: #6b3e2a;">Una aplicación para gestionar tus propiedades de manera fácil y rápida.</p>
+            <hr style="background-color: #E8D1C5;">
+            <p class="small text-muted">
+              © 2024 Mis Hogares - Todos los derechos reservados
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
