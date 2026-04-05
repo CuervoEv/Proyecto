@@ -105,6 +105,32 @@
   transform: scale(1.05);
 }
 
+/* Centrar el menú principal */
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navbar-nav.justify-content-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav.justify-content-center > ul {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav.justify-content-center .nav-item {
+  margin: 0;
+}
+
 /* Navbar toggler (botón hamburguesa) */
 .navbar-toggler {
   border-color: #2d6a4f;
