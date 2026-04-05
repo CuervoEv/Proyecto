@@ -1,34 +1,16 @@
-div {
-  margin-bottom: 10px;
-}
-
-input {
-  padding: 5px;
-  margin-right: 5px;
-  color: #000000;
-  border: 2px solid #dad72c;
-}
-
-button {
-  margin-left: 5px;
-  background-color: #ece13e;
-  color: rgb(0, 0, 0);
-  padding: 10px;
-  border: none;
-  cursor: pointer;
+.accordion-item {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
   font-weight: bold;
-  transition: transform 0.8s ease;}
-
-li {
-  margin-bottom: 5px;
 }
-
-button:hover {
-  transform: scale(1.1);
+.accordion-button {
+  background-color: rgb(201, 248, 197);
+  color: rgb(0, 0, 0);
+  border: none;
+  font-weight: bold;
+  transition: transform 0.8s ease;
 }
-
-div {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 5px;
+.accordion-button:hover {
+  transform: scale(0.98);
 }
