@@ -1,19 +1,18 @@
-/* Contenedor principal - ocupa toda la altura disponible */
+
 .profile-container {
   display: flex;
   gap: 2rem;
-  height: calc(100vh - 70px); /* Altura total menos el header */
+  height: calc(100vh - 70px); 
   max-width: 1400px;
   margin: 0 auto;
   padding: 1.5rem;
   background: #f5f7f5;
 }
 
-/* COLUMNA IZQUIERDA - PERFIL ESTÁTICO (sin scroll) */
 .profile-left {
   flex: 2;
   height: 100%;
-  overflow: hidden; /* Evita scroll en esta columna */
+  overflow: hidden;
   position: sticky;
   top: 1.5rem;
 }
@@ -22,11 +21,11 @@
   background: white;
   border-radius: 24px;
   height: 100%;
-  overflow-y: auto; /* Scroll interno solo si el contenido es muy largo */
+  overflow-y: auto;
   box-shadow: none;
 }
 
-/* Personalizar scroll del perfil (sutil) */
+
 .profile-card::-webkit-scrollbar {
   width: 4px;
 }
@@ -41,15 +40,14 @@
   border-radius: 4px;
 }
 
-/* COLUMNA DERECHA - OPCIONES CON SCROLL INDEPENDIENTE */
 .profile-right {
   flex: 1;
   height: 100%;
-  overflow-y: auto; /* Scroll independiente */
+  overflow-y: auto; 
   padding-right: 0.5rem;
 }
 
-/* Personalizar scroll de la columna derecha */
+
 .profile-right::-webkit-scrollbar {
   width: 5px;
 }
@@ -70,7 +68,7 @@
   gap: 1.2rem;
 }
 
-/* Bloques de opciones - sin bordes visibles */
+
 .option-block {
   background: white;
   border-radius: 20px;
@@ -94,7 +92,7 @@
   font-size: 1.1rem;
 }
 
-/* ========== ESTILOS DEL PERFIL (izquierda) ========== */
+
 .profile-header {
   background: #2d6a4f;
   color: white;
@@ -257,8 +255,7 @@
   color: white;
 }
 
-/* ========== ESTILOS DE OPCIONES (derecha) ========== */
-/* Estadísticas */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
