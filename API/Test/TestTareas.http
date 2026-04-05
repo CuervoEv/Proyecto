@@ -9,7 +9,7 @@
 POST http://localhost:8000/Sesion/auth/login
 Content-Type: application/x-www-form-urlencoded
 
-username=ana.maria@example.com&password=123456
+username=ana.maria@example.com&password=nueva123
 
 ### Guardar tokens de la respuesta
 @access_token = {{login.response.body.access_token}}
@@ -22,8 +22,22 @@ username=ana.maria@example.com&password=123456
 GET http://localhost:8000/hogares/hogares
 Authorization: {{token_type}} {{access_token}}
 
-### IMDADWADASNFOAOW
+
+### ============================================
+### 11. Crear un nuevo hogar
+### ============================================
+POST http://localhost:8000/hogares/hogares
+Content-Type: {{contentType}}
+Authorization: {{token_type}} {{access_token}}
+
+{
+  "nombre_hogar": "Familia García",
+  "nombre_admin": "Carldadwos"
+}
+
+### Guardar el id_hogar de la respuesta (opcional)
 @id_hogar = 1
+
 ### ============================================
 ### 15. Listar miembros de un hogar (usando id_hogar)
 ### ============================================
@@ -79,7 +93,7 @@ Content-Type: {{contentType}}
 Authorization: {{token_type}} {{access_token}}
 
 {
-  "id_miembro": {{id_miembro}},
+  "id_miembro": 1,
   "fecha": "2025-04-05",
   "hora": "20:00:00",
   "duracion_minutos": 30,
