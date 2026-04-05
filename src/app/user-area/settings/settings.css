@@ -1,32 +1,160 @@
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #5f2c82, #ff0080);
+/* Estilos generales con colores pastel */
+body {
+    background-color: #f5f0e8;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Opciones de color pastel */
+.color-option {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: #1967d2;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #1967d2;
+}
+
+/* Colores pastel específicos */
+.pastel-1 { background-color: #B8E0D2; }
+.pastel-2 { background-color: #FFD6B5; }
+.pastel-3 { background-color: #FFB5C2; }
+.pastel-4 { background-color: #C9E4DE; }
+.pastel-5 { background-color: #E8D1C5; }
+.pastel-6 { background-color: #D4E0F0; }
+.pastel-7 { background-color: #FCE1B3; }
+.pastel-8 { background-color: #E0D4E8; }
+
+/* Menú lateral con colores pastel */
+.list-group-item {
+    border: none;
+    border-radius: 12px !important;
+    margin-bottom: 5px;
+    transition: all 0.2s;
+    background-color: #fffef7;
+    color: #2c5f4e;
+}
+
+.list-group-item i {
+    margin-right: 10px;
+}
+
+.list-group-item.active {
+    background-color: #B8E0D2;
+    color: #2c5f4e;
+    border-color: #B8E0D2;
+}
+
+.list-group-item:not(.active):hover {
+    background-color: #E8D1C5;
+    color: #6b3e2a;
+    transform: translateX(5px);
+}
+
+/* Tarjetas de settings */
 .card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #fffef7;
 }
 
-select, input {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.card-header {
+    border-bottom: none;
+    padding: 16px 20px;
 }
 
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
-  color: white;
-  cursor: pointer;
+/* Formularios */
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #E8D1C5;
+    background-color: #fffef7;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #B8E0D2;
+    box-shadow: 0 0 0 0.2rem rgba(184, 224, 210, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #B8E0D2;
+    border-color: #B8E0D2;
+}
+
+/* Botones */
+.btn {
+    border-radius: 10px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
+
+/* Tema pastel para el body */
+body.pastel-theme {
+    background-color: #f5f0e8;
+}
+
+body.pastel-theme .card {
+    background-color: #fffef7;
+}
+
+/* Tamaños de fuente */
+body.font-small {
+    font-size: 14px;
+}
+
+body.font-medium {
+    font-size: 16px;
+}
+
+body.font-large {
+    font-size: 18px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settings-section {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .col-md-3 {
+        margin-bottom: 20px;
+    }
+    
+    .list-group-item {
+        display: inline-block;
+        width: auto;
+        margin-right: 5px;
+    }
+    
+    .list-group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
 }
