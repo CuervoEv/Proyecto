@@ -1,98 +1,153 @@
 <div class="profile-container">
-  <div class="profile-card">
+  
+  <!-- Columna Izquierda - PERFIL ESTÁTICO (no scroll) -->
+  <div class="profile-left">
     
-    <!-- Header del perfil -->
-    <div class="profile-header">
-      <div class="avatar-container">
-        <div class="avatar">
-          {{ (usuario.nombre?.charAt(0) || 'U') + (usuario.apellido?.charAt(0) || '') }}
-        </div>
-        <button class="btn-edit-avatar" *ngIf="editMode">
-          <i class="bi bi-camera-fill"></i>
-        </button>
-      </div>
-      <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
-      <p class="rol-badge">{{ usuario.rol }}</p>
-      <p class="miembro-desde">Miembro desde {{ usuario.fechaRegistro }}</p>
-    </div>
-
-    <!-- Indicador de carga -->
-    <div class="loading" *ngIf="cargando">
-      <div class="spinner"></div>
-      <p>Cargando perfil...</p>
-    </div>
-
-    <!-- Formulario de perfil -->
-    <div class="profile-body" *ngIf="!cargando">
-      
-      <div class="info-section">
-        <h3>
-          <i class="bi bi-person-badge"></i> Información Personal
-          <button class="btn-edit" (click)="toggleEditMode()" *ngIf="!editMode">
-            <i class="bi bi-pencil-fill"></i> Editar
+    <!-- Tarjeta de perfil - sin bordes visibles -->
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar-container">
+          <div class="avatar">
+            {{ (usuario.nombre?.charAt(0) || 'U') + (usuario.apellido?.charAt(0) || '') }}
+          </div>
+          <button class="btn-edit-avatar" *ngIf="editMode">
+            <i class="bi bi-camera-fill"></i>
           </button>
-        </h3>
-        
-        <div class="info-grid">
-          <!-- Nombre -->
-          <div class="info-field">
-            <label>Nombre</label>
-            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.nombre">
-            <p *ngIf="!editMode">{{ usuario.nombre }}</p>
+        </div>
+        <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+        <p class="rol-badge">{{ usuario.rol }}</p>
+        <p class="miembro-desde">Miembro desde {{ usuario.fechaRegistro }}</p>
+      </div>
+
+      <div class="profile-body">
+        <div class="info-section">
+          <div class="section-header">
+            <h3><i class="bi bi-person-badge"></i> Información Personal</h3>
+            <button class="btn-edit" (click)="toggleEditMode()" *ngIf="!editMode">
+              <i class="bi bi-pencil-fill"></i> Editar
+            </button>
+          </div>
+          
+          <div class="info-grid">
+            <div class="info-field">
+              <label>Nombre</label>
+              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.nombre">
+              <p *ngIf="!editMode">{{ usuario.nombre }}</p>
+            </div>
+
+            <div class="info-field">
+              <label>Segundo Nombre</label>
+              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoNombre">
+              <p *ngIf="!editMode">{{ usuario.segundoNombre || '—' }}</p>
+            </div>
+
+            <div class="info-field">
+              <label>Apellido</label>
+              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.apellido">
+              <p *ngIf="!editMode">{{ usuario.apellido }}</p>
+            </div>
+
+            <div class="info-field">
+              <label>Segundo Apellido</label>
+              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoApellido">
+              <p *ngIf="!editMode">{{ usuario.segundoApellido || '—' }}</p>
+            </div>
+
+            <div class="info-field">
+              <label>Correo Electrónico</label>
+              <input *ngIf="editMode" type="email" [(ngModel)]="usuario.email">
+              <p *ngIf="!editMode">{{ usuario.email }}</p>
+            </div>
+
+            <div class="info-field">
+              <label>Teléfono</label>
+              <input *ngIf="editMode" type="tel" [(ngModel)]="usuario.telefono">
+              <p *ngIf="!editMode">{{ usuario.telefono || '—' }}</p>
+            </div>
+
+            <div class="info-field full-width">
+              <label>Dirección</label>
+              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.direccion">
+              <p *ngIf="!editMode">{{ usuario.direccion || '—' }}</p>
+            </div>
           </div>
 
-          <!-- Segundo Nombre -->
-          <div class="info-field">
-            <label>Segundo Nombre</label>
-            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoNombre">
-            <p *ngIf="!editMode">{{ usuario.segundoNombre || '—' }}</p>
+          <div class="action-buttons" *ngIf="editMode">
+            <button class="btn-cancel" (click)="cancelarEdicion()">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+            <button class="btn-save" (click)="guardarCambios()">
+              <i class="bi bi-check-circle"></i> Guardar Cambios
+            </button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <!-- Apellido -->
-          <div class="info-field">
-            <label>Apellido</label>
-            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.apellido">
-            <p *ngIf="!editMode">{{ usuario.apellido }}</p>
+  <!-- Columna Derecha - OPCIONES CON SCROLL INDEPENDIENTE -->
+  <div class="profile-right">
+    <div class="options-scroll-container">
+      
+      <!-- Estadísticas -->
+      <div class="option-block">
+        <h3><i class="bi bi-graph-up"></i> Estadísticas</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Hogares</span>
           </div>
-
-          <!-- Segundo Apellido -->
-          <div class="info-field">
-            <label>Segundo Apellido</label>
-            <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoApellido">
-            <p *ngIf="!editMode">{{ usuario.segundoApellido || '—' }}</p>
+          <div class="stat-item">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Miembros</span>
           </div>
-
-          <!-- Email -->
-          <div class="info-field">
-            <label>Correo Electrónico</label>
-            <input *ngIf="editMode" type="email" [(ngModel)]="usuario.email">
-            <p *ngIf="!editMode">{{ usuario.email }}</p>
+          <div class="stat-item">
+            <span class="stat-number">24</span>
+            <span class="stat-label">Tareas</span>
           </div>
-
-          <!-- Teléfono -->
-          <div class="info-field">
-            <label>Teléfono</label>
-            <input *ngIf="editMode" type="tel" [(ngModel)]="usuario.telefono">
-            <p *ngIf="!editMode">{{ usuario.telefono || '—' }}</p>
+          <div class="stat-item">
+            <span class="stat-number">127</span>
+            <span class="stat-label">Días activo</span>
           </div>
+        </div>
+        <button class="details-btn" (click)="verDetalles()">
+          <i class="bi bi-eye"></i> Ver más detalles
+        </button>
+      </div>
 
+      <!-- Configuración -->
+      <div class="option-block">
+        <h3><i class="bi bi-gear-fill"></i> Configuración</h3>
+        <div class="config-list">
+          <div class="config-item" (click)="abrirConfiguracion()">
+            <i class="bi bi-gear"></i>
+            <span>Configuración</span>
+            <i class="bi bi-chevron-right"></i>
+          </div>
         </div>
       </div>
 
-      <!-- Botones de acción en modo edición -->
-      <div class="action-buttons" *ngIf="editMode">
-        <button class="btn-cancel" (click)="cancelarEdicion()">
-          <i class="bi bi-x-circle"></i> Cancelar
-        </button>
-        <button class="btn-save" (click)="guardarCambios()">
-          <i class="bi bi-check-circle"></i> Guardar Cambios
-        </button>
+      <!-- Más opciones -->
+      <div class="option-block">
+        <h3><i class="bi bi-lightning-charge"></i> Más opciones</h3>
+        <div class="quick-links">
+          <a (click)="navegarA('/list')">
+            <i class="bi bi-house-door"></i> Mis hogares
+          </a>
+          <a (click)="navegarA('/invitations')">
+            <i class="bi bi-envelope-paper"></i> Invitar miembros
+          </a>
+        </div>
       </div>
 
-      <!-- Botón de cerrar sesión -->
-      <div class="logout-section" *ngIf="!editMode">
-        <button class="btn-logout" (click)="logout()">
-          <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+      <!-- Seguridad -->
+      <div class="option-block">
+        <h3><i class="bi bi-shield-lock"></i> Seguridad</h3>
+        <button class="security-btn" (click)="cambiarContrasena()">
+          <i class="bi bi-key"></i> Cambiar contraseña
+        </button>
+        <button class="logout-btn" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
         </button>
       </div>
 

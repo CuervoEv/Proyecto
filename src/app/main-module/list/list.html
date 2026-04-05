@@ -1,162 +1,92 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Casas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="list.css">
-</head>
-<body class="bg-light">
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="text-primary">Mis Casas</h1>
-            <button class="btn btn-primary" id="btnAgregar">
-                <i class="bi bi-plus-lg"></i> Agregar Casa
-            </button>
-        </div>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary">Mis Casas</h1>
+    <button class="btn btn-primary" (click)="agregarCasa()">
+      <i class="bi bi-plus-lg"></i> Agregar Casa
+    </button>
+  </div>
 
-        <div class="row" id="cardsContainer">
-            <!-- Card 1 -->
-            <div class="col-md-4 col-lg-3 mb-4 card-item" data-id="1">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header" style="background-color: #1967d2; color: white;">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h5 class="card-title mb-1" contenteditable="false"></h5>
-                                <p class="card-subtitle mb-0 small" contenteditable="false"></p>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical fs-5"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#" onclick="editarCard(this)"><i class="bi bi-pencil me-2"></i>Editar</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#" onclick="eliminarCard(this)"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-code small text-muted" contenteditable="false"></p>
-                        <p class="card-desc" contenteditable="false"></p>
-                        <div class="d-flex justify-content-between mt-3 text-muted small">
-                            <span contenteditable="false"><i class="bi bi-geo-alt"></i> </span>
-                            <span contenteditable="false"><i class="bi bi-coin"></i> </span>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <button class="btn w-100" onclick="entrarCard(this)">
-                            <i class="bi bi-box-arrow-in-right"></i> Entrar
-                        </button>
-                    </div>
-                </div>
+  <div class="row">
+    <div class="col-md-4 col-lg-3 mb-4" *ngFor="let casa of casas">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header" [style.background-color]="casa.color" [style.color]="casa.textColor">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h5 class="card-title mb-1">{{ casa.titulo }}</h5>
+              <p class="card-subtitle mb-0 small">{{ casa.subtitulo }}</p>
             </div>
+            <div class="dropdown">
+              <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" [style.color]="casa.textColor">
+                <i class="bi bi-three-dots-vertical fs-5"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" (click)="abrirModalEditar(casa)" data-bs-toggle="modal" data-bs-target="#editarModal"><i class="bi bi-pencil me-2"></i>Editar</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="#" (click)="eliminarCasa(casa)"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
+        <div class="card-body">
+          <p class="card-code small text-muted">{{ casa.codigo }}</p>
+          <p class="card-desc">{{ casa.descripcion }}</p>
+          <div class="d-flex justify-content-between mt-3 text-muted small">
+            <span><i class="bi bi-geo-alt"></i> {{ casa.ubicacion }}</span>
+            <span><i class="bi bi-coin"></i> {{ casa.precio }}</span>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent">
+          <button class="btn w-100" (click)="entrarCasa(casa)">
+            <i class="bi bi-box-arrow-in-right"></i> Entrar
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        let nextId = 2;
-
-        function agregarCard() {
-            const container = document.getElementById('cardsContainer');
-            const col = document.createElement('div');
-            col.className = 'col-md-4 col-lg-3 mb-4 card-item';
-            col.setAttribute('data-id', nextId);
-            
-            col.innerHTML = `
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header" style="background-color: ${getRandomColor()}; color: white;">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h5 class="card-title mb-1" contenteditable="false"></h5>
-                                <p class="card-subtitle mb-0 small" contenteditable="false"></p>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical fs-5"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#" onclick="editarCard(this)"><i class="bi bi-pencil me-2"></i>Editar</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="#" onclick="eliminarCard(this)"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-code small text-muted" contenteditable="false"></p>
-                        <p class="card-desc" contenteditable="false"></p>
-                        <div class="d-flex justify-content-between mt-3 text-muted small">
-                            <span contenteditable="false"><i class="bi bi-geo-alt"></i> </span>
-                            <span contenteditable="false"><i class="bi bi-coin"></i> </span>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <button class="btn w-100" onclick="entrarCard(this)">
-                            <i class="bi bi-box-arrow-in-right"></i> Entrar
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(col);
-            nextId++;
-        }
-
-        function entrarCard(btn) {
-            const card = btn.closest('.card-item');
-            const id = card.getAttribute('data-id');
-            alert(`Entrando a la casa ID: ${id}`);
-        }
-
-        function editarCard(opcion) {
-            const card = opcion.closest('.card-item');
-            const titulo = card.querySelector('.card-title');
-            const subtitulo = card.querySelector('.card-subtitle');
-            const codigo = card.querySelector('.card-code');
-            const desc = card.querySelector('.card-desc');
-            const metas = card.querySelectorAll('.card-body span');
-            
-            const editable = titulo.getAttribute('contenteditable') === 'true';
-            
-            if (editable) {
-                titulo.setAttribute('contenteditable', 'false');
-                subtitulo.setAttribute('contenteditable', 'false');
-                codigo.setAttribute('contenteditable', 'false');
-                desc.setAttribute('contenteditable', 'false');
-                metas.forEach(meta => meta.setAttribute('contenteditable', 'false'));
-                opcion.innerHTML = '<i class="bi bi-pencil me-2"></i>Editar';
-            } else {
-                titulo.setAttribute('contenteditable', 'true');
-                subtitulo.setAttribute('contenteditable', 'true');
-                codigo.setAttribute('contenteditable', 'true');
-                desc.setAttribute('contenteditable', 'true');
-                metas.forEach(meta => meta.setAttribute('contenteditable', 'true'));
-                opcion.innerHTML = '<i class="bi bi-check-lg me-2"></i>Guardar';
-                titulo.focus();
-            }
-        }
-
-        function eliminarCard(opcion) {
-            const card = opcion.closest('.card-item');
-            if (confirm('¿Eliminar esta casa?')) {
-                card.remove();
-            }
-        }
-
-        function getRandomColor() {
-    const colores = [
-        '#B8E0D2', '#FFD6B5', '#FFB5C2', '#C9E4DE', 
-        '#E8D1C5', '#D4E0F0', '#FCE1B3', '#E0D4E8'
-    ];
-    return colores[Math.floor(Math.random() * colores.length)];
-}
-        document.getElementById('btnAgregar').addEventListener('click', agregarCard);
-    </script>
-</body>
-</html>
+<!-- Modal de Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" *ngIf="casaEditando">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarModalLabel">✏️ Editar Casa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre de la Casa</label>
+            <input type="text" class="form-control" [(ngModel)]="editTitulo" name="titulo">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Dueño / Propietario</label>
+            <input type="text" class="form-control" [(ngModel)]="editSubtitulo" name="subtitulo">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Código de Referencia</label>
+            <input type="text" class="form-control" [(ngModel)]="editCodigo" name="codigo">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="editDescripcion" name="descripcion" rows="2"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ubicación</label>
+              <input type="text" class="form-control" [(ngModel)]="editUbicacion" name="ubicacion">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Precio</label>
+              <input type="text" class="form-control" [(ngModel)]="editPrecio" name="precio">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarEdicion()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
