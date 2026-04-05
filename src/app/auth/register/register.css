@@ -1,0 +1,130 @@
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  /* Sin background para mostrar la imagen global */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Tarjeta del formulario */
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+.card h1 {
+  color: #5f4fb7; /* Púrpura pastel */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+/* Caja interna */
+.box h2 {
+  color: #6a90e2; /* Azul pastel */
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.box p {
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+/* Campos de entrada */
+.box input[type="text"],
+.box input[type="email"],
+.box input[type="password"] {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border: 2px solid #c8e6c9; /* Verde pastel claro */
+  border-radius: 10px;
+  background: #f9f9f9;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.box input[type="text"]:focus,
+.box input[type="email"]:focus,
+.box input[type="password"]:focus {
+  border-color: #b3e5fc; /* Azul claro */
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(179, 229, 252, 0.3);
+}
+
+/* Botón de registrarse */
+.box button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  background: linear-gradient(135deg, #c8e6c9, #b3e5fc); /* Verde y azul pastel */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(200, 230, 201, 0.3);
+}
+
+.box button:hover {
+  background: linear-gradient(135deg, #a5d6a7, #81c784); /* Tonos más oscuros al hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(165, 214, 167, 0.4);
+}
+
+.box button:active {
+  transform: translateY(0);
+}
+
+/* Enlaces */
+.box .link {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.box .link a {
+  color: #f8bbd9; /* Rosa pastel */
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.box .link a:hover {
+  color: #f48fb1; /* Rosa más intenso */
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .card {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+
+  .card h1 {
+    font-size: 1.5rem;
+  }
+
+  .box h2 {
+    font-size: 1.3rem;
+  }
+
+  .box input[type="text"] {
+    font-size: 14px;
+  }
+}
