@@ -1,17 +1,19 @@
-/* Contenedor principal del login */
-.login-container {
+/* filepath: c:\Users\Admin\Documents\python x SQL\apis act\Proyecto\src\app\auth\login\login.css */
+
+/* Contenedor principal */
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f7fa, #fce4ec); /* Gradiente pastel azul y rosa */
+  /*background: linear-gradient(135deg, #e0f7fa, #fce4ec); /* Gradiente pastel azul y rosa */
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
-/* Formulario de login */
-.login-form {
+/* Tarjeta del formulario */
+.card {
   background: rgba(255, 255, 255, 0.9);
   padding: 30px;
   border-radius: 15px;
@@ -21,14 +23,20 @@
   text-align: center;
 }
 
-.login-form h2 {
+/* Caja interna */
+.box h2 {
   color: #4a90e2; /* Azul pastel */
+  margin-bottom: 10px;
+}
+
+.box p {
+  color: #666;
   margin-bottom: 20px;
 }
 
 /* Campos de entrada */
-.login-form input[type="email"],
-.login-form input[type="password"] {
+.box input[type="text"],
+.box input[type="password"] {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
@@ -39,14 +47,14 @@
   transition: border-color 0.3s;
 }
 
-.login-form input[type="email"]:focus,
-.login-form input[type="password"]:focus {
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
   border-color: #81c784; /* Verde pastel */
   outline: none;
 }
 
-/* Botón de login */
-.login-btn {
+/* Botón de entrar */
+.box button {
   width: 100%;
   padding: 12px;
   background: linear-gradient(45deg, #a5d6a7, #ce93d8); /* Verde y morado pastel */
@@ -59,24 +67,23 @@
   transition: background 0.3s;
 }
 
-.login-btn:hover {
+.box button:hover {
   background: linear-gradient(45deg, #81c784, #ba68c8); /* Tonos más oscuros al hover */
 }
 
-/* Enlaces para forgot password y register */
-.login-links {
-  margin-top: 20px;
+/* Enlaces */
+.box .link {
+  margin-top: 15px;
 }
 
-.login-links a {
+.box .link a {
   color: #ffb3ba; /* Rosa pastel */
   text-decoration: none;
-  margin: 0 10px;
   font-size: 14px;
   transition: color 0.3s;
 }
 
-.login-links a:hover {
+.box .link a:hover {
   color: #ff8a80; /* Rosa más intenso */
 }
 
@@ -90,7 +97,7 @@
   display: block;
 }
 
-.register {
+.register {g
   display: none;
   margin-top: 20px;
 }
