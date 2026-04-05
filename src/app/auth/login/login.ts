@@ -35,11 +35,11 @@ export class LoginComponent {
     this.error = '';
 
     this.authService.login(this.usuario, this.contrasena).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('Login exitoso', response);
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.loading = false;
         this.error = 'Usuario o contraseña incorrectos';
         console.error('Error en login:', err);

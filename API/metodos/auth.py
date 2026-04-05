@@ -38,7 +38,7 @@ def get_password_hash(password):
 
 def authenticate_user(db, correo, password):
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
-    if not usuario or not verify_password(password, usuario.contrasena):
+    if not usuario or not verify_password(password, usuario.contraseña):
         return False
     return usuario
 
@@ -117,8 +117,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     if db.query(Usuario).filter(Usuario.correo == usuario.correo).first():
         raise HTTPException(400, "El correo ya está registrado")
-    hashed = get_password_hash(usuario.contrasena)
-    db_usuario = Usuario(nombre=usuario.nombre, correo=usuario.correo, contrasena=hashed)
+    hashed = get_password_hash(usuario.contraseña)
+    db_usuario = Usuario(nombre=usuario.nombre, correo=usuario.correo, contraseña=hashed)
     db.add(db_usuario)
     db.commit()
     db.refresh(db_usuario)
@@ -128,7 +128,7 @@ def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     usuario = authenticate_user(db, form_data.username, form_data.password)
     if not usuario:
-        raise HTTPException(401, "Correo o contrasena incorrectos")
+        raise HTTPException(401, "Correo o contraseña incorrectos")
     
     access_token = create_access_token(data={"sub": usuario.id_usuario})
     refresh_token = create_refresh_token(data={"sub": usuario.id_usuario})
@@ -177,8 +177,8 @@ def verify_password_endpoint(
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    if not verify_password(data.password, current_user.contrasena):
-        raise HTTPException(401, "Contrasena incorrecta")
+    if not verify_password(data.password, current_user.contraseña):
+        raise HTTPException(401, "Contraseña incorrecta")
     return {"message": "Contraseña correcta"}
 
 @router.get("/me", response_model=UsuarioSchema)
@@ -192,8 +192,8 @@ def update_user(
     db: Session = Depends(get_db)
 ):
     # Verificar contraseña actual
-    if not verify_password(update_data.current_password, current_user.contrasena):
-        raise HTTPException(400, "Contrasena actual incorrecta")
+    if not verify_password(update_data.current_password, current_user.contraseña):
+        raise HTTPException(400, "Contraseña actual incorrecta")
     
     if update_data.nombre:
         current_user.nombre = update_data.nombre
@@ -202,8 +202,8 @@ def update_user(
             if db.query(Usuario).filter(Usuario.correo == update_data.correo).first():
                 raise HTTPException(400, "Correo ya en uso")
         current_user.correo = update_data.correo
-    if update_data.contrasena:
-        current_user.contrasena = get_password_hash(update_data.contrasena)
+    if update_data.contraseña:
+        current_user.contraseña = get_password_hash(update_data.contraseña)
     
     db.commit()
     db.refresh(current_user)
