@@ -1,0 +1,33 @@
+form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  color: #000000;
+}
+
+input, textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 2px solid #e9e627;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+button {
+  background-color: #e2df2a;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+   transition: transform 0.8s ease;
+}
+button:hover {
+  transform: scale(1.1);
+}

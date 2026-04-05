@@ -1,0 +1,34 @@
+div {
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 5px;
+  margin-right: 5px;
+  color: #000000;
+  border: 2px solid #dad72c;
+}
+
+button {
+  margin-left: 5px;
+  background-color: #ece13e;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.8s ease;}
+
+li {
+  margin-bottom: 5px;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+div {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+}
