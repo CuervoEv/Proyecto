@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface Casa {
+interface Hogar {
   id: number;
   titulo: string;
   subtitulo: string;
-  codigo: string;
   descripcion: string;
-  ubicacion: string;
-  precio: string;
   color: string;
   textColor: string;
 }
@@ -23,7 +20,7 @@ interface Casa {
 })
 export class ListComponent implements OnInit {
 
-  casas: Casa[] = [];
+  hogares: Hogar[] = [];
   nextId: number = 2;
 
   // Colores pastel
@@ -44,30 +41,24 @@ export class ListComponent implements OnInit {
     '#E0D4E8': '#4a2a6b'
   };
 
-  casaEditando: Casa | null = null;
+  hogarEditando: Hogar | null = null;
   editTitulo: string = '';
   editSubtitulo: string = '';
-  editCodigo: string = '';
   editDescripcion: string = '';
-  editUbicacion: string = '';
-  editPrecio: string = '';
 
   ngOnInit() {
-    // Cargar casas iniciales o desde API
-    this.cargarCasasIniciales();
+    // Cargar hogares iniciales o desde API
+    this.cargarHogaresIniciales();
   }
 
-  cargarCasasIniciales() {
-    // Casa inicial de ejemplo
-    this.casas = [
+  cargarHogaresIniciales() {
+    // Hogar inicial de ejemplo
+    this.hogares = [
       {
         id: 1,
-        titulo: 'Casa Principal',
-        subtitulo: 'Mi hogar',
-        codigo: 'CP001',
-        descripcion: 'Casa familiar cómoda',
-        ubicacion: 'Centro',
-        precio: '200,000',
+        titulo: 'Hogar Principal',
+        subtitulo: 'Mi familia',
+        descripcion: 'Familia principal',
         color: '#B8E0D2',
         textColor: '#2c5f4e'
       }
@@ -82,65 +73,53 @@ export class ListComponent implements OnInit {
     return this.textColors[color] || '#2c5f4e';
   }
 
-  agregarCasa(): void {
+  agregarHogar(): void {
     const nuevoColor = this.getRandomColor();
     const textoColor = this.getTextColor(nuevoColor);
 
-    const nuevaCasa: Casa = {
+    const nuevoHogar: Hogar = {
       id: this.nextId++,
       titulo: '',
       subtitulo: '',
-      codigo: '',
       descripcion: '',
-      ubicacion: '',
-      precio: '',
       color: nuevoColor,
       textColor: textoColor
     };
 
-    this.casas.push(nuevaCasa);
+    this.hogares.push(nuevoHogar);
   }
 
-  entrarCasa(casa: Casa): void {
-    alert(`Entrando a la casa ID: ${casa.id}`);
+  entrarHogar(hogar: Hogar): void {
+    window.open(`/hogar/${hogar.id}`, '_blank');
   }
 
-  abrirModalEditar(casa: Casa): void {
-    this.casaEditando = casa;
-    this.editTitulo = casa.titulo;
-    this.editSubtitulo = casa.subtitulo;
-    this.editCodigo = casa.codigo;
-    this.editDescripcion = casa.descripcion;
-    this.editUbicacion = casa.ubicacion;
-    this.editPrecio = casa.precio;
+  abrirModalEditar(hogar: Hogar): void {
+    this.hogarEditando = hogar;
+    this.editTitulo = hogar.titulo;
+    this.editSubtitulo = hogar.subtitulo;
+    this.editDescripcion = hogar.descripcion;
   }
 
   guardarEdicion(): void {
-    if (!this.casaEditando) return;
+    if (!this.hogarEditando) return;
 
-    this.casaEditando.titulo = this.editTitulo;
-    this.casaEditando.subtitulo = this.editSubtitulo;
-    this.casaEditando.codigo = this.editCodigo;
-    this.casaEditando.descripcion = this.editDescripcion;
-    this.casaEditando.ubicacion = this.editUbicacion;
-    this.casaEditando.precio = this.editPrecio;
+    this.hogarEditando.titulo = this.editTitulo;
+    this.hogarEditando.subtitulo = this.editSubtitulo;
+    this.hogarEditando.descripcion = this.editDescripcion;
 
     this.cerrarModal();
   }
 
-  eliminarCasa(casa: Casa): void {
-    if (confirm('¿Eliminar esta casa?')) {
-      this.casas = this.casas.filter(c => c.id !== casa.id);
+  eliminarHogar(hogar: Hogar): void {
+    if (confirm('¿Eliminar este hogar?')) {
+      this.hogares = this.hogares.filter(h => h.id !== hogar.id);
     }
   }
 
   cerrarModal(): void {
-    this.casaEditando = null;
+    this.hogarEditando = null;
     this.editTitulo = '';
     this.editSubtitulo = '';
-    this.editCodigo = '';
     this.editDescripcion = '';
-    this.editUbicacion = '';
-    this.editPrecio = '';
   }
 }
