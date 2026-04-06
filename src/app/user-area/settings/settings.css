@@ -158,3 +158,26 @@ body.font-large {
         gap: 5px;
     }
 }
+.font-size-selector {
+  padding: 0.5rem 0;
+}
+
+.form-range {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: #e0e8e0;
+}
+
+.form-range::-webkit-slider-thumb {
+  background: #2d6a4f;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #1b4d3e;
+}

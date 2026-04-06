@@ -38,26 +38,20 @@
 
     <!-- Perfil -->
     <div class="navbar-nav ms-auto" *ngIf="isLoggedIn">
-      <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-          <img src="https://ui-avatars.com/api/?background=2d6a4f&color=fff&rounded=true&bold=true&size=32" 
-               alt="Perfil" 
-               class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" routerLink="/profile">
-            <i class="bi bi-person-circle"></i> Mi Perfil
-          </a></li>
-          <li><a class="dropdown-item" routerLink="/settings">
-            <i class="bi bi-sliders2"></i> Configuración
-          </a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" (click)="logout()">
-            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-          </a></li>
-        </ul>
-      </div>
-    </div>
+  <a class="nav-link profile-link" routerLink="/profile">
+    <img src="https://ui-avatars.com/api/?background=2d6a4f&color=fff&rounded=true&bold=true&size=32" 
+         alt="Perfil" 
+         class="rounded-circle"
+         style="width: 35px; height: 35px; object-fit: cover;">
+    
+  </a>
+</div>
+
+<div class="navbar-nav ms-auto" *ngIf="!isLoggedIn">
+  <a class="nav-link" routerLink="/login">
+    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+  </a>
+</div>
 
     <!-- Login -->
     <div class="navbar-nav ms-auto" *ngIf="!isLoggedIn">

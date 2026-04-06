@@ -52,69 +52,122 @@
     <div class="col-md-9">
 
       <!-- Panel General -->
-      <div *ngIf="activeSection === 'general'">
-        <div class="card shadow-sm">
-          <div class="card-header" style="background-color: #B8E0D2; color: #2c5f4e;">
-            <h5 class="mb-0"><i class="bi bi-sliders2"></i> Configuración General</h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-3">
-              <label class="form-label" style="color: #2c5f4e;">Nombre del usuario</label>
-              <input type="text" class="form-control" [(ngModel)]="settings.userName" placeholder="Ej: Juan Pérez">
-            </div>
-            <div class="mb-3">
-              <label class="form-label" style="color: #2c5f4e;">Idioma</label>
-              <select class="form-select" [(ngModel)]="settings.language">
-                <option value="es">Español</option>
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-              </select>
-            </div>
-            <div class="form-check form-switch mb-3">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="settings.notifications">
-              <label class="form-check-label" style="color: #2c5f4e;">Activar notificaciones</label>
-            </div>
-          </div>
-        </div>
+      <!-- Panel General -->
+<div *ngIf="activeSection === 'general'">
+  <div class="card shadow-sm">
+    <div class="card-header" style="background-color: #B8E0D2; color: #2c5f4e;">
+      <h5 class="mb-0"><i class="bi bi-sliders2"></i> Configuración General</h5>
+    </div>
+    <div class="card-body">
+
+      <!-- Preferencias -->
+      <div class="mb-3">
+        <label class="form-label" style="color: #2c5f4e;">🌐 Idioma</label>
+        <select class="form-select" [(ngModel)]="settings.language">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
       </div>
 
+      <div class="mb-3">
+        <label class="form-label" style="color: #2c5f4e;">📅 Formato de fecha</label>
+        <select class="form-select" [(ngModel)]="settings.dateFormat">
+          <option value="DD/MM/YYYY">DD/MM/YYYY (31/12/2024)</option>
+          <option value="MM/DD/YYYY">MM/DD/YYYY (12/31/2024)</option>
+          <option value="YYYY-MM-DD">YYYY-MM-DD (2024-12-31)</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" style="color: #2c5f4e;">💰 Moneda</label>
+        <select class="form-select" [(ngModel)]="settings.currency">
+          <option value="EUR">Euro (€)</option>
+          <option value="USD">Dólar ($)</option>
+          <option value="GBP">Libra (£)</option>
+          <option value="MXN">Peso Mexicano ($)</option>
+          <option value="COP">Peso Colombiano ($)</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" style="color: #2c5f4e;">📆 Primer día de la semana</label>
+        <select class="form-select" [(ngModel)]="settings.firstDayWeek">
+          <option value="monday">Lunes</option>
+          <option value="sunday">Domingo</option>
+        </select>
+      </div>
+
+      <!-- Notificaciones -->
+      <hr class="my-4">
+      
+      <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="settings.taskReminders">
+        <label class="form-check-label" style="color: #2c5f4e;">⏰ Recordatorios de tareas</label>
+      </div>
+
+      <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="settings.expiryAlerts">
+        <label class="form-check-label" style="color: #2c5f4e;">⚠️ Alertas de productos por caducar</label>
+      </div>
+
+    </div>
+  </div>
+</div>
+
       <!-- Panel Apariencia -->
-      <div *ngIf="activeSection === 'apariencia'">
-        <div class="card shadow-sm">
-          <div class="card-header" style="background-color: #FFD6B5; color: #8b5a2b;">
-            <h5 class="mb-0"><i class="bi bi-palette"></i> Apariencia</h5>
-          </div>
-          <div class="card-body">
-            <div class="mb-3">
-              <label class="form-label" style="color: #8b5a2b;">Tema</label>
-              <select class="form-select" [(ngModel)]="settings.theme">
-                <option value="light">☀️ Claro</option>
-                <option value="pastel">🎨 Pastel</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" style="color: #8b5a2b;">Color principal de las cards</label>
-              <div class="d-flex gap-2 flex-wrap">
-                <div
-                  *ngFor="let color of pastelColors | keyvalue"
-                  class="color-option"
-                  [style.background-color]="color.key"
-                  [class.selected]="settings.primaryColor === color.key"
-                  (click)="selectColor(color.key)">
-                </div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" style="color: #8b5a2b;">Tamaño de fuente</label>
-              <select class="form-select" [(ngModel)]="settings.fontSize">
-                <option value="small">Pequeño</option>
-                <option value="medium">Mediano</option>
-                <option value="large">Grande</option>
-              </select>
-            </div>
+      <!-- Panel Apariencia -->
+<div *ngIf="activeSection === 'apariencia'">
+  <div class="card shadow-sm">
+    <div class="card-header" style="background-color: #FFD6B5; color: #8b5a2b;">
+      <h5 class="mb-0"><i class="bi bi-palette"></i> Apariencia</h5>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label" style="color: #8b5a2b;">Tema</label>
+        <select class="form-select" [(ngModel)]="settings.theme">
+          <option value="light">☀️ Claro</option>
+          <option value="pastel">🎨 Pastel</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" style="color: #8b5a2b;">Color principal</label>
+        <div class="d-flex gap-2 flex-wrap">
+          <div
+            *ngFor="let color of colorList"
+            class="color-option"
+            [style.backgroundColor]="color.code"
+            [class.selected]="settings.primaryColor === color.code"
+            (click)="selectColor(color.code)"
+            [title]="color.name">
           </div>
         </div>
+        <small class="text-muted">Color seleccionado: {{ settings.primaryColor }}</small>
       </div>
+
+      <div class="mb-3">
+        <label class="form-label" style="color: #8b5a2b;">Tamaño de fuente</label>
+        <div class="font-size-selector">
+          <div class="d-flex align-items-center gap-3">
+           
+            <input 
+              type="range" 
+              class="form-range" 
+              min="1" 
+              max="5" 
+              step="1"
+              [(ngModel)]="settings.fontSizeLevel"
+              (change)="applyTheme()">
+            <span class="fw-bold">{{ getFontSizeLabel(settings.fontSizeLevel) }}</span>
+          </div>
+          <small class="text-muted">Ajusta el tamaño de la fuente en toda la aplicación.</small>
+        </div>
+      </div>
+    </div> <!-- 👈 Este cierra card-body -->
+  </div> <!-- 👈 Este cierra card -->
+</div> <!-- 👈 Este cierra el *ngIf -->
+    
 
       <!-- Panel Tarjetas -->
       <div *ngIf="activeSection === 'tarjetas'">

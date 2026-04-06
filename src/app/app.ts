@@ -22,4 +22,12 @@ export class App {
   closeSidebar() {
     this.sidebarOpen = false;
   }
+
+  ngOnInit() {
+  // Cargar fuente guardada al iniciar la app
+  const savedFontSize = localStorage.getItem('appFontSize');
+  if (savedFontSize) {
+    document.body.style.fontSize = savedFontSize;
+  }
+}
 }
