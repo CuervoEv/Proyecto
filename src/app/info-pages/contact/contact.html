@@ -1,19 +1,118 @@
-<h2>Contacto</h2>
+<div class="container">
 
-<form (ngSubmit)="guardar()">
+  <div class="form-section">
+    <h2>Contáctanos</h2>
 
-  <label>Nombre</label>
-  <input type="text" [(ngModel)]="contact.nombre" name="nombre">
+    <form #form="ngForm" (ngSubmit)="guardar(form)">
 
-  <label>Correo</label>
-  <input type="email" [(ngModel)]="contact.correo" name="correo">
+      <div class="input-group">
+        <label>Nombre</label>
+        <input 
+          type="text" 
+          [(ngModel)]="contact.nombre" 
+          name="nombre"
+          required
+          #nombre="ngModel">
+        
+        <small *ngIf="nombre.invalid && nombre.touched">
+          El nombre es obligatorio
+        </small>
+      </div>
 
-  <label>Teléfono</label>
-  <input type="text" [(ngModel)]="contact.telefono" name="telefono">
 
-  <label>Mensaje</label>
-  <textarea [(ngModel)]="contact.mensaje" name="mensaje"></textarea>
+      <div class="input-group">
+        <label>Correo Electrónico</label>
+        <input 
+          type="email" 
+          [(ngModel)]="contact.correo" 
+          name="correo"
+          required
+          email
+          #correo="ngModel">
 
-  <button type="submit">Enviar</button>
+        <small *ngIf="correo.invalid && correo.touched">
+          Ingresa un correo válido (debe tener @)
+        </small>
+      </div>
 
-</form>
+
+      <div class="input-group">
+        <label>Teléfono</label>
+        <input 
+          type="text" 
+          [(ngModel)]="contact.telefono" 
+          name="telefono"
+          required
+          minlength="10"
+          pattern="[0-9]*"
+          #telefono="ngModel">
+
+        <small *ngIf="telefono.invalid && telefono.touched">
+          Debe tener mínimo 10 dígitos y solo números
+        </small>
+      </div>
+
+
+      <div class="input-group">
+        <label>Presupuesto</label>
+        <input 
+          type="number" 
+          name="presupuesto"
+          required
+          min="1"
+          [(ngModel)]="contact.presupuesto"
+          #presupuesto="ngModel">
+
+        <small *ngIf="presupuesto.invalid && presupuesto.touched">
+          Ingresa un valor válido
+        </small>
+      </div>
+
+      <div class="input-group">
+        <label>Mensaje</label>
+        <textarea 
+          [(ngModel)]="contact.mensaje" 
+          name="mensaje"
+          required
+          minlength="10"
+          #mensaje="ngModel"></textarea>
+
+        <small *ngIf="mensaje.invalid && mensaje.touched">
+          El mensaje debe tener al menos 10 caracteres
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">
+        Enviar
+      </button>
+
+    </form>
+  </div>
+
+  <div class="info-section">
+    <h3>Síguenos</h3>
+
+<div class="socials">
+  <a href="https://instagram.com" target="_blank" class="icon">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <a href="https://twitter.com" target="_blank" class="icon">
+    <i class="fab fa-twitter"></i>
+  </a>
+
+  <a href="https://facebook.com" target="_blank" class="icon">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <a href="https://linkedin.com" target="_blank" class="icon">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+</div>
+
+    <p>
+      Escríbenos y mejora tu gestión del tiempo como un jefe 🧠✨
+    </p>
+  </div>
+
+</div>

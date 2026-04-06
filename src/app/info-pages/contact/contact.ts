@@ -14,6 +14,7 @@ export class Contact implements OnInit {
     nombre: '',
     correo: '',
     telefono: '',
+    presupuesto: '',
     mensaje: ''
   };
 
@@ -24,7 +25,16 @@ export class Contact implements OnInit {
     }
   }
 
-  guardar() {
+  guardar(form: any) {
+    if (form.invalid) {
+      Object.values(form.controls).forEach((control: any) => {
+        control.markAsTouched();
+      });
+      return;
+    }
+
     localStorage.setItem('contact', JSON.stringify(this.contact));
+
+    console.log("Formulario válido y guardado", this.contact);
   }
 }
