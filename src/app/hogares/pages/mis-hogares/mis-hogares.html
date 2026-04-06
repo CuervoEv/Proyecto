@@ -1,1 +1,116 @@
-<p>mis-hogares works!</p>
+<!-- VISTA LISTA -->
+<div class="container mt-4" *ngIf="vistaActual === 'lista'">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary">🏠 Mis Inventarios</h1>
+    <button class="btn btn-primary" (click)="crearHogar()">
+      <i class="bi bi-plus-lg"></i> Crear Inventario
+    </button>
+  </div>
+
+  <!-- Cards -->
+  <div class="row">
+    <div class="col-md-4 col-lg-3 mb-4" *ngFor="let hogar of hogares; trackBy: trackById">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header" [style.background-color]="hogar.color" [style.color]="hogar.textColor">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h5 class="card-title mb-1">{{ hogar.titulo }}</h5>
+              <p class="card-subtitle mb-0 small">{{ hogar.subtitulo }}</p>
+              <p class="card-id small text-muted mt-2">ID: {{ hogar.id }}</p>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" [style.color]="hogar.textColor">
+                <i class="bi bi-three-dots-vertical fs-5"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button class="dropdown-item" (click)="editarHogar()">
+                    <i class="bi bi-pencil me-2"></i>Editar
+                  </button>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <button class="dropdown-item text-danger" (click)="eliminarHogar()">
+                    <i class="bi bi-trash me-2"></i>Eliminar
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">{{ hogar.descripcion }}</p>
+        </div>
+        <div class="card-footer bg-transparent">
+          <button class="btn w-100" (click)="entrarHogar(hogar.id)">
+            <i class="bi bi-box-arrow-in-right"></i> Entrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VISTA DETALLES -->
+<div class="mis-hogares-page" *ngIf="vistaActual === 'detalles' && selectedHogar">
+  <!-- Sidebar pastel fija -->
+  <div class="mis-hogares-sidebar">
+    <div class="sidebar-header">
+      <span class="app-icon">🏠</span>
+      <h2 class="app-title">Inventario</h2>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar">👤</div>
+      <div>
+        <h4>{{ usuario.nombre }}</h4>
+      </div>
+    </div>
+
+    <!-- Menú principal con submenús -->
+    <div class="sidebar-menu">
+      <button class="sidebar-item">Lista-Actividades</button>
+
+      <div class="sidebar-group">
+        <button class="sidebar-item" (click)="toggleSubmenu('gastos')">
+          GastosPersonales
+          <span class="arrow" [class.open]="submenuOpen['gastos']">▼</span>
+        </button>
+        <div class="sidebar-submenu" *ngIf="submenuOpen['gastos']">
+          <button class="sidebar-subitem">ReporteDeGastos</button>
+        </div>
+      </div>
+
+      <button class="sidebar-item" (click)="editarHogar()">Editar-Hogar</button>
+
+      <div class="sidebar-group">
+        <button class="sidebar-item" (click)="toggleSubmenu('inventario')">
+          Inventario
+          <span class="arrow" [class.open]="submenuOpen['inventario']">▼</span>
+        </button>
+        <div class="sidebar-submenu" *ngIf="submenuOpen['inventario']">
+          <button class="sidebar-subitem">Stock-Alertas</button>
+        </div>
+      </div>
+
+      <button class="sidebar-item">ListaMensualidades</button>
+      <button class="sidebar-item">ListaMiembros</button>
+      <button class="sidebar-item">SeguimientoMedico</button>
+      <button class="sidebar-item">ListaTareas</button>
+
+      <button class="sidebar-item" (click)="volverAlista()">← Volver a lista</button>
+      <button class="sidebar-item sidebar-item-danger" (click)="eliminarHogar()">🗑️ Eliminar Inventario</button>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn-logout" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="hogares-main">
+    <h1>🏡 {{ selectedHogar.titulo }}</h1>
+    <p>{{ selectedHogar.descripcion }}</p>
+    <!-- Aquí puedes añadir tabs de tareas, miembros, gastos -->
+  </div>
+</div>
