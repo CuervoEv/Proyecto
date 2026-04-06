@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal} from '@angular/core';
+import { RegisterService } from '../../servicesAPI/register/register-service';
+import { RegisterData } from '../../models/register-interface';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -10,61 +12,53 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./register.css']
 })
 export class RegisterComponent {
-
+  private registerService = inject(RegisterService);
   
   nombre: string = '';
-  segundoNombre: string = '';
-  apellido: string = '';
-  segundoApellido: string = '';
-  usuario: string = '';
+  correo: string = '';
+  contrasena: string = '';
 
   constructor(private router: Router) {}
 
-  obtenerNombreCompleto(): string {
-    let nombreCompleto = this.nombre;
-    
-    if (this.segundoNombre) {
-      nombreCompleto += ' ' + this.segundoNombre;
-    }
-    if (this.apellido) {
-      nombreCompleto += ' ' + this.apellido;
-    }
-    if (this.segundoApellido) {
-      nombreCompleto += ' ' + this.segundoApellido;
-    }
-    
-    return nombreCompleto;
-  }
-
   entrar() {
-    
+    // Validaciones
     if (!this.nombre.trim()) {
       alert('Por favor escribe tu nombre');
       return;
     }
-    
-    if (!this.apellido.trim()) {
-      alert('Por favor escribe tu apellido');
+    if (!this.correo.trim()) {
+      alert('Por favor escribe tu correo electrónico');
+      return;
+    }
+    if (!this.contrasena.trim()) {
+      alert('Por favor escribe tu contraseña');
       return;
     }
     
-    if (!this.usuario.trim()) {
-      alert('Por favor escribe tu usuario');
-      return;
-    }
-    
-    const datosUsuario = {
+    // Preparar datos para enviar al backend
+    const datosUsuario: RegisterData = {
       nombre: this.nombre,
-      segundoNombre: this.segundoNombre,
-      apellido: this.apellido,
-      segundoApellido: this.segundoApellido,
-      nombreCompleto: this.obtenerNombreCompleto(),
-      usuario: this.usuario
+      correo: this.correo,
+      contrasena: this.contrasena
     };
     
-    localStorage.setItem('usuario', JSON.stringify(datosUsuario));
-    
-    
-    this.router.navigate(['/dashboard']);
+    // Enviar al backend
+    this.registerService.register(datosUsuario).subscribe({
+      next: (respuesta) => {
+        // Si el registro es exitoso, redirigir al dashboard
+        console.log('Usuario registrado con éxito', respuesta);
+        alert('Registro exitoso');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        // Si hay error, mostrar mensaje
+        console.error('Error al registrar', error);
+        if (error.status === 400) {
+          alert('El correo ya está registrado');
+        } else {
+          alert('Error al registrar usuario. Intenta de nuevo');
+        }
+      }
+    });
   }
 }
