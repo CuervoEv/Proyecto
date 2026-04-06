@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class RegisterComponent {
 
-  // Datos personales
+  
   nombre: string = '';
   segundoNombre: string = '';
   apellido: string = '';
@@ -37,7 +37,7 @@ export class RegisterComponent {
   }
 
   entrar() {
-    // Validaciones
+    
     if (!this.nombre.trim()) {
       alert('Por favor escribe tu nombre');
       return;
@@ -64,7 +64,7 @@ export class RegisterComponent {
     
     localStorage.setItem('usuario', JSON.stringify(datosUsuario));
     
-    // Redirige al dashboard
+    
     this.router.navigate(['/dashboard']);
   }
 }

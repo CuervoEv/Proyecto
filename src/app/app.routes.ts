@@ -11,6 +11,7 @@ import { ListComponent } from './main-module/list/list';
 import { About } from './info-pages/about/about';
 import { Services } from './info-pages/services/services';
 import { Contact } from './info-pages/contact/contact';
+import { MisHogaresComponent } from './hogares/pages/mis-hogares/mis-hogares';
 
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'about', component: About },
   { path: 'services', component: Services },
   { path: 'contact', component: Contact },
+  { path: 'mis-hogares', component: MisHogaresComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'login' }
 ];

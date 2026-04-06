@@ -1,16 +1,14 @@
-/* Contenedor principal */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  /* Sin background para mostrar la imagen global */
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
-/* Tarjeta del formulario */
+
 .card {
   background: rgba(255, 255, 255, 0.9);
   padding: 40px;
@@ -27,7 +25,7 @@
   margin-bottom: 10px;
 }
 
-/* Caja interna */
+
 .box h2 {
   color: #6a90e2; /* Azul pastel */
   margin-bottom: 8px;
@@ -40,7 +38,7 @@
   font-size: 0.95rem;
 }
 
-/* Campos de entrada */
+
 .box input[type="text"],
 .box input[type="email"],
 .box input[type="password"] {
@@ -64,7 +62,7 @@
   box-shadow: 0 0 8px rgba(179, 229, 252, 0.3);
 }
 
-/* Botón de registrarse */
+
 .box button {
   width: 100%;
   padding: 14px;
@@ -90,7 +88,7 @@
   transform: translateY(0);
 }
 
-/* Enlaces */
+
 .box .link {
   margin-top: 20px;
   color: #666;
@@ -109,7 +107,7 @@
   text-decoration: underline;
 }
 
-/* Responsive */
+
 @media (max-width: 640px) {
   .card {
     padding: 30px 20px;
