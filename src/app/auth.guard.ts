@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+//   constructor(private router: Router) {}
 
-  canActivate(): boolean {
-    const usuario = localStorage.getItem('usuario');
-    if (usuario) {
-      return true;
-    } else {
-      alert('Debes iniciar sesión para acceder a esta página');
-      this.router.navigate(['/login']);
-      return false;
-    }
-  }
-}
+//   // canActivate(): boolean {
+//   //   const usuario = localStorage.getItem('usuario');
+//   //   if (usuario) {
+//   //     return true;
+//   //   } else {
+//   //     alert('Debes iniciar sesión para acceder a esta página');
+//   //     this.router.navigate(['/login']);
+//   //     return false;
+//   //   }
+//   // }
+// }

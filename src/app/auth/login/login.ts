@@ -17,7 +17,7 @@ export class LoginComponent {
   loading: boolean = false;
   error: string = '';
 }
-  // constructor(private router: Router, private authService: AuthService) {}
+//   constructor(private router: Router, private authService: AuthService) {}
 
 //   entrar() {
 
