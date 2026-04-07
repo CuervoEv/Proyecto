@@ -10,7 +10,7 @@ import { SettingsComponent } from './user-area/settings/settings';
 import { About } from './info-pages/about/about';
 import { Services } from './info-pages/services/services';
 import { Contact } from './info-pages/contact/contact';
-import { MisHogaresComponent } from './hogares/pages/mis-hogares/mis-hogares';
+import { MisHogaresComponent } from './hogares/mis-hogares/mis-hogares';
 
 
 export const routes: Routes = [
