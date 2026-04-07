@@ -13,12 +13,12 @@ class UsuarioBase(BaseModel):
     correo: str
 
 class UsuarioCreate(UsuarioBase):
-    contraseña: str
+    contrasena: str
 
 class UsuarioUpdate(BaseModel):
     nombre: Optional[str] = None
     correo: Optional[str] = None
-    contraseña: Optional[str] = None
+    contrasena: Optional[str] = None
     current_password: str   # obligatorio
 
 class UsuarioSchema(UsuarioBase):

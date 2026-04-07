@@ -1,0 +1,213 @@
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS seashell;
+USE seashell;
+
+-- Tabla: usuarios
+CREATE TABLE IF NOT EXISTS usuarios (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    correo VARCHAR(150) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla: refresh_tokens
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(500) UNIQUE NOT NULL,
+    id_usuario INT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    revoked BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
+
+-- Tabla: hogares
+CREATE TABLE IF NOT EXISTS hogares (
+    id_hogar INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario_f INT NOT NULL,
+    nombre_familiar VARCHAR(50),
+    FOREIGN KEY (id_usuario_f) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
+
+-- Tabla: miembros
+CREATE TABLE IF NOT EXISTS miembros (
+    id_miembro INT PRIMARY KEY AUTO_INCREMENT,
+    id_hogar INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    es_admin BOOLEAN DEFAULT FALSE,
+    preferencias_alimenticias TEXT,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (id_hogar) REFERENCES hogares(id_hogar) ON DELETE CASCADE
+);
+
+-- Tabla: configuracion_miembro
+CREATE TABLE IF NOT EXISTS configuracion_miembro (
+    id_configuracion INT PRIMARY KEY AUTO_INCREMENT,
+    crear_actividad BOOLEAN NOT NULL DEFAULT FALSE,
+    crear_tarea BOOLEAN NOT NULL DEFAULT FALSE,
+    administrar_miembros BOOLEAN NOT NULL DEFAULT FALSE,
+    id_miembro_f INT NOT NULL,
+    FOREIGN KEY (id_miembro_f) REFERENCES miembros(id_miembro) ON DELETE CASCADE
+);
+
+-- Tabla: tareas
+CREATE TABLE IF NOT EXISTS tareas (
+    id_tarea INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    solo_adulto BOOLEAN DEFAULT FALSE,
+    repetitiva INT DEFAULT NULL,
+    realizada BOOLEAN DEFAULT FALSE,
+    hora TIME NULL,
+    fecha DATE NULL,
+    duracion_minutos INT,
+    id_miembro_f INT NULL,
+    id_hogar_f INT NOT NULL,
+    FOREIGN KEY (id_miembro_f) REFERENCES miembros(id_miembro) ON DELETE SET NULL,
+    FOREIGN KEY (id_hogar_f) REFERENCES hogares(id_hogar) ON DELETE CASCADE
+);
+
+-- Tabla: actividades
+CREATE TABLE IF NOT EXISTS actividades (
+    id_actividad INT PRIMARY KEY AUTO_INCREMENT,
+    repetitiva_semanal BOOLEAN DEFAULT FALSE,
+    hora TIME NOT NULL,
+    dias_semana TEXT,
+    duracion_minutos INT,
+    economica BOOLEAN DEFAULT FALSE,
+    id_miembro_f INT NOT NULL,
+    FOREIGN KEY (id_miembro_f) REFERENCES miembros(id_miembro) ON DELETE CASCADE
+);
+
+-- Tabla: seguimiento_medico
+CREATE TABLE IF NOT EXISTS seguimiento_medico (
+    id_seguimiento INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE,
+    estado VARCHAR(50),
+    nota VARCHAR(500),
+    id_miembro_f INT NOT NULL,
+    FOREIGN KEY (id_miembro_f) REFERENCES miembros(id_miembro) ON DELETE CASCADE
+);
+
+-- Tabla: mensualidades
+CREATE TABLE IF NOT EXISTS mensualidades (
+    id_mensualidad INT PRIMARY KEY AUTO_INCREMENT,
+    valor_aproximado DECIMAL(10,2),
+    fecha_cancelacion DATE,
+    dias_repeticion VARCHAR(7),
+    estado BOOLEAN DEFAULT FALSE,
+    id_hogar_f INT NOT NULL,
+    FOREIGN KEY (id_hogar_f) REFERENCES hogares(id_hogar) ON DELETE CASCADE
+);
+
+-- Tabla: gastos_miembro
+CREATE TABLE IF NOT EXISTS gastos_miembro (
+    id_gasto INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(50),
+    descripcion VARCHAR(250),
+    valor_aproximado DECIMAL(10,2),
+    dia_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_miembro_f INT,
+    FOREIGN KEY (id_miembro_f) REFERENCES miembros(id_miembro) ON DELETE SET NULL
+);
+
+-- Tabla: clasificacion_ingredientes
+CREATE TABLE IF NOT EXISTS clasificacion_ingredientes (
+    id_clasificacion INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- Tabla: unidades_medida
+CREATE TABLE IF NOT EXISTS unidades_medida (
+    id_unidad INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(30) UNIQUE NOT NULL,
+    abreviatura VARCHAR(10)
+);
+
+-- Tabla: tipos_ingredientes
+CREATE TABLE IF NOT EXISTS tipos_ingredientes (
+    id_tipo_ingrediente INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    id_clasificacion INT,
+    id_unidad_base INT,
+    caducidad_estandar_dias INT,
+    cantidad_minima_aviso FLOAT DEFAULT 0.0,
+    FOREIGN KEY (id_clasificacion) REFERENCES clasificacion_ingredientes(id_clasificacion) ON DELETE SET NULL,
+    FOREIGN KEY (id_unidad_base) REFERENCES unidades_medida(id_unidad) ON DELETE SET NULL
+);
+
+-- Tabla: stock_ingredientes
+CREATE TABLE IF NOT EXISTS stock_ingredientes (
+    id_stock INT PRIMARY KEY AUTO_INCREMENT,
+    id_hogar INT NOT NULL,
+    id_tipo_ingrediente INT NOT NULL,
+    cantidad FLOAT NOT NULL DEFAULT 0.0,
+    id_unidad INT,
+    fecha_caducidad DATE,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_hogar) REFERENCES hogares(id_hogar) ON DELETE CASCADE,
+    FOREIGN KEY (id_tipo_ingrediente) REFERENCES tipos_ingredientes(id_tipo_ingrediente) ON DELETE CASCADE,
+    FOREIGN KEY (id_unidad) REFERENCES unidades_medida(id_unidad) ON DELETE SET NULL
+);
+
+-- Tabla: historial_consumo
+CREATE TABLE IF NOT EXISTS historial_consumo (
+    id_consumo INT PRIMARY KEY AUTO_INCREMENT,
+    id_hogar INT NOT NULL,
+    id_tipo_ingrediente INT NOT NULL,
+    cantidad_consumida FLOAT NOT NULL,
+    id_unidad INT NOT NULL,
+    fecha_consumo DATE NOT NULL,
+    FOREIGN KEY (id_hogar) REFERENCES hogares(id_hogar) ON DELETE CASCADE,
+    FOREIGN KEY (id_tipo_ingrediente) REFERENCES tipos_ingredientes(id_tipo_ingrediente) ON DELETE CASCADE,
+    FOREIGN KEY (id_unidad) REFERENCES unidades_medida(id_unidad) ON DELETE CASCADE
+);
+
+-- Crear índices para mejorar el rendimiento
+CREATE INDEX idx_usuario_correo ON usuarios(correo);
+CREATE INDEX idx_tarea_hogar ON tareas(id_hogar_f);
+CREATE INDEX idx_tarea_miembro ON tareas(id_miembro_f);
+CREATE INDEX idx_actividad_miembro ON actividades(id_miembro_f);
+CREATE INDEX idx_stock_hogar ON stock_ingredientes(id_hogar);
+CREATE INDEX idx_historial_hogar ON historial_consumo(id_hogar);
+
+-- Insertar datos de ejemplo para unidades de medida
+INSERT INTO unidades_medida (nombre, abreviatura) VALUES
+('Kilogramo', 'kg'),
+('Gramo', 'g'),
+('Litro', 'L'),
+('Mililitro', 'ml'),
+('Unidad', 'ud'),
+('Cucharada', 'cda'),
+('Cucharadita', 'cdta');
+
+-- Insertar datos de ejemplo para clasificaciones de ingredientes
+INSERT INTO clasificacion_ingredientes (nombre) VALUES
+('Verduras'),
+('Frutas'),
+('Carnes'),
+('Pescados'),
+('Lácteos'),
+('Cereales'),
+('Legumbres'),
+('Especias'),
+('Bebidas'),
+('Otros');
+
+-- Insertar un usuario de ejemplo (contraseña: 'admin123')
+INSERT INTO usuarios (nombre, correo, contrasena) VALUES
+('Administrador', 'admin@ejemplo.com', 'admin123');
+
+-- Insertar un hogar de ejemplo
+INSERT INTO hogares (id_usuario_f, nombre_familiar) VALUES (1, 'Familia Ejemplo');
+
+-- Insertar miembros de ejemplo
+INSERT INTO miembros (id_hogar, nombre, es_admin, activo) VALUES
+(1, 'Admin', TRUE, TRUE),
+(1, 'Miembro 1', FALSE, TRUE);
+
+-- Insertar configuración para miembros
+INSERT INTO configuracion_miembro (crear_actividad, crear_tarea, administrar_miembros, id_miembro_f) VALUES
+(TRUE, TRUE, TRUE, 1),
+(TRUE, FALSE, FALSE, 2);

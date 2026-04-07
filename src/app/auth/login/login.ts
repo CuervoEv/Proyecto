@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoginService } from '../../servicesAPI/login/login-service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -10,14 +11,22 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-
+  private loginService = inject(LoginService);
+  
+  // 🔥 CAMBIO: para que coincida con HTML
   usuario: string = '';
   contrasena: string = '';
+
+  // 🔥 PARA EL HTML
   loading: boolean = false;
   error: string = '';
 
+  // 🔁 MODO FAKE
+  usarBackend: boolean = false;
+
   constructor(private router: Router) {}
 
+  // 🔥 CAMBIO: ahora se llama como tu HTML
   entrar() {
 
     if (!this.usuario.trim()) {
@@ -33,23 +42,45 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
 
-    // 🎭 LOGIN FAKE
-    setTimeout(() => {
+    // 🟡 MODO FAKE
+    if (!this.usarBackend) {
+      setTimeout(() => {
 
-      const usuarioFake = {
-        nombre: this.usuario,
-        correo: this.usuario + '@fake.com'
-      };
+        const usuarioFake = {
+          nombre: this.usuario,
+          correo: this.usuario + '@fake.com'
+        };
 
-      // 💾 Guardar sesión
-      localStorage.setItem('usuario', JSON.stringify(usuarioFake));
-      localStorage.setItem('token', 'fake-token-123');
+        localStorage.setItem('usuario', JSON.stringify(usuarioFake));
+        localStorage.setItem('token', 'fake-token');
 
-      this.loading = false;
+        this.loading = false;
+        this.router.navigate(['/dashboard']);
 
-      // 🚀 Redirigir
-      this.router.navigate(['/dashboard']);
+      }, 800);
 
-    }, 800); // simula carga real
+      return;
+    }
+
+    // 🔵 MODO REAL (cuando actives backend)
+    const credenciales = {
+      username: this.usuario,
+      password: this.contrasena
+    };
+
+    this.loginService.login(credenciales).subscribe({
+      next: (respuesta: any) => {
+        localStorage.setItem('access_token', respuesta.access_token);
+        localStorage.setItem('refresh_token', respuesta.refresh_token);
+
+        this.loading = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error: any) => {
+        this.loading = false;
+        this.error = 'Usuario o contraseña incorrectos';
+        console.error(error);
+      }
+    });
   }
 }

@@ -1,11 +1,13 @@
 <div class="container">
   <div class="card">
+    <h1>Administración del Hogar</h1>
+
     <div class="box">
       <h2>Bienvenido</h2>
-      <p>Ingresa tus credenciales</p>
+      <p>Inicia sesión en tu cuenta</p>
 
-      <input type="text" placeholder="Escribe tu usuario aquí" [(ngModel)]="usuario">
-      <input type="password" placeholder="Escribe tu contraseña aquí" [(ngModel)]="contrasena">
+      <input type="email" placeholder="Correo electrónico" [(ngModel)]="usuario">
+      <input type="password" placeholder="Contraseña" [(ngModel)]="contrasena">
 
       <button 
         (click)="entrar()" 
@@ -17,14 +19,9 @@
       <!-- <button routerLink=""></button> -->
 
       <p class="link">
-        <a routerLink="/recover">¿Olvidaste tu contraseña?</a>
-      </p>
-      <p class="link">
-        <a routerLink="/register">¿No tienes una cuenta? Regístrate</a>
+        ¿No tienes una cuenta?
+        | <a routerLink="/register">Registrarse</a>
       </p>
     </div>
   </div>
 </div>
-
-<p *ngIf="loading">Entrando...</p>
-<p *ngIf="error" style="color:red">{{ error }}</p>
