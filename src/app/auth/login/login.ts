@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoginService } from '../../servicesAPI/login/login-service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-// import { AuthService } from '../../servicesAPI/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,39 +11,48 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-
-  usuario: string = '';
+  private loginService = inject(LoginService);
+  
+  correo: string = '';
   contrasena: string = '';
-  loading: boolean = false;
-  error: string = '';
+
+  constructor(private router: Router) {}
+
+  ingresar() {
+    // Validaciones
+    if (!this.correo.trim()) {
+      alert('Por favor escribe tu correo electrónico');
+      return;
+    }
+    if (!this.contrasena.trim()) {
+      alert('Por favor escribe tu contraseña');
+      return;
+    }
+    
+    // Preparar datos para enviar al backend
+    const credenciales = {
+      username: this.correo,  // OAuth2 espera "username"
+      password: this.contrasena
+    };
+    
+    // Enviar al backend
+    this.loginService.login(credenciales).subscribe({
+      next: (respuesta) => {
+        console.log('Login exitoso', respuesta);
+        // Guardar tokens en localStorage
+        localStorage.setItem('access_token', respuesta.access_token);
+        localStorage.setItem('refresh_token', respuesta.refresh_token);
+        alert('Bienvenido');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Error al iniciar sesión', error);
+        if (error.status === 401) {
+          alert('Correo o contraseña incorrectos');
+        } else {
+          alert('Error al iniciar sesión. Intenta de nuevo');
+        }
+      }
+    });
+  }
 }
-//   constructor(private router: Router, private authService: AuthService) {}
-
-//   entrar() {
-
-//     if (!this.usuario.trim()) {
-//       alert('Por favor escribe tu usuario');
-//       return;
-//     }
-
-//     if (!this.contrasena.trim()) {
-//       alert('Por favor escribe tu contraseña');
-//       return;
-//     }
-
-//     this.loading = true;
-//     this.error = '';
-
-//     // this.authService.login(this.usuario, this.contrasena).subscribe({
-//     //   next: (response: any) => {
-//     //     console.log('Login exitoso', response);
-//     //     this.router.navigate(['/dashboard']);
-//       },
-//       error: (err: any) => {
-//         this.loading = false;
-//         this.error = 'Usuario o contraseña incorrectos';
-//         console.error('Error en login:', err);
-//       }
-//     });
-//   }
-// }

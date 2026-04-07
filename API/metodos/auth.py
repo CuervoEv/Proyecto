@@ -38,7 +38,7 @@ def get_password_hash(password):
 
 def authenticate_user(db, correo, password):
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
-    if not usuario or not verify_password(password, usuario.contraseña):
+    if not usuario or not verify_password(password, usuario.contrasena):  # Cambiado
         return False
     return usuario
 
@@ -115,10 +115,11 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 # ----- Endpoints -----
 @router.post("/register", response_model=UsuarioSchema, status_code=201)
 def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
+    print("Datos recibidos:", usuario.dict());
     if db.query(Usuario).filter(Usuario.correo == usuario.correo).first():
         raise HTTPException(400, "El correo ya está registrado")
-    hashed = get_password_hash(usuario.contraseña)
-    db_usuario = Usuario(nombre=usuario.nombre, correo=usuario.correo, contraseña=hashed)
+    hashed = get_password_hash(usuario.contrasena)  # Cambiado
+    db_usuario = Usuario(nombre=usuario.nombre, correo=usuario.correo, contrasena=hashed)  # Cambiado
     db.add(db_usuario)
     db.commit()
     db.refresh(db_usuario)
@@ -177,6 +178,9 @@ def verify_password_endpoint(
     current_user: Usuario = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
+    if not verify_password(data.password, current_user.contrasena):  # Cambiado
+        raise HTTPException(401, "Contraseña incorrecta")
+    return {"message": "Contraseña correcta"}
     if not verify_password(data.password, current_user.contraseña):
         raise HTTPException(401, "Contraseña incorrecta")
     return {"message": "Contraseña correcta"}
@@ -192,7 +196,7 @@ def update_user(
     db: Session = Depends(get_db)
 ):
     # Verificar contraseña actual
-    if not verify_password(update_data.current_password, current_user.contraseña):
+    if not verify_password(update_data.current_password, current_user.contrasena):  # Cambiado
         raise HTTPException(400, "Contraseña actual incorrecta")
     
     if update_data.nombre:
@@ -202,8 +206,8 @@ def update_user(
             if db.query(Usuario).filter(Usuario.correo == update_data.correo).first():
                 raise HTTPException(400, "Correo ya en uso")
         current_user.correo = update_data.correo
-    if update_data.contraseña:
-        current_user.contraseña = get_password_hash(update_data.contraseña)
+    if update_data.contrasena:  # Cambiado
+        current_user.contrasena = get_password_hash(update_data.contrasena)  # Cambiado
     
     db.commit()
     db.refresh(current_user)
