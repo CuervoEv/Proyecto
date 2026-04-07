@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-// import { AuthService } from '../../servicesAPI/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,34 +15,41 @@ export class LoginComponent {
   contrasena: string = '';
   loading: boolean = false;
   error: string = '';
+
+  constructor(private router: Router) {}
+
+  entrar() {
+
+    if (!this.usuario.trim()) {
+      this.error = 'Por favor escribe tu usuario';
+      return;
+    }
+
+    if (!this.contrasena.trim()) {
+      this.error = 'Por favor escribe tu contraseña';
+      return;
+    }
+
+    this.loading = true;
+    this.error = '';
+
+    // 🎭 LOGIN FAKE
+    setTimeout(() => {
+
+      const usuarioFake = {
+        nombre: this.usuario,
+        correo: this.usuario + '@fake.com'
+      };
+
+      // 💾 Guardar sesión
+      localStorage.setItem('usuario', JSON.stringify(usuarioFake));
+      localStorage.setItem('token', 'fake-token-123');
+
+      this.loading = false;
+
+      // 🚀 Redirigir
+      this.router.navigate(['/dashboard']);
+
+    }, 800); // simula carga real
+  }
 }
-//   constructor(private router: Router, private authService: AuthService) {}
-
-//   entrar() {
-
-//     if (!this.usuario.trim()) {
-//       alert('Por favor escribe tu usuario');
-//       return;
-//     }
-
-//     if (!this.contrasena.trim()) {
-//       alert('Por favor escribe tu contraseña');
-//       return;
-//     }
-
-//     this.loading = true;
-//     this.error = '';
-
-//     // this.authService.login(this.usuario, this.contrasena).subscribe({
-//     //   next: (response: any) => {
-//     //     console.log('Login exitoso', response);
-//     //     this.router.navigate(['/dashboard']);
-//       },
-//       error: (err: any) => {
-//         this.loading = false;
-//         this.error = 'Usuario o contraseña incorrectos';
-//         console.error('Error en login:', err);
-//       }
-//     });
-//   }
-// }

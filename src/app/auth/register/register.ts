@@ -18,6 +18,9 @@ export class RegisterComponent {
   correo: string = '';
   contrasena: string = '';
 
+  // NUEVO 
+  usuarioGuardado: any = null;
+
   constructor(private router: Router) {}
 
   entrar() {
@@ -35,7 +38,7 @@ export class RegisterComponent {
       return;
     }
     
-    // Preparar datos para enviar al backend
+    // Enviar al backend
     const datosUsuario: RegisterData = {
       nombre: this.nombre,
       correo: this.correo,
@@ -45,13 +48,18 @@ export class RegisterComponent {
     // Enviar al backend
     this.registerService.register(datosUsuario).subscribe({
       next: (respuesta) => {
-        // Si el registro es exitoso, redirigir al dashboard
         console.log('Usuario registrado con éxito', respuesta);
+
+        // NUEVO: guardar usuario 
+        localStorage.setItem('usuario', JSON.stringify(respuesta));
+        this.usuarioGuardado = respuesta;
+
         alert('Registro exitoso');
+
+        // REDIRECCIÓN 
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        // Si hay error, mostrar mensaje
         console.error('Error al registrar', error);
         if (error.status === 400) {
           alert('El correo ya está registrado');
@@ -60,5 +68,8 @@ export class RegisterComponent {
         }
       }
     });
+  }
+  obtenerUsuario() {
+    return JSON.parse(localStorage.getItem('usuario')!);
   }
 }
