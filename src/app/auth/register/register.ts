@@ -32,16 +32,6 @@ export class RegisterComponent {
   obtenerNombreCompleto(): string {
     let nombreCompleto = this.nombre;
     
-    if (this.segundoNombre) {
-      nombreCompleto += ' ' + this.segundoNombre;
-    }
-    if (this.apellido) {
-      nombreCompleto += ' ' + this.apellido;
-    }
-    if (this.segundoApellido) {
-      nombreCompleto += ' ' + this.segundoApellido;
-    }
-    
     return nombreCompleto;
   }
 
@@ -52,16 +42,6 @@ export class RegisterComponent {
 
   registrar() {
     this.error = '';
-
-    if (!this.nombre.trim()) {
-      this.error = 'Por favor escribe tu nombre';
-      return;
-    }
-    
-    if (!this.apellido.trim()) {
-      this.error = 'Por favor escribe tu apellido';
-      return;
-    }
     
     if (!this.usuario.trim()) {
       this.error = 'Por favor escribe tu usuario';

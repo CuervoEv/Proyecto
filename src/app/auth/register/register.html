@@ -1,74 +1,25 @@
 <div class="register-container">
   <div class="register-card">
+    <!-- Header -->
     <div class="register-header">
       <i class="bi bi-house-heart-fill"></i>
       <h1>Administración del Hogar</h1>
     </div>
 
+    <!-- Caja de registro -->
     <div class="register-box">
       <h2>Crear Cuenta</h2>
       <p>Ingresa tus datos para registrarte</p>
 
+      <!-- Mensaje de error -->
       <div class="error-message" *ngIf="error">
         <i class="bi bi-exclamation-triangle-fill"></i>
         <span>{{ error }}</span>
       </div>
 
+      <!-- Formulario -->
       <form (ngSubmit)="registrar()">
-        <div class="form-row">
-          <div class="form-group">
-            <label>
-              <i class="bi bi-person-fill"></i>
-              Nombre *
-            </label>
-            <input 
-              type="text" 
-              placeholder="Tu nombre" 
-              [(ngModel)]="nombre" 
-              name="nombre"
-              [class.error-input]="error && !nombre.trim()">
-          </div>
-          
-          <div class="form-group">
-            <label>
-              <i class="bi bi-person"></i>
-              Segundo nombre
-            </label>
-            <input 
-              type="text" 
-              placeholder="Segundo nombre" 
-              [(ngModel)]="segundoNombre" 
-              name="segundoNombre">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>
-              <i class="bi bi-person-fill"></i>
-              Apellido *
-            </label>
-            <input 
-              type="text" 
-              placeholder="Tu apellido" 
-              [(ngModel)]="apellido" 
-              name="apellido"
-              [class.error-input]="error && !apellido.trim()">
-          </div>
-          
-          <div class="form-group">
-            <label>
-              <i class="bi bi-person"></i>
-              Segundo apellido
-            </label>
-            <input 
-              type="text" 
-              placeholder="Segundo apellido" 
-              [(ngModel)]="segundoApellido" 
-              name="segundoApellido">
-          </div>
-        </div>
-
+        
         <div class="form-group">
           <label>
             <i class="bi bi-person-badge-fill"></i>
@@ -95,33 +46,31 @@
             [class.error-input]="error && !email.trim()">
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>
-              <i class="bi bi-lock-fill"></i>
-              Contraseña *
-            </label>
-            <input 
-              type="password" 
-              placeholder="Mínimo 6 caracteres" 
-              [(ngModel)]="contrasena" 
-              name="contrasena"
-              [class.error-input]="error && !contrasena.trim()">
-            <small class="password-hint">Mínimo 6 caracteres</small>
-          </div>
-          
-          <div class="form-group">
-            <label>
-              <i class="bi bi-lock-fill"></i>
-              Confirmar contraseña *
-            </label>
-            <input 
-              type="password" 
-              placeholder="Repite tu contraseña" 
-              [(ngModel)]="confirmarContrasena" 
-              name="confirmarContrasena"
-              [class.error-input]="error && confirmarContrasena !== contrasena">
-          </div>
+        <div class="form-group">
+          <label>
+            <i class="bi bi-lock-fill"></i>
+            Contraseña *
+          </label>
+          <input 
+            type="password" 
+            placeholder="Mínimo 6 caracteres" 
+            [(ngModel)]="contrasena" 
+            name="contrasena"
+            [class.error-input]="error && !contrasena.trim()">
+          <small class="password-hint">Mínimo 6 caracteres</small>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <i class="bi bi-lock-fill"></i>
+            Confirmar contraseña *
+          </label>
+          <input 
+            type="password" 
+            placeholder="Repite tu contraseña" 
+            [(ngModel)]="confirmarContrasena" 
+            name="confirmarContrasena"
+            [class.error-input]="error && confirmarContrasena !== contrasena">
         </div>
 
         <button type="submit" [disabled]="loading" class="register-btn">
@@ -130,6 +79,7 @@
         </button>
       </form>
 
+      <!-- Enlace a login -->
       <div class="login-link">
         <p>¿Ya tienes una cuenta?</p>
         <a routerLink="/login">

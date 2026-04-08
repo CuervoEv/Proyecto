@@ -85,14 +85,7 @@ form {
   gap: 20px;
 }
 
-/* Filas del formulario */
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
 
-/* Grupos de formulario */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -204,14 +197,8 @@ form {
 
 /* Animaciones */
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes shake {
@@ -222,60 +209,19 @@ form {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .register-card {
-    max-width: 95%;
-  }
-  
-  .register-header {
-    padding: 25px;
-  }
-  
-  .register-header h1 {
-    font-size: 1.4rem;
-  }
-  
-  .register-box {
-    padding: 25px;
-  }
-  
-  .register-box h2 {
-    font-size: 1.5rem;
-  }
-  
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
+  .register-card { max-width: 95%; }
+  .register-header { padding: 25px; }
+  .register-header h1 { font-size: 1.4rem; }
+  .register-box { padding: 25px; }
+  .register-box h2 { font-size: 1.5rem; }
 }
 
 @media (max-width: 480px) {
-  .register-container {
-    padding: 10px;
-  }
-  
-  .register-box {
-    padding: 20px;
-  }
-  
-  .register-header i {
-    font-size: 2rem;
-  }
-  
-  .register-header h1 {
-    font-size: 1.2rem;
-  }
-  
-  .register-box h2 {
-    font-size: 1.3rem;
-  }
-  
-  .form-group input {
-    padding: 10px 12px;
-    font-size: 0.9rem;
-  }
-  
-  .register-btn {
-    padding: 12px;
-    font-size: 0.9rem;
-  }
+  .register-container { padding: 10px; }
+  .register-box { padding: 20px; }
+  .register-header i { font-size: 2rem; }
+  .register-header h1 { font-size: 1.2rem; }
+  .register-box h2 { font-size: 1.3rem; }
+  .form-group input { padding: 10px 12px; font-size: 0.9rem; }
+  .register-btn { padding: 12px; font-size: 0.9rem; }
 }

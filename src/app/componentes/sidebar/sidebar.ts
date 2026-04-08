@@ -16,14 +16,13 @@ export class SidebarComponent {
 
   // 📌 MENÚ CON RUTAS CORRECTAS
   menuItems = [
+    { path: '/mis-hogares', icon: 'bi bi-house-heart-fill', label: 'Mis Hogares' },
     { path: '/dashboard', icon: 'bi bi-speedometer2', label: 'Dashboard' },
-    { path: '/hogares', icon: 'bi bi-house-door-fill', label: 'Hogares' },
     { path: '/profile', icon: 'bi bi-person-circle', label: 'Mi Perfil' },
-    { path: '/settings', icon: 'bi bi-gear-fill', label: 'Configuración' },
     { path: '/about', icon: 'bi bi-info-circle-fill', label: 'Acerca de' },
     { path: '/services', icon: 'bi bi-gear-fill', label: 'Servicios' },
     { path: '/contact', icon: 'bi bi-envelope-fill', label: 'Contacto' },
-    { path: '/mis-hogares', icon: 'bi bi-house-heart-fill', label: 'Mis Hogares' }
+    { path: '/settings', icon: 'bi bi-gear-fill', label: 'Configuración' }
   ];
 
   constructor(private router: Router) {}
