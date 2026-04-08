@@ -7,7 +7,7 @@ import { RegisterData } from '../../models/register-interface';
   providedIn: 'root',
 })
 export class RegisterService {
-  private apiUrl = 'http://localhost:8000/Sesion/auth/register'; // Cambia esta URL por la de tu backend
+  private apiUrl = 'http://codigo-production.up.railway/app/Sesion/auth/register'; // Cambia esta URL por la de tu backend
   constructor(private http: HttpClient) {}
 
   register(data: RegisterData): Observable<any> {
