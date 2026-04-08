@@ -1,20 +1,41 @@
-<div class="container">
-  <div class="card">
-    <div class="box">
-      <h2>Bienvenido</h2>
-      <p>Ingresa tus credenciales</p>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <i class="bi bi-lock-fill"></i>
+      <h1>Iniciar Sesión</h1>
+    </div>
 
-      <input type="text" placeholder="Escribe tu usuario aquí" [(ngModel)]="usuario">
-      <input type="password" placeholder="Escribe tu contraseña aquí" [(ngModel)]="contrasena">
+    <div class="login-box">
+      <p>Ingresa tus credenciales para acceder</p>
 
-      <button (click)="entrar()">Entrar al Proyecto</button>
+      <div class="error-message" *ngIf="error">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ error }}</span>
+      </div>
 
-      <p class="link">
-        <a routerLink="/recover">¿Olvidaste tu contraseña?</a>
-      </p>
-      <p class="link">
-        <a routerLink="/register">¿No tienes una cuenta? Regístrate</a>
-      </p>
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <label><i class="bi bi-person-fill"></i> Usuario</label>
+          <input type="text" [(ngModel)]="usuario" name="usuario" placeholder="Tu usuario" />
+        </div>
+
+        <div class="form-group">
+          <label><i class="bi bi-key-fill"></i> Contraseña</label>
+          <input type="password" [(ngModel)]="contrasena" name="contrasena" placeholder="Tu contraseña" />
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="loading">
+          <i class="bi" [class.bi-box-arrow-in-right]="!loading" [class.bi-hourglass-split]="loading"></i>
+          {{ loading ? 'Ingresando...' : 'Entrar' }}
+        </button>
+      </form>
+
+      <div class="login-links">
+        <p>¿No tienes cuenta?</p>
+        <a routerLink="/register"><i class="bi bi-person-plus-fill"></i> Regístrate aquí</a>
+        <p>¿Olvidaste tu contraseña?</p>
+        <a routerLink="/recover"><i class="bi bi-shield-lock-fill"></i> Recuperar contraseña</a>
+      </div>
     </div>
   </div>
 </div>
