@@ -60,7 +60,7 @@ export class LoginComponent {
         this.actualizarEstadoApp();
         
         // Redirigir después del login
-        this.router.navigate(['/mis-hogares']);
+        this.router.navigate(['/members']);
       },
       error: (err: any) => {
         this.loading = false;

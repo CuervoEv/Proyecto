@@ -12,7 +12,7 @@ import { About } from './info-pages/about/about';
 import { Services } from './info-pages/services/services';
 import { Contact } from './info-pages/contact/contact';
 import { MisHogaresComponent } from './hogares/pages/mis-hogares/mis-hogares';
-
+import { MembersComponent } from './miembros/pages/members/members';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +20,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recover', component: RecoverComponent },
+  { path: 'members', component: MembersComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },

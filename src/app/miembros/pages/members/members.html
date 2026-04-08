@@ -1,0 +1,38 @@
+<div class="members-container">
+  <div class="members-card">
+    <h1>👥 Crear Miembros</h1>
+    <p>El primer miembro será Administrador. Máximo 6 miembros.</p>
+
+    <div class="error-message" *ngIf="error">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>{{ error }}</span>
+    </div>
+
+    <form (ngSubmit)="crearMiembro()">
+      <div class="form-group">
+        <label>Nombre del miembro</label>
+        <input type="text" [(ngModel)]="nuevoNombre" name="nombre" placeholder="Ej: Juan" />
+      </div>
+      <div class="form-group">
+        <label>PIN de acceso</label>
+        <input type="password" [(ngModel)]="nuevoPin" name="pin" placeholder="Crea un PIN" />
+      </div>
+      <button type="submit" class="create-btn">Crear miembro</button>
+    </form>
+
+    <h2>Perfiles creados</h2>
+    <div class="profiles-grid">
+      <div class="profile" *ngFor="let miembro of miembros">
+        <div class="avatar pastel">
+          {{ miembro.nombre.charAt(0) }}
+        </div>
+        <h3>{{ miembro.nombre }}</h3>
+        <p>{{ miembro.rol }}</p>
+        <div class="pin-access">
+          <input type="password" #pinInput placeholder="Ingresa PIN" />
+          <button (click)="ingresar(miembro, pinInput.value)">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

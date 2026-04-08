@@ -92,7 +92,7 @@ export class RegisterComponent {
       localStorage.setItem('usuario', JSON.stringify(datosUsuario));
       this.dispararEventoAuth();
       this.loading = false;
-      this.router.navigate(['/mis-hogares']);
+      this.router.navigate(['/members']);
     }, 1500);
   }
 
