@@ -1,4 +1,4 @@
-  // src/app/main-module/list/list.ts (COMPLETO Y FUNCIONANDO)
+// src/app/main-module/list/list.ts (SIN BOOTSTRAP - CON MODALES MANUALES)
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -71,6 +71,13 @@ export class ListComponent implements OnInit {
   // ========== NOTIFICACIONES ==========
   notificaciones: Notificacion[] = [];
   notificacionIdCounter = 0;
+
+  // ========== CONTROL DE MODALES (MANUAL) ==========
+  modalEditarVisible = false;
+  modalMiembroVisible = false;
+  modalTareaVisible = false;
+  modalEliminarVisible = false;
+  tabActivo: 'tareas' | 'miembros' | 'gastos' = 'tareas';
 
   // ========== COLORES ==========
   coloresPastel: string[] = [
@@ -154,6 +161,7 @@ export class ListComponent implements OnInit {
   entrarHogar(hogar: Hogar): void {
     this.hogarActual = hogar;
     this.vistaActual = 'detalles';
+    this.tabActivo = 'tareas';
     this.cargarTareas(hogar.id_hogar || hogar.id);
     this.cargarMiembros(hogar.id_hogar || hogar.id);
   }
@@ -163,11 +171,32 @@ export class ListComponent implements OnInit {
     this.hogarActual = null;
   }
 
+  cambiarTab(tab: 'tareas' | 'miembros' | 'gastos'): void {
+    this.tabActivo = tab;
+  }
+
+  // ========== MODALES MANUALES ==========
+
   abrirModalEditar(hogar: Hogar): void {
     this.hogarEditando = hogar;
     this.editTitulo = hogar.titulo;
     this.editSubtitulo = hogar.subtitulo;
     this.editDescripcion = hogar.descripcion;
+    this.modalEditarVisible = true;
+  }
+
+  cerrarModal(): void {
+    this.modalEditarVisible = false;
+    this.hogarEditando = null;
+    this.editTitulo = '';
+    this.editSubtitulo = '';
+    this.editDescripcion = '';
+  }
+
+  cerrarModalFondo(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.cerrarModal();
+    }
   }
 
   guardarEdicion(): void {
@@ -188,52 +217,41 @@ export class ListComponent implements OnInit {
     this.hogarAEliminar = hogar;
     this.confirmarEliminacion = false;
     this.textoConfirmacion = '';
-    
-    const modal = new (window as any).bootstrap.Modal(
-      document.getElementById('confirmarEliminarModal')
-    );
-    modal.show();
+    this.modalEliminarVisible = true;
+  }
+
+  cerrarEliminarModalFondo(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.cancelarEliminar();
+    }
   }
 
   confirmarYEliminar(): void {
     if (!this.hogarAEliminar) return;
 
-    // Validar texto
     if (this.textoConfirmacion.toLowerCase() !== this.hogarAEliminar.titulo.toLowerCase()) {
       this.mostrarNotificacion('error', 'El texto no coincide con el nombre del hogar', '❌');
       return;
     }
 
-    // Validar checkbox
     if (!this.confirmarEliminacion) {
       this.mostrarNotificacion('warning', 'Debes aceptar la confirmación', '⚠️');
       return;
     }
 
-    // Llamar a API
     this.homesService.eliminarHogar(this.hogarAEliminar.id_hogar || this.hogarAEliminar.id).subscribe({
       next: () => {
-        // Eliminar del listado local
         this.hogares = this.hogares.filter(
           h => (h.id_hogar || h.id) !== (this.hogarAEliminar!.id_hogar || this.hogarAEliminar!.id)
         );
 
-        // Mostrar notificación
         this.mostrarNotificacion(
           'success',
           `"${this.hogarAEliminar?.titulo || 'Hogar'}" eliminado correctamente`,
           '🗑️'
         );
 
-        // Cerrar modal
-        const modalElement = document.getElementById('confirmarEliminarModal');
-        const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-        modal?.hide();
-
-        // Limpiar
-        this.hogarAEliminar = null;
-        this.textoConfirmacion = '';
-        this.confirmarEliminacion = false;
+        this.cancelarEliminar();
       },
       error: () => {
         this.mostrarNotificacion('error', 'Error al eliminar el hogar', '❌');
@@ -242,16 +260,10 @@ export class ListComponent implements OnInit {
   }
 
   cancelarEliminar(): void {
+    this.modalEliminarVisible = false;
     this.hogarAEliminar = null;
     this.textoConfirmacion = '';
     this.confirmarEliminacion = false;
-  }
-
-  cerrarModal(): void {
-    this.hogarEditando = null;
-    this.editTitulo = '';
-    this.editSubtitulo = '';
-    this.editDescripcion = '';
   }
 
   // ======================= TAREAS =======================
@@ -271,9 +283,24 @@ export class ListComponent implements OnInit {
   }
 
   abrirCrearTarea() {
+    this.formularioTarea.reset({
+      nombre: '',
+      descripcion: '',
+      duracion_minutos: 30,
+      solo_adulto: false
+    });
+    this.modalTareaVisible = true;
+  }
+
+  cerrarTareaModalFondo(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.cerrarTareaModal();
+    }
+  }
+
+  cerrarTareaModal() {
+    this.modalTareaVisible = false;
     this.formularioTarea.reset();
-    const modal = new (window as any).bootstrap.Modal(document.getElementById('tareaModal'));
-    modal.show();
   }
 
   guardarTarea() {
@@ -282,18 +309,12 @@ export class ListComponent implements OnInit {
       next: (tarea) => {
         this.tareas.push(tarea);
         this.mostrarNotificacion('success', 'Tarea creada correctamente', '✅');
-        this.formularioTarea.reset();
-        const modal = (window as any).bootstrap.Modal.getInstance(document.getElementById('tareaModal'));
-        modal?.hide();
+        this.cerrarTareaModal();
       },
       error: (err) => {
         this.mostrarNotificacion('error', 'Error creando tarea', '❌');
       }
     });
-  }
-
-  cerrarTareaModal() {
-    this.formularioTarea.reset();
   }
 
   asignarTarea(idTarea: number) {
@@ -343,9 +364,26 @@ export class ListComponent implements OnInit {
 
   abrirAgregarMiembro() {
     this.modoEdicionMiembro = false;
+    this.miembroEnEdicion = null;
+    this.formularioMiembro.reset({
+      nombre: '',
+      es_admin: false,
+      preferencias_alimenticias: ''
+    });
+    this.modalMiembroVisible = true;
+  }
+
+  cerrarMiembroModalFondo(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.cerrarMiembroModal();
+    }
+  }
+
+  cerrarMiembroModal() {
+    this.modalMiembroVisible = false;
     this.formularioMiembro.reset();
-    const modal = new (window as any).bootstrap.Modal(document.getElementById('miembroModal'));
-    modal.show();
+    this.modoEdicionMiembro = false;
+    this.miembroEnEdicion = null;
   }
 
   editarMiembro(idMiembro: number) {
@@ -353,9 +391,12 @@ export class ListComponent implements OnInit {
     const miembro = this.miembros.find(m => m.id_miembro === idMiembro);
     if (miembro) {
       this.miembroEnEdicion = miembro;
-      this.formularioMiembro.patchValue(miembro);
-      const modal = new (window as any).bootstrap.Modal(document.getElementById('miembroModal'));
-      modal.show();
+      this.formularioMiembro.patchValue({
+        nombre: miembro.nombre,
+        es_admin: miembro.es_admin,
+        preferencias_alimenticias: miembro.preferencias_alimenticias || ''
+      });
+      this.modalMiembroVisible = true;
     }
   }
 
@@ -396,12 +437,6 @@ export class ListComponent implements OnInit {
     }
   }
 
-  cerrarMiembroModal() {
-    this.formularioMiembro.reset();
-    this.modoEdicionMiembro = false;
-    this.miembroEnEdicion = null;
-  }
-
   // ======================= NOTIFICACIONES =======================
 
   mostrarNotificacion(
@@ -419,7 +454,6 @@ export class ListComponent implements OnInit {
 
     this.notificaciones.push(notificacion);
 
-    // Auto-eliminar después de 5 segundos
     setTimeout(() => {
       this.notificaciones = this.notificaciones.filter(n => n.id !== notificacion.id);
     }, 5000);

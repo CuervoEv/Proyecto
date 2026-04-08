@@ -1,333 +1,311 @@
-<!-- src/app/main-module/list/list.html (CORREGIDO) -->
-
-<div class="container mt-4">
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-primary">🏠 Mis Hogares</h1>
-    <button class="btn btn-primary" (click)="agregarHogar()">
-      <i class="bi bi-plus-lg"></i> Agregar Hogar
-    </button>
-  </div>
-
-  <!-- VISTA: Listado de Hogares -->
-  <div *ngIf="vistaActual === 'lista'" class="row">
-    <div class="col-md-4 col-lg-3 mb-4" *ngFor="let hogar of hogares">
-      <div class="card h-100 shadow-sm">
-        <div class="card-header" [style.background-color]="hogar.color" [style.color]="hogar.textColor">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h5 class="card-title mb-1">{{ hogar.titulo }}</h5>
-              <p class="card-subtitle mb-0 small">{{ hogar.subtitulo }}</p>
-              <p class="card-id small text-muted mt-2">ID: {{ hogar.id }}</p>
-            </div>
-            <div class="dropdown">
-              <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" [style.color]="hogar.textColor">
-                <i class="bi bi-three-dots-vertical fs-5"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#" (click)="abrirModalEditar(hogar)" data-bs-toggle="modal" data-bs-target="#editarModal"><i class="bi bi-pencil me-2"></i>Editar</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item text-danger" href="#" (click)="abrirConfirmacionEliminar(hogar, $event)">
-                    <i class="bi bi-trash me-2"></i>Eliminar
-                  </a>
-                </li>
-              </ul>
-            </div>
+<!-- VISTA: Listado de Hogares -->
+<div *ngIf="vistaActual === 'lista'" class="hogares-grid">
+  <div *ngFor="let hogar of hogares" class="hogar-card">
+    <div class="card" [style.background-color]="hogar.color" [style.color]="hogar.textColor">
+      <div class="card-header">
+        <div class="card-header-content">
+          <div>
+            <h5 class="card-title">{{ hogar.titulo }}</h5>
+            <p class="card-subtitle">{{ hogar.subtitulo }}</p>
+            <p class="card-id">ID: {{ hogar.id }}</p>
           </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">{{ hogar.descripcion }}</p>
-        </div>
-        <div class="card-footer bg-transparent">
-          <button class="btn w-100" (click)="entrarHogar(hogar)">
-            <i class="bi bi-box-arrow-in-right"></i> Entrar
-          </button>
+          <div class="dropdown">
+            <button class="dropdown-btn" [style.color]="hogar.textColor">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" (click)="abrirModalEditar(hogar)"><i class="bi bi-pencil"></i>Editar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a href="#" class="text-danger" (click)="abrirConfirmacionEliminar(hogar, $event)"><i class="bi bi-trash"></i>Eliminar</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- VISTA: Detalles del Hogar -->
-  <div *ngIf="vistaActual === 'detalles' && hogarActual" class="hogar-container">
-    <!-- Header -->
-    <div class="hogar-header mb-4">
-      <button class="btn btn-secondary" (click)="volverAlista()">
-        ← Volver
-      </button>
-      <h1 class="ms-3">🏡 {{ hogarActual?.titulo }}</h1>
-    </div>
-
-    <!-- Tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="tareas-tab" data-bs-toggle="tab" data-bs-target="#tareas" type="button" role="tab" aria-controls="tareas" aria-selected="true">
-          ✅ Tareas
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="miembros-tab" data-bs-toggle="tab" data-bs-target="#miembros" type="button" role="tab" aria-controls="miembros" aria-selected="false">
-          👥 Miembros
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="gastos-tab" data-bs-toggle="tab" data-bs-target="#gastos" type="button" role="tab" aria-controls="gastos" aria-selected="false">
-          💰 Gastos
-        </button>
-      </li>
-    </ul>
-
-    <!-- Tab Content -->
-    <div class="tab-content bg-white p-4 rounded-bottom">
-      <!-- TAREAS TAB -->
-      <div class="tab-pane fade show active" id="tareas" role="tabpanel">
-        <div class="section-header d-flex justify-content-between align-items-center mb-3">
-          <h3>Tareas del Hogar</h3>
-          <button class="btn btn-success btn-sm" (click)="abrirCrearTarea()">
-            + Nueva Tarea
-          </button>
-        </div>
-
-        <div *ngIf="!loadingTareas; else tareasLoading" class="tareas-list">
-          <div *ngFor="let tarea of tareas" class="tarea-item">
-            <div class="d-flex justify-content-between align-items-start">
-              <div class="flex-grow-1">
-                <h5 class="mb-2">{{ tarea.nombre }}</h5>
-                <span class="badge" [ngClass]="tarea.realizada ? 'bg-success' : 'bg-warning'">
-                  {{ tarea.realizada ? '✅ Completada' : '⏳ Pendiente' }}
-                </span>
-              </div>
-            </div>
-            <p class="tarea-description text-muted mt-2">{{ tarea.descripcion }}</p>
-            <p class="tarea-meta text-muted small">
-              ⏱️ {{ tarea.duracion_minutos }} min |
-              👤 {{ tarea.id_miembro_f ? 'Asignada' : 'Sin asignar' }}
-            </p>
-            <div class="tarea-actions mt-2">
-              <button class="btn btn-sm btn-primary" (click)="asignarTarea(tarea.id_tarea)">
-                Asignar
-              </button>
-              <button *ngIf="!tarea.realizada" class="btn btn-sm btn-success" (click)="completarTarea(tarea.id_tarea)">
-                Marcar Completa
-              </button>
-              <button class="btn btn-sm btn-danger" (click)="eliminarTarea(tarea.id_tarea)">
-                Eliminar
-              </button>
-            </div>
-          </div>
-          <div *ngIf="tareas.length === 0" class="alert alert-info">
-            📭 No hay tareas en este hogar
-          </div>
-        </div>
-
-        <ng-template #tareasLoading>
-          <div class="text-center p-3">
-            <div class="spinner-border spinner-border-sm"></div>
-          </div>
-        </ng-template>
+      <div class="card-body">
+        <p class="card-desc">{{ hogar.descripcion }}</p>
       </div>
-
-      <!-- MIEMBROS TAB -->
-      <div class="tab-pane fade" id="miembros" role="tabpanel">
-        <div class="section-header d-flex justify-content-between align-items-center mb-3">
-          <h3>Miembros del Hogar</h3>
-          <button class="btn btn-success btn-sm" (click)="abrirAgregarMiembro()">
-            + Agregar Miembro
-          </button>
-        </div>
-
-        <div *ngIf="!loadingMiembros; else miembrosLoading" class="miembros-list">
-          <div *ngFor="let miembro of miembros" class="miembro-item">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="flex-grow-1">
-                <h5 class="mb-1">{{ miembro.nombre }}</h5>
-                <span class="badge" [ngClass]="miembro.es_admin ? 'bg-danger' : 'bg-info'">
-                  {{ miembro.es_admin ? '👑 Admin' : '👤 Miembro' }}
-                </span>
-              </div>
-              <div class="miembro-actions">
-                <button class="btn btn-sm btn-warning" (click)="editarMiembro(miembro.id_miembro)">
-                  Editar
-                </button>
-                <button class="btn btn-sm btn-danger" (click)="eliminarMiembro(miembro.id_miembro)">
-                  Eliminar
-                </button>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="miembros.length === 0" class="alert alert-info">
-            📭 No hay miembros en este hogar
-          </div>
-        </div>
-
-        <ng-template #miembrosLoading>
-          <div class="text-center p-3">
-            <div class="spinner-border spinner-border-sm"></div>
-          </div>
-        </ng-template>
-      </div>
-
-      <!-- GASTOS TAB -->
-      <div class="tab-pane fade" id="gastos" role="tabpanel">
-        <div class="section-header mb-3">
-          <h3>Gastos del Hogar</h3>
-        </div>
-        <div class="alert alert-warning">
-          🚧 Sección en construcción
-        </div>
+      <div class="card-footer">
+        <button class="btn-entrar" (click)="entrarHogar(hogar)">
+          <i class="bi bi-box-arrow-in-right"></i> Entrar
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal de Editar -->
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true" *ngIf="hogarEditando">
+<!-- VISTA: Detalles del Hogar -->
+<div *ngIf="vistaActual === 'detalles' && hogarActual" class="hogar-container">
+  <!-- Header -->
+  <div class="hogar-header">
+    <button class="btn-volver" (click)="volverAlista()">
+      ← Volver
+    </button>
+    <h1>🏡 {{ hogarActual?.titulo }}</h1>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-container">
+    <button class="tab-btn" [class.active]="tabActivo === 'tareas'" (click)="cambiarTab('tareas')">
+      ✅ Tareas
+    </button>
+    <button class="tab-btn" [class.active]="tabActivo === 'miembros'" (click)="cambiarTab('miembros')">
+      👥 Miembros
+    </button>
+    <button class="tab-btn" [class.active]="tabActivo === 'gastos'" (click)="cambiarTab('gastos')">
+      💰 Gastos
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- TAREAS TAB -->
+    <div *ngIf="tabActivo === 'tareas'">
+      <div class="section-header">
+        <h3>Tareas del Hogar</h3>
+        <button class="btn-crear" (click)="abrirCrearTarea()">
+          + Nueva Tarea
+        </button>
+      </div>
+
+      <div *ngIf="!loadingTareas; else tareasLoading" class="tareas-list">
+        <div *ngFor="let tarea of tareas" class="tarea-item">
+          <div class="tarea-header">
+            <div>
+              <h5>{{ tarea.nombre }}</h5>
+              <span class="badge" [class.badge-success]="tarea.realizada" [class.badge-warning]="!tarea.realizada">
+                {{ tarea.realizada ? '✅ Completada' : '⏳ Pendiente' }}
+              </span>
+            </div>
+          </div>
+          <p class="tarea-description">{{ tarea.descripcion }}</p>
+          <p class="tarea-meta">
+            ⏱️ {{ tarea.duracion_minutos }} min |
+            👤 {{ tarea.id_miembro_f ? 'Asignada' : 'Sin asignar' }}
+          </p>
+          <div class="tarea-actions">
+            <button class="btn-asignar" (click)="asignarTarea(tarea.id_tarea)">
+              Asignar
+            </button>
+            <button *ngIf="!tarea.realizada" class="btn-completar" (click)="completarTarea(tarea.id_tarea)">
+              Marcar Completa
+            </button>
+            <button class="btn-eliminar" (click)="eliminarTarea(tarea.id_tarea)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+        <div *ngIf="tareas.length === 0" class="alert-info">
+          📭 No hay tareas en este hogar
+        </div>
+      </div>
+
+      <ng-template #tareasLoading>
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- MIEMBROS TAB -->
+    <div *ngIf="tabActivo === 'miembros'">
+      <div class="section-header">
+        <h3>Miembros del Hogar</h3>
+        <button class="btn-crear" (click)="abrirAgregarMiembro()">
+          + Agregar Miembro
+        </button>
+      </div>
+
+      <div *ngIf="!loadingMiembros; else miembrosLoading" class="miembros-list">
+        <div *ngFor="let miembro of miembros" class="miembro-item">
+          <div class="miembro-info">
+            <div>
+              <h5>{{ miembro.nombre }}</h5>
+              <span class="badge" [class.badge-admin]="miembro.es_admin" [class.badge-member]="!miembro.es_admin">
+                {{ miembro.es_admin ? '👑 Admin' : '👤 Miembro' }}
+              </span>
+            </div>
+          </div>
+          <div class="miembro-actions">
+            <button class="btn-editar" (click)="editarMiembro(miembro.id_miembro)">
+              Editar
+            </button>
+            <button class="btn-eliminar" (click)="eliminarMiembro(miembro.id_miembro)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+        <div *ngIf="miembros.length === 0" class="alert-info">
+          📭 No hay miembros en este hogar
+        </div>
+      </div>
+
+      <ng-template #miembrosLoading>
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- GASTOS TAB -->
+    <div *ngIf="tabActivo === 'gastos'">
+      <div class="section-header">
+        <h3>Gastos del Hogar</h3>
+      </div>
+      <div class="alert-warning">
+        🚧 Sección en construcción
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Editar Hogar -->
+<div class="modal" [class.show]="modalEditarVisible" (click)="cerrarModalFondo($event)">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editarModalLabel">✏️ Editar Hogar</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" (click)="cerrarModal()"></button>
+        <h5>✏️ Editar Hogar</h5>
+        <button class="modal-close" (click)="cerrarModal()">×</button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Nombre del Hogar</label>
-            <input type="text" class="form-control" [(ngModel)]="editTitulo" name="titulo">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Familia / Grupo</label>
-            <input type="text" class="form-control" [(ngModel)]="editSubtitulo" name="subtitulo">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" [(ngModel)]="editDescripcion" name="descripcion" rows="2"></textarea>
-          </div>
-        </form>
+        <div class="form-group">
+          <label>Nombre del Hogar</label>
+          <input type="text" [(ngModel)]="editTitulo" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Familia / Grupo</label>
+          <input type="text" [(ngModel)]="editSubtitulo" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea [(ngModel)]="editDescripcion" rows="2" class="form-control"></textarea>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarModal()">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn-guardar" (click)="guardarEdicion()">Guardar Cambios</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Agregar/Editar Miembro -->
-<div class="modal fade" id="miembroModal" tabindex="-1" aria-labelledby="miembroModalLabel" aria-hidden="true">
+<div class="modal" [class.show]="modalMiembroVisible" (click)="cerrarMiembroModalFondo($event)">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="miembroModalLabel">{{ modoEdicionMiembro ? '✏️ Editar' : '➕ Agregar' }} Miembro</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarMiembroModal()"></button>
+        <h5>{{ modoEdicionMiembro ? '✏️ Editar' : '➕ Agregar' }} Miembro</h5>
+        <button class="modal-close" (click)="cerrarMiembroModal()">×</button>
       </div>
       <div class="modal-body">
         <form [formGroup]="formularioMiembro">
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Ej: Juan" />
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" placeholder="Ej: Juan" class="form-control">
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="esAdmin" formControlName="es_admin" />
-            <label class="form-check-label" for="esAdmin">👑 Es administrador</label>
+          <div class="form-check">
+            <input type="checkbox" id="esAdmin" formControlName="es_admin">
+            <label for="esAdmin">👑 Es administrador</label>
           </div>
-          <div class="mb-3">
-            <label for="preferencias" class="form-label">Preferencias Alimenticias</label>
-            <textarea class="form-control" id="preferencias" formControlName="preferencias_alimenticias" rows="3"></textarea>
+          <div class="form-group">
+            <label>Preferencias Alimenticias</label>
+            <textarea formControlName="preferencias_alimenticias" rows="3" class="form-control"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarMiembroModal()">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarMiembro()">Guardar</button>
+        <button class="btn-cancelar" (click)="cerrarMiembroModal()">Cancelar</button>
+        <button class="btn-guardar" (click)="guardarMiembro()">Guardar</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Crear Tarea -->
-<div class="modal fade" id="tareaModal" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+<div class="modal" [class.show]="modalTareaVisible" (click)="cerrarTareaModalFondo($event)">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tareaModalLabel">➕ Nueva Tarea</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarTareaModal()"></button>
+        <h5>➕ Nueva Tarea</h5>
+        <button class="modal-close" (click)="cerrarTareaModal()">×</button>
       </div>
       <div class="modal-body">
         <form [formGroup]="formularioTarea">
-          <div class="mb-3">
-            <label for="nombreTarea" class="form-label">Nombre de la Tarea</label>
-            <input type="text" class="form-control" id="nombreTarea" formControlName="nombre" placeholder="Ej: Lavar los platos" />
+          <div class="form-group">
+            <label>Nombre de la Tarea</label>
+            <input type="text" formControlName="nombre" placeholder="Ej: Lavar los platos" class="form-control">
           </div>
-          <div class="mb-3">
-            <label for="descripcionTarea" class="form-label">Descripción</label>
-            <textarea class="form-control" id="descripcionTarea" formControlName="descripcion" rows="3"></textarea>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea formControlName="descripcion" rows="3" class="form-control"></textarea>
           </div>
-          <div class="mb-3">
-            <label for="duracionTarea" class="form-label">Duración (minutos)</label>
-            <input type="number" class="form-control" id="duracionTarea" formControlName="duracion_minutos" min="1" />
+          <div class="form-group">
+            <label>Duración (minutos)</label>
+            <input type="number" formControlName="duracion_minutos" min="1" class="form-control">
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="soloAdulto" formControlName="solo_adulto" />
-            <label class="form-check-label" for="soloAdulto">👨‍🦳 Solo adultos</label>
+          <div class="form-check">
+            <input type="checkbox" id="soloAdulto" formControlName="solo_adulto">
+            <label for="soloAdulto">👨‍🦳 Solo adultos</label>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarTareaModal()">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarTarea()">Crear Tarea</button>
+        <button class="btn-cancelar" (click)="cerrarTareaModal()">Cancelar</button>
+        <button class="btn-guardar" (click)="guardarTarea()">Crear Tarea</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== MODAL CONFIRMACIÓN ELIMINAR (CORREGIDO) ========== -->
-<div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<!-- Modal Confirmación Eliminar -->
+<div class="modal" [class.show]="modalEliminarVisible" (click)="cerrarEliminarModalFondo($event)">
+  <div class="modal-dialog">
     <div class="modal-content border-danger">
-      <div class="modal-header bg-danger bg-opacity-10 border-danger">
-        <div class="d-flex align-items-center w-100">
-          <i class="bi bi-exclamation-triangle-fill text-danger me-3" style="font-size: 24px;"></i>
-          <h5 class="modal-title text-danger mb-0" id="confirmarEliminarLabel">⚠️ Confirmar eliminación</h5>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cancelarEliminar()"></button>
+      <div class="modal-header bg-danger">
+        <h5 class="text-white">⚠️ Confirmar eliminación</h5>
+        <button class="modal-close text-white" (click)="cancelarEliminar()">×</button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert-danger">
           <strong>⚠️ Acción irreversible</strong><br>
           <small>Estás a punto de eliminar el hogar "<strong>{{ hogarAEliminar?.titulo }}</strong>". Esta acción no se puede deshacer.</small>
         </div>
-        <div class="mb-3 p-3 bg-light rounded">
-          <p class="text-muted small mb-2">Para confirmar la eliminación, escribe el nombre exacto del hogar:</p>
-          <p class="fw-bold text-danger">{{ hogarAEliminar?.titulo }}</p>
-          <input type="text" class="form-control" placeholder="Escribe el nombre del hogar..." [(ngModel)]="textoConfirmacion" [class.is-invalid]="textoConfirmacion && textoConfirmacion.toLowerCase() !== (hogarAEliminar?.titulo?.toLowerCase() || '')" [class.is-valid]="textoConfirmacion && textoConfirmacion.toLowerCase() === (hogarAEliminar?.titulo?.toLowerCase() || '')">
-          <small class="d-block mt-2 text-danger" *ngIf="textoConfirmacion && textoConfirmacion.toLowerCase() !== (hogarAEliminar?.titulo?.toLowerCase() || '')">❌ El nombre no coincide</small>
-          <small class="d-block mt-2 text-success" *ngIf="textoConfirmacion && textoConfirmacion.toLowerCase() === (hogarAEliminar?.titulo?.toLowerCase() || '')">✅ Nombre correcto</small>
+        <div class="confirm-box">
+          <p>Para confirmar la eliminación, escribe el nombre exacto del hogar:</p>
+          <p class="hogar-nombre">{{ hogarAEliminar?.titulo }}</p>
+          <input type="text" placeholder="Escribe el nombre del hogar..." [(ngModel)]="textoConfirmacion" class="form-control">
+          <small *ngIf="textoConfirmacion && textoConfirmacion.toLowerCase() !== (hogarAEliminar?.titulo?.toLowerCase() || '')" class="error-text">
+            ❌ El nombre no coincide
+          </small>
+          <small *ngIf="textoConfirmacion && textoConfirmacion.toLowerCase() === (hogarAEliminar?.titulo?.toLowerCase() || '')" class="success-text">
+            ✅ Nombre correcto
+          </small>
         </div>
-        <div class="form-check form-check-danger mb-3">
-          <input class="form-check-input" type="checkbox" id="confirmarCheck" [(ngModel)]="confirmarEliminacion">
-          <label class="form-check-label text-danger" for="confirmarCheck"><strong>Confirmo que deseo eliminar este hogar y todos sus datos</strong></label>
+        <div class="form-check">
+          <input type="checkbox" id="confirmarCheck" [(ngModel)]="confirmarEliminacion">
+          <label for="confirmarCheck"><strong>Confirmo que deseo eliminar este hogar y todos sus datos</strong></label>
         </div>
-        <div class="alert alert-warning mb-0" role="alert">
+        <div class="alert-warning">
           <small><strong>Nota:</strong> Los datos del hogar, miembros, tareas y gastos se perderán permanentemente.</small>
         </div>
       </div>
-      <div class="modal-footer bg-light border-top">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarEliminar()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmarYEliminar()" [disabled]="!confirmarEliminacion || textoConfirmacion.toLowerCase() !== (hogarAEliminar?.titulo?.toLowerCase() || '')">
-          <i class="bi bi-trash me-2"></i>Eliminar Permanentemente
+      <div class="modal-footer">
+        <button class="btn-cancelar" (click)="cancelarEliminar()">Cancelar</button>
+        <button class="btn-eliminar" (click)="confirmarYEliminar()" 
+          [disabled]="!confirmarEliminacion || textoConfirmacion.toLowerCase() !== (hogarAEliminar?.titulo?.toLowerCase() || '')">
+          <i class="bi bi-trash"></i>Eliminar Permanentemente
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== NOTIFICACIONES ========== -->
+<!-- Notificaciones -->
 <div class="notificaciones-container">
-  <div *ngFor="let notif of notificaciones" class="notificacion" [ngClass]="'notificacion-' + notif.tipo">
+  <div *ngFor="let notif of notificaciones" class="notificacion" [class]="'notificacion-' + notif.tipo">
     <div class="notificacion-contenido">
       <span class="notificacion-icono">{{ notif.icono }}</span>
       <span class="notificacion-texto">{{ notif.mensaje }}</span>
     </div>
-    <button class="btn-close-notif" (click)="eliminarNotificacion(notif.id)" aria-label="Cerrar">×</button>
+    <button class="btn-close-notif" (click)="eliminarNotificacion(notif.id)">×</button>
   </div>
 </div>

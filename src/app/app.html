@@ -1,15 +1,23 @@
-<!-- Header con evento para toggle sidebar -->
-<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<div class="app-container">
+  <!-- Botón para abrir sidebar (solo visible cuando hay sesión) -->
+  <button class="menu-toggle" (click)="toggleSidebar()" *ngIf="!showFooter && !sidebarOpen">
+    <i class="bi bi-list"></i> Menú
+  </button>
 
-<!-- Sidebar -->
-<app-sidebar 
-  [isOpen]="sidebarOpen" 
-  (closeSidebar)="closeSidebar()">
-</app-sidebar>
+  <!-- Sidebar (solo visible cuando hay sesión) -->
+  <app-sidebar 
+    *ngIf="!showFooter"
+    [isOpen]="sidebarOpen"
+    (closeSidebar)="closeSidebar()">
+  </app-sidebar>
 
-<!-- Contenido principal -->
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <!-- Contenido principal -->
+  <main class="main-content" [class.with-sidebar]="!showFooter" [class.sidebar-open]="sidebarOpen">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 
-<app-footer></app-footer>
+  <!-- Footer (solo visible en páginas públicas sin sesión) -->
+  <app-footer *ngIf="showFooter"></app-footer>
+</div>

@@ -1,128 +1,276 @@
-.container {
+/* Contenedor principal */
+.register-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
-  font-family: Arial, sans-serif;
 }
 
-
-.card {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+/* Tarjeta de registro */
+.register-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  max-width: 700px;
   width: 100%;
-  max-width: 480px;
-  text-align: center;
+  animation: slideUp 0.5s ease;
 }
 
-.card h1 {
-  color: #5f4fb7; /* Púrpura pastel */
-  font-size: 1.8rem;
+/* Header */
+.register-header {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4d3e 100%);
+  padding: 30px;
+  text-align: center;
+  color: white;
+}
+
+.register-header i {
+  font-size: 3rem;
   margin-bottom: 10px;
 }
 
-
-.box h2 {
-  color: #6a90e2; /* Azul pastel */
-  margin-bottom: 8px;
-  font-size: 1.5rem;
+.register-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 600;
 }
 
-.box p {
+/* Caja de registro */
+.register-box {
+  padding: 40px;
+}
+
+.register-box h2 {
+  color: #2d6a4f;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.register-box > p {
   color: #666;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   font-size: 0.95rem;
 }
 
-
-.box input[type="text"],
-.box input[type="email"],
-.box input[type="password"] {
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border: 2px solid #c8e6c9; /* Verde pastel claro */
+/* Mensaje de error */
+.error-message {
+  background: #fee;
+  border-left: 4px solid #f56565;
+  color: #c53030;
+  padding: 12px 15px;
   border-radius: 10px;
-  background: #f9f9f9;
-  font-size: 16px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  animation: shake 0.3s ease;
+}
+
+.error-message i {
+  font-size: 1.2rem;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Filas del formulario */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Grupos de formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group label i {
+  color: #2d6a4f;
+  font-size: 1rem;
+}
+
+.form-group input {
+  padding: 12px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  box-sizing: border-box;
+  background: #f8fafc;
 }
 
-.box input[type="text"]:focus,
-.box input[type="email"]:focus,
-.box input[type="password"]:focus {
-  border-color: #b3e5fc; /* Azul claro */
-  background: #ffffff;
+.form-group input:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(179, 229, 252, 0.3);
+  border-color: #2d6a4f;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
 }
 
+.form-group input.error-input {
+  border-color: #f56565;
+  background: #fff5f5;
+}
 
-.box button {
+/* Hint de contraseña */
+.password-hint {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Botón de registro */
+.register-btn {
   width: 100%;
   padding: 14px;
-  margin-top: 16px;
-  background: linear-gradient(135deg, #c8e6c9, #b3e5fc); /* Verde y azul pastel */
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4d3e 100%);
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(200, 230, 201, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.box button:hover {
-  background: linear-gradient(135deg, #a5d6a7, #81c784); /* Tonos más oscuros al hover */
+.register-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(165, 214, 167, 0.4);
+  box-shadow: 0 10px 20px -5px rgba(45, 106, 79, 0.3);
 }
 
-.box button:active {
-  transform: translateY(0);
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
+/* Enlace de login */
+.login-link {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
 
-.box .link {
-  margin-top: 20px;
+.login-link p {
   color: #666;
-  font-size: 0.95rem;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
 }
 
-.box .link a {
-  color: #f8bbd9; /* Rosa pastel */
+.login-link a {
+  color: #2d6a4f;
   text-decoration: none;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
   transition: all 0.3s ease;
 }
 
-.box .link a:hover {
-  color: #f48fb1; /* Rosa más intenso */
-  text-decoration: underline;
+.login-link a:hover {
+  background: #e8f5e9;
+  text-decoration: none;
 }
 
-
-@media (max-width: 640px) {
-  .card {
-    padding: 30px 20px;
-    max-width: 100%;
+/* Animaciones */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .card h1 {
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-card {
+    max-width: 95%;
+  }
+  
+  .register-header {
+    padding: 20px;
+  }
+  
+  .register-header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .register-box {
+    padding: 25px;
+  }
+  
+  .register-box h2 {
     font-size: 1.5rem;
   }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
 
-  .box h2 {
+@media (max-width: 480px) {
+  .register-container {
+    padding: 10px;
+  }
+  
+  .register-box {
+    padding: 20px;
+  }
+  
+  .register-header i {
+    font-size: 2rem;
+  }
+  
+  .register-header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .register-box h2 {
     font-size: 1.3rem;
   }
-
-  .box input[type="text"] {
-    font-size: 14px;
+  
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .register-btn {
+    padding: 12px;
+    font-size: 0.9rem;
   }
 }
