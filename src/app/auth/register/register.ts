@@ -65,6 +65,6 @@ export class RegisterComponent {
     localStorage.setItem('usuario', JSON.stringify(datosUsuario));
     
     
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/mis-hogares']);
   }
 }
