@@ -12,7 +12,6 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 })
 export class RegisterComponent {
 
-  // Campos del formulario
   nombre: string = '';
   segundoNombre: string = '';
   apellido: string = '';
@@ -22,7 +21,6 @@ export class RegisterComponent {
   contrasena: string = '';
   confirmarContrasena: string = '';
   
-  // Estados
   loading: boolean = false;
   error: string = '';
 
@@ -31,7 +29,6 @@ export class RegisterComponent {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  // Obtener nombre completo
   obtenerNombreCompleto(): string {
     let nombreCompleto = this.nombre;
     
@@ -48,18 +45,14 @@ export class RegisterComponent {
     return nombreCompleto;
   }
 
-  // Validar email
   validarEmail(email: string): boolean {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   }
 
-  // Registrar usuario
   registrar() {
-    // Limpiar error previo
     this.error = '';
 
-    // Validaciones
     if (!this.nombre.trim()) {
       this.error = 'Por favor escribe tu nombre';
       return;
@@ -102,7 +95,6 @@ export class RegisterComponent {
     
     this.loading = true;
 
-    // Simular registro (aquí iría la llamada a tu API)
     setTimeout(() => {
       const datosUsuario = {
         id: Date.now(),
@@ -117,20 +109,13 @@ export class RegisterComponent {
         fechaRegistro: new Date().toISOString()
       };
       
-      // Guardar en localStorage
       localStorage.setItem('usuario', JSON.stringify(datosUsuario));
-      
-      // Disparar evento personalizado para actualizar el footer
       this.dispararEventoAuth();
-      
       this.loading = false;
-      
-      // Redirigir a mis hogares
       this.router.navigate(['/mis-hogares']);
     }, 1500);
   }
 
-  // Disparar evento para actualizar el estado en app.component
   dispararEventoAuth() {
     const evento = new CustomEvent('authChange', { 
       detail: { isLoggedIn: true } 

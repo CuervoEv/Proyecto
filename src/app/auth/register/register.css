@@ -1,4 +1,4 @@
-/* Contenedor principal */
+/* Contenedor principal - Fondo pastel degradado */
 .register-container {
   display: flex;
   justify-content: center;
@@ -9,59 +9,62 @@
 
 /* Tarjeta de registro */
 .register-card {
-  background: rgba(255, 255, 255, 0.98);
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   max-width: 700px;
   width: 100%;
   animation: slideUp 0.5s ease;
 }
 
-/* Header */
+/* Header con color pastel verde */
 .register-header {
-  background: linear-gradient(135deg, #2d6a4f 0%, #1b4d3e 100%);
-  padding: 30px;
+  background: linear-gradient(135deg, #a8e6cf 0%, #d4f1f9 100%);
+  padding: 35px;
   text-align: center;
-  color: white;
+  color: #2c5f4e;
 }
 
 .register-header i {
   font-size: 3rem;
   margin-bottom: 10px;
+  color: #3d8b6e;
 }
 
 .register-header h1 {
   font-size: 1.8rem;
   margin: 0;
   font-weight: 600;
+  color: #2c5f4e;
 }
 
 /* Caja de registro */
 .register-box {
   padding: 40px;
+  background: #ffffff;
 }
 
 .register-box h2 {
-  color: #2d6a4f;
+  color: #7b8a6f;
   font-size: 1.8rem;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
 .register-box > p {
-  color: #666;
+  color: #b5c4b1;
   margin-bottom: 30px;
   font-size: 0.95rem;
 }
 
-/* Mensaje de error */
+/* Mensaje de error - pastel rosa */
 .error-message {
-  background: #fee;
-  border-left: 4px solid #f56565;
-  color: #c53030;
+  background: #ffe5e5;
+  border-left: 4px solid #fbbfbf;
+  color: #c97b7b;
   padding: 12px 15px;
-  border-radius: 10px;
+  border-radius: 14px;
   margin-bottom: 25px;
   display: flex;
   align-items: center;
@@ -72,6 +75,7 @@
 
 .error-message i {
   font-size: 1.2rem;
+  color: #fbbfbf;
 }
 
 /* Formulario */
@@ -97,7 +101,7 @@ form {
 
 .form-group label {
   font-weight: 600;
-  color: #333;
+  color: #8faa8a;
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -105,46 +109,46 @@ form {
 }
 
 .form-group label i {
-  color: #2d6a4f;
+  color: #b5d3b0;
   font-size: 1rem;
 }
 
 .form-group input {
   padding: 12px 15px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
+  border: 2px solid #e8f0e6;
+  border-radius: 14px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: #f8fafc;
+  background: #fefef8;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #2d6a4f;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+  border-color: #c5e0d4;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(165, 210, 175, 0.15);
 }
 
 .form-group input.error-input {
-  border-color: #f56565;
+  border-color: #fbbfbf;
   background: #fff5f5;
 }
 
 /* Hint de contraseña */
 .password-hint {
   font-size: 0.7rem;
-  color: #94a3b8;
+  color: #c5d1c2;
   margin-top: 4px;
 }
 
-/* Botón de registro */
+/* Botón de registro - pastel verde */
 .register-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #2d6a4f 0%, #1b4d3e 100%);
-  color: white;
+  background: linear-gradient(135deg, #c5e0d4 0%, #b5d3b0 100%);
+  color: #4a6b5d;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -158,11 +162,12 @@ form {
 
 .register-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(45, 106, 79, 0.3);
+  box-shadow: 0 10px 20px -5px rgba(165, 210, 175, 0.4);
+  background: linear-gradient(135deg, #d4eedc 0%, #c5e0cc 100%);
 }
 
 .register-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -170,31 +175,31 @@ form {
 .login-link {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #edf3ea;
   text-align: center;
 }
 
 .login-link p {
-  color: #666;
+  color: #b5c4b1;
   margin-bottom: 10px;
   font-size: 0.9rem;
 }
 
 .login-link a {
-  color: #2d6a4f;
+  color: #8faa8a;
   text-decoration: none;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   transition: all 0.3s ease;
 }
 
 .login-link a:hover {
-  background: #e8f5e9;
-  text-decoration: none;
+  background: #f0f7ed;
+  color: #6b8f64;
 }
 
 /* Animaciones */
@@ -222,7 +227,7 @@ form {
   }
   
   .register-header {
-    padding: 20px;
+    padding: 25px;
   }
   
   .register-header h1 {

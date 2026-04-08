@@ -9,13 +9,11 @@
       <h2>Crear Cuenta</h2>
       <p>Ingresa tus datos para registrarte</p>
 
-      <!-- Mensaje de error -->
       <div class="error-message" *ngIf="error">
         <i class="bi bi-exclamation-triangle-fill"></i>
         <span>{{ error }}</span>
       </div>
 
-      <!-- Formulario de registro -->
       <form (ngSubmit)="registrar()">
         <div class="form-row">
           <div class="form-group">
@@ -28,8 +26,7 @@
               placeholder="Tu nombre" 
               [(ngModel)]="nombre" 
               name="nombre"
-              [class.error-input]="error && !nombre.trim()"
-              autocomplete="given-name">
+              [class.error-input]="error && !nombre.trim()">
           </div>
           
           <div class="form-group">
@@ -41,8 +38,7 @@
               type="text" 
               placeholder="Segundo nombre" 
               [(ngModel)]="segundoNombre" 
-              name="segundoNombre"
-              autocomplete="additional-name">
+              name="segundoNombre">
           </div>
         </div>
 
@@ -57,8 +53,7 @@
               placeholder="Tu apellido" 
               [(ngModel)]="apellido" 
               name="apellido"
-              [class.error-input]="error && !apellido.trim()"
-              autocomplete="family-name">
+              [class.error-input]="error && !apellido.trim()">
           </div>
           
           <div class="form-group">
@@ -70,8 +65,7 @@
               type="text" 
               placeholder="Segundo apellido" 
               [(ngModel)]="segundoApellido" 
-              name="segundoApellido"
-              autocomplete="additional-name">
+              name="segundoApellido">
           </div>
         </div>
 
@@ -85,8 +79,7 @@
             placeholder="Nombre de usuario" 
             [(ngModel)]="usuario" 
             name="usuario"
-            [class.error-input]="error && !usuario.trim()"
-            autocomplete="username">
+            [class.error-input]="error && !usuario.trim()">
         </div>
 
         <div class="form-group">
@@ -99,8 +92,7 @@
             placeholder="tu@email.com" 
             [(ngModel)]="email" 
             name="email"
-            [class.error-input]="error && !email.trim()"
-            autocomplete="email">
+            [class.error-input]="error && !email.trim()">
         </div>
 
         <div class="form-row">
@@ -114,8 +106,7 @@
               placeholder="Mínimo 6 caracteres" 
               [(ngModel)]="contrasena" 
               name="contrasena"
-              [class.error-input]="error && !contrasena.trim()"
-              autocomplete="new-password">
+              [class.error-input]="error && !contrasena.trim()">
             <small class="password-hint">Mínimo 6 caracteres</small>
           </div>
           
@@ -129,8 +120,7 @@
               placeholder="Repite tu contraseña" 
               [(ngModel)]="confirmarContrasena" 
               name="confirmarContrasena"
-              [class.error-input]="error && confirmarContrasena !== contrasena"
-              autocomplete="new-password">
+              [class.error-input]="error && confirmarContrasena !== contrasena">
           </div>
         </div>
 

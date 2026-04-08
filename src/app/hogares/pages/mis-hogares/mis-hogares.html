@@ -2,7 +2,7 @@
 <div class="container mt-4" *ngIf="vistaActual === 'lista'">
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-primary">🏠 Mis Hogares</h1>
+    <h1 class="text-primary">Mis Hogares</h1>
     <button class="btn btn-primary" (click)="crearHogar()">
       <i class="bi bi-plus-lg"></i> Crear Inventario
     </button>
@@ -67,7 +67,6 @@
       </div>
     </div>
 
-    <!-- Menú principal con submenús -->
     <div class="sidebar-menu">
       <button class="sidebar-item">Lista-Actividades</button>
 
@@ -107,10 +106,8 @@
     </div>
   </div>
 
-  <!-- Contenido principal -->
   <div class="hogares-main">
     <h1>🏡 {{ selectedHogar.titulo }}</h1>
     <p>{{ selectedHogar.descripcion }}</p>
-    <!-- Aquí puedes añadir tabs de tareas, miembros, gastos -->
   </div>
 </div>
