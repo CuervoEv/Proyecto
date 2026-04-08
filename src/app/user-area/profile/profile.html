@@ -1,20 +1,20 @@
 <div class="profile-container">
   
-  <!-- Columna Izquierda - PERFIL ESTÁTICO (no scroll) -->
   <div class="profile-left">
     
-    <!-- Tarjeta de perfil - sin bordes visibles -->
+    <!-- Tarjeta de perfil -->
     <div class="profile-card">
       <div class="profile-header">
         <div class="avatar-container">
           <div class="avatar">
-            {{ (usuario.nombre?.charAt(0) || 'U') + (usuario.apellido?.charAt(0) || '') }}
+            {{ (usuario.nombre?.charAt(0) || 'U') }}
           </div>
           <button class="btn-edit-avatar" *ngIf="editMode">
             <i class="bi bi-camera-fill"></i>
           </button>
         </div>
-        <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+        <!-- ✅ Solo nombre -->
+        <h2>{{ usuario.nombre }}</h2>
         <p class="rol-badge">{{ usuario.rol }}</p>
         <p class="miembro-desde">Miembro desde {{ usuario.fechaRegistro }}</p>
       </div>
@@ -35,24 +35,7 @@
               <p *ngIf="!editMode">{{ usuario.nombre }}</p>
             </div>
 
-            <div class="info-field">
-              <label>Segundo Nombre</label>
-              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoNombre">
-              <p *ngIf="!editMode">{{ usuario.segundoNombre || '—' }}</p>
-            </div>
-
-            <div class="info-field">
-              <label>Apellido</label>
-              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.apellido">
-              <p *ngIf="!editMode">{{ usuario.apellido }}</p>
-            </div>
-
-            <div class="info-field">
-              <label>Segundo Apellido</label>
-              <input *ngIf="editMode" type="text" [(ngModel)]="usuario.segundoApellido">
-              <p *ngIf="!editMode">{{ usuario.segundoApellido || '—' }}</p>
-            </div>
-
+            
             <div class="info-field">
               <label>Correo Electrónico</label>
               <input *ngIf="editMode" type="email" [(ngModel)]="usuario.email">
@@ -85,30 +68,17 @@
     </div>
   </div>
 
-  <!-- Columna Derecha - OPCIONES CON SCROLL INDEPENDIENTE -->
+  <!-- Columna Derecha - OPCIONES -->
   <div class="profile-right">
     <div class="options-scroll-container">
-      
       <!-- Estadísticas -->
       <div class="option-block">
         <h3><i class="bi bi-graph-up"></i> Estadísticas</h3>
         <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-number">3</span>
-            <span class="stat-label">Hogares</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">5</span>
-            <span class="stat-label">Miembros</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">24</span>
-            <span class="stat-label">Tareas</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">127</span>
-            <span class="stat-label">Días activo</span>
-          </div>
+          <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Hogares</span></div>
+          <div class="stat-item"><span class="stat-number">5</span><span class="stat-label">Miembros</span></div>
+          <div class="stat-item"><span class="stat-number">24</span><span class="stat-label">Tareas</span></div>
+          <div class="stat-item"><span class="stat-number">127</span><span class="stat-label">Días activo</span></div>
         </div>
         <button class="details-btn" (click)="verDetalles()">
           <i class="bi bi-eye"></i> Ver más detalles
@@ -131,12 +101,8 @@
       <div class="option-block">
         <h3><i class="bi bi-lightning-charge"></i> Más opciones</h3>
         <div class="quick-links">
-          <a (click)="navegarA('/list')">
-            <i class="bi bi-house-door"></i> Mis hogares
-          </a>
-          <a (click)="navegarA('/invitations')">
-            <i class="bi bi-envelope-paper"></i> Invitar miembros
-          </a>
+          <a (click)="navegarA('/list')"><i class="bi bi-house-door"></i> Mis hogares</a>
+          <a (click)="navegarA('/invitations')"><i class="bi bi-envelope-paper"></i> Invitar miembros</a>
         </div>
       </div>
 
@@ -150,7 +116,6 @@
           <i class="bi bi-box-arrow-right"></i> Cerrar sesión
         </button>
       </div>
-
     </div>
   </div>
 </div>
