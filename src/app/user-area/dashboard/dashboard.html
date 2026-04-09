@@ -1,67 +1,45 @@
 <div class="dashboard">
 
-  <!-- Fondo -->
-  <div class="background"></div>
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header class="topbar">
+      <h1>Panel de Estadísticas</h1>
+      <div class="user-info">
+        <span>{{ usuario.nombre }}</span>
+      </div>
+    </header>
 
-  <div class="container">
-
-    <div class="card main">
-      <h1>📊 Estadísticas</h1>
-      <p *ngIf="usuario">
-        Bienvenido, <strong>{{ usuario.nombre }}</strong>.
-      </p>
-    </div>
-
-    <div class="grid">
-
+    <section class="cards-grid">
       <div class="card">
-        <h2>🏠 Hogar</h2>
-        <p>Organiza tareas y mejora tu rutina diaria.</p>
+        <h3>Total Hogares</h3>
+        <p class="stat">{{ estadisticas.hogares }}</p>
       </div>
-
       <div class="card">
-        <h2>📋 Sistema</h2>
-        <p>Tu hogar como una mini empresa eficiente.</p>
+        <h3>Total Miembros</h3>
+        <p class="stat">{{ estadisticas.miembros }}</p>
       </div>
-
       <div class="card">
-        <h2>📊 Áreas</h2>
-        <ul>
-          <li>Contabilidad</li>
-          <li>Actividades</li>
-          <li>Recetas</li>
-          <li>Tiempo</li>
-        </ul>
+        <h3>Total Tareas</h3>
+        <p class="stat">{{ estadisticas.tareas }}</p>
       </div>
-
-      <div class="card stats">
-        <div><strong>30%</strong><br>Ahorro</div>
-        <div><strong>2h</strong><br>Tiempo</div>
-        <div><strong>60%</strong><br>Conflictos</div>
-        <div><strong>85%</strong><br>Calidad</div>
-      </div>
-
       <div class="card">
-        <h2>⚠ Problemas</h2>
-        <ul>
-          <li>Tiempo mal gestionado</li>
-          <li>Tareas olvidadas</li>
-          <li>Gastos innecesarios</li>
-        </ul>
+        <h3>Días Activo</h3>
+        <p class="stat">{{ estadisticas.diasActivo }}</p>
       </div>
+    </section>
 
-      <div class="card">
-        <h2>🚀 Estrategias</h2>
-        <ul>
-          <li>Calendario</li>
-          <li>Lista semanal</li>
-          <li>Presupuesto</li>
-        </ul>
-      </div>
+    <section class="chart-section">
+      <h2>Tendencia de Actividad</h2>
+      <canvas id="activityChart"></canvas>
+    </section>
 
-    </div>
-
-    <button class="btn" routerLink="/profile">👤 Ir a Perfil</button>
-
+    <section class="ranking-section">
+      <h2>Ranking de Hogares</h2>
+      <ul>
+        <li *ngFor="let hogar of estadisticas.ranking; let i = index">
+          {{ i+1 }}. {{ hogar.nombre }} — {{ hogar.valor }}
+        </li>
+      </ul>
+    </section>
   </div>
 </div>

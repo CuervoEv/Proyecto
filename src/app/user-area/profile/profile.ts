@@ -15,9 +15,6 @@ export class ProfileComponent implements OnInit {
   usuario: any = {
     id: '',
     nombre: '',
-    segundoNombre: '',
-    apellido: '',
-    segundoApellido: '',
     email: '',
     telefono: '',
     direccion: '',
@@ -39,25 +36,19 @@ export class ProfileComponent implements OnInit {
     if (usuarioGuardado) {
       const datos = JSON.parse(usuarioGuardado);
       this.usuario = {
-        id: '1',
-        nombre: datos.usuario || 'Juan',
-        segundoNombre: 'Carlos',
-        apellido: 'Pérez',
-        segundoApellido: 'González',
-        email: `${datos.usuario || 'usuario'}@ejemplo.com`,
-        telefono: '+34 123 456 789',
-        direccion: 'Calle Principal 123, Ciudad',
-        fechaRegistro: new Date().toLocaleDateString(),
-        rol: 'Usuario'
+        id: datos.id || '1',
+        nombre: datos.usuario || 'Usuario',
+        email: datos.email || `${datos.usuario || 'usuario'}@ejemplo.com`,
+        telefono: datos.telefono || '+34 123 456 789',
+        direccion: datos.direccion || 'Calle Principal 123, Ciudad',
+        fechaRegistro: datos.fechaRegistro || new Date().toLocaleDateString(),
+        rol: datos.rol || 'Usuario'
       };
     } else {
       this.usuario = {
         id: '1',
-        nombre: 'Juan',
-        segundoNombre: 'Carlos',
-        apellido: 'Pérez',
-        segundoApellido: 'González',
-        email: 'juan.perez@ejemplo.com',
+        nombre: 'Usuario',
+        email: 'usuario@ejemplo.com',
         telefono: '+34 123 456 789',
         direccion: 'Calle Principal 123, Ciudad',
         fechaRegistro: new Date().toLocaleDateString(),

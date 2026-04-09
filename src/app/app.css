@@ -6,14 +6,139 @@
   background: url('/fondo3.png') no-repeat center/cover fixed;
 }
 
-main {
-  flex: 1; /* Esto hace que el main ocupe el espacio restante */
-  padding: 20px;
+/* Contenedor principal de la app */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
   background: transparent;
 }
 
-/* Asegurar que header y footer no tengan márgenes no deseados */
-app-header,
+/* Cuando hay sidebar (usuario logueado) */
+.main-content.with-sidebar {
+  margin-left: 0;
+}
+
+.main-content.with-sidebar.sidebar-open {
+  margin-left: 280px;
+}
+
+/* Cuando NO hay sidebar (páginas públicas) */
+.main-content:not(.with-sidebar) {
+  margin-left: 0;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+/* Cuando hay sidebar y está cerrado, dar espacio para el botón */
+.main-content.with-sidebar .content-wrapper {
+  padding: 80px 20px 20px 20px;
+}
+
+/* Cuando NO hay sidebar */
+.main-content:not(.with-sidebar) .content-wrapper {
+  padding: 20px;
+}
+
+/* Botón de menú (solo cuando hay sesión) */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: #2d6a4f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: #1b4d3e;
+  transform: scale(1.05);
+}
+
+/* Footer siempre al final */
 app-footer {
   display: block;
+  margin-top: auto;
+}
+
+/* Sidebar solo cuando hay sesión */
+app-sidebar {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+  
+  .main-content.with-sidebar.sidebar-open {
+    margin-left: 260px;
+  }
+  
+  .main-content.with-sidebar .content-wrapper {
+    padding: 70px 15px 15px 15px;
+  }
+  
+  .content-wrapper {
+    padding: 15px;
+  }
+}
+
+/* Ajustes para móviles muy pequeños */
+@media (max-width: 480px) {
+  .main-content.with-sidebar.sidebar-open {
+    margin-left: 0;
+  }
+  
+  .menu-toggle {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .main-content.with-sidebar .content-wrapper {
+    padding: 60px 10px 10px 10px;
+  }
+}
+
+/* Animación suave para el contenido */
+.main-content {
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Asegurar que el router-outlet no cause problemas */
+router-outlet {
+  display: none;
+}
+
+/* Estilo para cuando el sidebar está abierto en móvil */
+@media (max-width: 768px) {
+  body.sidebar-open {
+    overflow: hidden;
+  }
 }

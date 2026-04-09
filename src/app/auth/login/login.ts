@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { LoginService } from '../../servicesAPI/login/login-service';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { AuthService } from '../../servicesAPI/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -15,59 +16,88 @@ export class LoginComponent {
   
   correo: string = '';
   contrasena: string = '';
-  loading: boolean = false;
   error: string = '';
+  loading: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
-  ingresar() {
+  login() {
     // Validaciones
-    if (!this.correo.trim()) {
-      this.error = 'Por favor escribe tu correo electrónico';
+    if (!this.usuario.trim()) {
+      this.error = '⚠ Por favor ingresa tu usuario';
       return;
     }
+    
     if (!this.contrasena.trim()) {
-      this.error = 'Por favor escribe tu contraseña';
+      this.error = '⚠ Por favor ingresa tu contraseña';
       return;
     }
 
     this.loading = true;
     this.error = '';
-    
-    // Preparar datos para enviar al backend
-    const credenciales = {
-      username: this.correo,
-      password: this.contrasena
-    };
-    
-    // Enviar al backend real
-    this.loginService.login(credenciales).subscribe({
-      next: (respuesta) => {
-        console.log('Login exitoso', respuesta);
-        // Guardar tokens en localStorage
-        localStorage.setItem('access_token', respuesta.access_token);
-        localStorage.setItem('refresh_token', respuesta.refresh_token);
+
+    // 🔥 LLAMADA CORRECTA: parámetros separados
+    this.authService.login(this.usuario, this.contrasena).subscribe({
+      next: (response: any) => {
+        console.log('✅ Login exitoso:', response);
         
-        // Guardar información del usuario
+        // Guardar datos del usuario
         const usuarioData = {
-          correo: this.correo,
-          nombre: this.correo.split('@')[0] // Temporal, después vendrá del backend
+          id: response.id || 1,
+          usuario: response.usuario || this.usuario,
+          nombre: response.nombre || response.usuario || this.usuario,
+          email: response.email || '',
+          token: response.token || 'fake-token',
+          rol: response.rol || 'miembro'
         };
+        
         localStorage.setItem('usuario', JSON.stringify(usuarioData));
         
-        this.loading = false;
-        alert('Bienvenido');
-        this.router.navigate(['/dashboard']);
+        // Disparar evento para actualizar el footer
+        this.actualizarEstadoApp();
+        
+        // Redirigir después del login
+        this.router.navigate(['/members']);
       },
       error: (error) => {
         console.error('Error al iniciar sesión', error);
         this.loading = false;
-        if (error.status === 401) {
-          this.error = 'Correo o contraseña incorrectos';
+        console.error('❌ Error en login:', err);
+        
+        // Manejo de errores
+        const mensajeError = err.error?.mensaje || err.error?.error || err.message;
+        
+        if (mensajeError?.includes('usuario') || mensajeError?.includes('Usuario')) {
+          this.error = '⚠ Usuario no encontrado';
+        } else if (mensajeError?.includes('contraseña') || mensajeError?.includes('Contraseña')) {
+          this.error = '⚠ Contraseña incorrecta';
         } else {
-          this.error = 'Error al iniciar sesión. Intenta de nuevo';
+          this.error = '⚠ Error al iniciar sesión. Intenta de nuevo.';
         }
       }
     });
+  }
+
+  actualizarEstadoApp() {
+    // Método 1: Evento personalizado
+    const evento = new CustomEvent('authChange', { 
+      detail: { isLoggedIn: true } 
+    });
+    this.document.dispatchEvent(evento);
+    
+    // Método 2: Buscar componente app-root y llamar método
+    setTimeout(() => {
+      const appRoot = document.querySelector('app-root');
+      if (appRoot && (appRoot as any).componentInstance) {
+        const appComponent = (appRoot as any).componentInstance;
+        if (appComponent.actualizarEstado) {
+          appComponent.actualizarEstado();
+        }
+      }
+    }, 100);
   }
 }

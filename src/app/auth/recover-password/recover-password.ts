@@ -1,51 +1,56 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-recover-password',
+  selector: 'app-recover',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './recover-password.html',
   styleUrls: ['./recover-password.css']
 })
 export class RecoverComponent {
 
-  correo: string = '';
+  email: string = '';
+  error: string = '';
+  success: string = '';
+  loading: boolean = false;
+  testMode: 'success' | 'error' = 'success'; // Cambia a 'error' para probar error
 
   constructor(private router: Router) {}
 
-  recuperar() {
-    // Validación del correo
-    if (!this.correo.trim()) {
-      alert('Por favor ingresa tu correo electrónico');
+  recoverPassword() {
+    if (!this.email.trim()) {
+      this.error = '⚠ Por favor ingresa tu correo electrónico';
       return;
     }
 
-    // Validación básica de formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.correo)) {
-      alert('Por favor ingresa un correo electrónico válido');
+    if (!emailRegex.test(this.email)) {
+      this.error = '⚠ Por favor ingresa un correo electrónico válido';
       return;
     }
 
-    // Aquí iría la lógica para enviar el correo de recuperación
-    // Por ahora simulamos el envío
-    console.log('Enviando correo de recuperación a:', this.correo);
-    
-    // Guardar en localStorage para simular
-    const solicitudRecuperacion = {
-      email: this.correo,
-      fecha: new Date().toISOString()
-    };
-    localStorage.setItem('recuperacion', JSON.stringify(solicitudRecuperacion));
-    
-    // Mostrar mensaje de éxito
-    alert(`Se ha enviado un enlace de recuperación a ${this.correo}`);
-    
-    // Redirigir al login después de 2 segundos
+    this.loading = true;
+    this.error = '';
+    this.success = '';
+
     setTimeout(() => {
-      this.router.navigate(['/login']);
+      if (this.testMode === 'success') {
+        // Éxito
+        this.success = '✅ Se ha enviado un enlace de recuperación a tu correo';
+        this.loading = false;
+        this.email = '';
+        
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3000);
+      } else {
+        // Error
+        this.error = '⚠ No existe una cuenta con este correo electrónico';
+        this.loading = false;
+      }
     }, 2000);
   }
 }

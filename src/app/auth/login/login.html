@@ -1,24 +1,41 @@
-<div class="container">
-  <div class="card">
-    <h1>Administración del Hogar</h1>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <i class="bi bi-lock-fill"></i>
+      <h1>Iniciar Sesión</h1>
+    </div>
 
-    <div class="box">
-      <h2>Bienvenido</h2>
-      <p>Inicia sesión en tu cuenta</p>
+    <div class="login-box">
+      <p>Ingresa tus credenciales para acceder</p>
 
-      <input type="email" placeholder="Correo electrónico" [(ngModel)]="correo">
-      <input type="password" placeholder="Contraseña" [(ngModel)]="contrasena">
+      <div class="error-message" *ngIf="error">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ error }}</span>
+      </div>
 
-      <button (click)="ingresar()" [disabled]="loading">
-        {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
-      </button>
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <label><i class="bi bi-person-fill"></i> Usuario</label>
+          <input type="text" [(ngModel)]="usuario" name="usuario" placeholder="Tu usuario" />
+        </div>
 
-      <p *ngIf="error" class="error" style="color:red">{{ error }}</p>
+        <div class="form-group">
+          <label><i class="bi bi-key-fill"></i> Contraseña</label>
+          <input type="password" [(ngModel)]="contrasena" name="contrasena" placeholder="Tu contraseña" />
+        </div>
 
-      <p class="link">
-        ¿No tienes una cuenta?
-        | <a routerLink="/register">Registrarse</a>
-      </p>
+        <button type="submit" class="login-btn" [disabled]="loading">
+          <i class="bi" [class.bi-box-arrow-in-right]="!loading" [class.bi-hourglass-split]="loading"></i>
+          {{ loading ? 'Ingresando...' : 'Entrar' }}
+        </button>
+      </form>
+
+      <div class="login-links">
+        <p>¿No tienes cuenta?</p>
+        <a routerLink="/register"><i class="bi bi-person-plus-fill"></i> Regístrate aquí</a>
+        <p>¿Olvidaste tu contraseña?</p>
+        <a routerLink="/recover"><i class="bi bi-shield-lock-fill"></i> Recuperar contraseña</a>
+      </div>
     </div>
   </div>
 </div>

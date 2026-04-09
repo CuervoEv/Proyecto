@@ -1,128 +1,227 @@
-.container {
+/* Contenedor principal - Fondo pastel degradado */
+.register-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
-  font-family: Arial, sans-serif;
 }
 
-
-.card {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+/* Tarjeta de registro */
+.register-card {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 700px;
   width: 100%;
-  max-width: 480px;
-  text-align: center;
+  animation: slideUp 0.5s ease;
 }
 
-.card h1 {
-  color: #5f4fb7; /* Púrpura pastel */
+/* Header con color pastel verde */
+.register-header {
+  background: linear-gradient(135deg, #a8e6cf 0%, #d4f1f9 100%);
+  padding: 35px;
+  text-align: center;
+  color: #2c5f4e;
+}
+
+.register-header i {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #3d8b6e;
+}
+
+.register-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 600;
+  color: #2c5f4e;
+}
+
+/* Caja de registro */
+.register-box {
+  padding: 40px;
+  background: #ffffff;
+}
+
+.register-box h2 {
+  color: #7b8a6f;
   font-size: 1.8rem;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
-
-.box h2 {
-  color: #6a90e2; /* Azul pastel */
-  margin-bottom: 8px;
-  font-size: 1.5rem;
-}
-
-.box p {
-  color: #666;
-  margin-bottom: 24px;
+.register-box > p {
+  color: #b5c4b1;
+  margin-bottom: 30px;
   font-size: 0.95rem;
 }
 
+/* Mensaje de error - pastel rosa */
+.error-message {
+  background: #ffe5e5;
+  border-left: 4px solid #fbbfbf;
+  color: #c97b7b;
+  padding: 12px 15px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  animation: shake 0.3s ease;
+}
 
-.box input[type="text"],
-.box input[type="email"],
-.box input[type="password"] {
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border: 2px solid #c8e6c9; /* Verde pastel claro */
-  border-radius: 10px;
-  background: #f9f9f9;
-  font-size: 16px;
+.error-message i {
+  font-size: 1.2rem;
+  color: #fbbfbf;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #8faa8a;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group label i {
+  color: #b5d3b0;
+  font-size: 1rem;
+}
+
+.form-group input {
+  padding: 12px 15px;
+  border: 2px solid #e8f0e6;
+  border-radius: 14px;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  box-sizing: border-box;
+  background: #fefef8;
 }
 
-.box input[type="text"]:focus,
-.box input[type="email"]:focus,
-.box input[type="password"]:focus {
-  border-color: #b3e5fc; /* Azul claro */
-  background: #ffffff;
+.form-group input:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(179, 229, 252, 0.3);
+  border-color: #c5e0d4;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(165, 210, 175, 0.15);
 }
 
+.form-group input.error-input {
+  border-color: #fbbfbf;
+  background: #fff5f5;
+}
 
-.box button {
+/* Hint de contraseña */
+.password-hint {
+  font-size: 0.7rem;
+  color: #c5d1c2;
+  margin-top: 4px;
+}
+
+/* Botón de registro - pastel verde */
+.register-btn {
   width: 100%;
   padding: 14px;
-  margin-top: 16px;
-  background: linear-gradient(135deg, #c8e6c9, #b3e5fc); /* Verde y azul pastel */
-  color: white;
+  background: linear-gradient(135deg, #c5e0d4 0%, #b5d3b0 100%);
+  color: #4a6b5d;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 14px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(200, 230, 201, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.box button:hover {
-  background: linear-gradient(135deg, #a5d6a7, #81c784); /* Tonos más oscuros al hover */
+.register-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(165, 214, 167, 0.4);
+  box-shadow: 0 10px 20px -5px rgba(165, 210, 175, 0.4);
+  background: linear-gradient(135deg, #d4eedc 0%, #c5e0cc 100%);
 }
 
-.box button:active {
-  transform: translateY(0);
+.register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-
-.box .link {
-  margin-top: 20px;
-  color: #666;
-  font-size: 0.95rem;
+/* Enlace de login */
+.login-link {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #edf3ea;
+  text-align: center;
 }
 
-.box .link a {
-  color: #f8bbd9; /* Rosa pastel */
+.login-link p {
+  color: #b5c4b1;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.login-link a {
+  color: #8faa8a;
   text-decoration: none;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 12px;
   transition: all 0.3s ease;
 }
 
-.box .link a:hover {
-  color: #f48fb1; /* Rosa más intenso */
-  text-decoration: underline;
+.login-link a:hover {
+  background: #f0f7ed;
+  color: #6b8f64;
 }
 
+/* Animaciones */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-@media (max-width: 640px) {
-  .card {
-    padding: 30px 20px;
-    max-width: 100%;
-  }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
 
-  .card h1 {
-    font-size: 1.5rem;
-  }
+/* Responsive */
+@media (max-width: 768px) {
+  .register-card { max-width: 95%; }
+  .register-header { padding: 25px; }
+  .register-header h1 { font-size: 1.4rem; }
+  .register-box { padding: 25px; }
+  .register-box h2 { font-size: 1.5rem; }
+}
 
-  .box h2 {
-    font-size: 1.3rem;
-  }
-
-  .box input[type="text"] {
-    font-size: 14px;
-  }
+@media (max-width: 480px) {
+  .register-container { padding: 10px; }
+  .register-box { padding: 20px; }
+  .register-header i { font-size: 2rem; }
+  .register-header h1 { font-size: 1.2rem; }
+  .register-box h2 { font-size: 1.3rem; }
+  .form-group input { padding: 10px 12px; font-size: 0.9rem; }
+  .register-btn { padding: 12px; font-size: 0.9rem; }
 }

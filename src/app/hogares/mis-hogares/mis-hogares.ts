@@ -64,24 +64,7 @@ export class MisHogaresComponent implements OnInit {
 
   cargarHogares() {
     this.hogares = [
-      {
-        id: this.nextId++,
-        titulo: 'Inventario Principal',
-        subtitulo: 'Mi hogar',
-        descripcion: 'Inventario general',
-        color: this.getRandomColor(),
-        textColor: this.getTextColor(this.getRandomColor()),
-        inventario: []
-      },
-      {
-        id: this.nextId++,
-        titulo: 'Inventario Secundario',
-        subtitulo: 'Mi hogar',
-        descripcion: 'Stock adicional',
-        color: this.getRandomColor(),
-        textColor: this.getTextColor(this.getRandomColor()),
-        inventario: []
-      }
+     
     ];
   }
 

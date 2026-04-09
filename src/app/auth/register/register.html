@@ -1,31 +1,92 @@
-<div class="container">
-  <div class="card">
-    <h1>Administración del Hogar</h1>
+<div class="register-container">
+  <div class="register-card">
+    <!-- Header -->
+    <div class="register-header">
+      <i class="bi bi-house-heart-fill"></i>
+      <h1>Administración del Hogar</h1>
+    </div>
 
-    <div class="box">
-      <h2>Bienvenido</h2>
+    <!-- Caja de registro -->
+    <div class="register-box">
+      <h2>Crear Cuenta</h2>
       <p>Ingresa tus datos para registrarte</p>
 
-      
-      <input type="text" placeholder="Nombre de usuario" [(ngModel)]="nombre">
-      <!-- <input type="text" placeholder="Segundo nombre" [(ngModel)]="segundoNombre">
-      <input type="text" placeholder="Apellido" [(ngModel)]="apellido">
-      <input type="text" placeholder="Segundo apellido" [(ngModel)]="segundoApellido">
-      <input type="text" placeholder="Usuario" [(ngModel)]="usuario"> -->
-      <input type="password" placeholder="Contraseña" [(ngModel)]="contrasena">
-      <input type="email" placeholder="Correo electrónico" [(ngModel)]="correo">
+      <!-- Mensaje de error -->
+      <div class="error-message" *ngIf="error">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ error }}</span>
+      </div>
 
-      <button 
-        (click)="entrar()" 
-        [disabled]="!nombre || !correo || !contrasena">
-        Registrarse
-      </button>
-
-      <p class="link">
-          ¿Ya tienes una cuenta?
-        | <a routerLink="/login">Iniciar sesión</a>
+      <!-- Formulario -->
+      <form (ngSubmit)="registrar()">
         
-      </p>
+        <div class="form-group">
+          <label>
+            <i class="bi bi-person-badge-fill"></i>
+            Usuario *
+          </label>
+          <input 
+            type="text" 
+            placeholder="Nombre de usuario" 
+            [(ngModel)]="usuario" 
+            name="usuario"
+            [class.error-input]="error && !usuario.trim()">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <i class="bi bi-envelope-fill"></i>
+            Correo electrónico *
+          </label>
+          <input 
+            type="email" 
+            placeholder="tu@email.com" 
+            [(ngModel)]="email" 
+            name="email"
+            [class.error-input]="error && !email.trim()">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <i class="bi bi-lock-fill"></i>
+            Contraseña *
+          </label>
+          <input 
+            type="password" 
+            placeholder="Mínimo 6 caracteres" 
+            [(ngModel)]="contrasena" 
+            name="contrasena"
+            [class.error-input]="error && !contrasena.trim()">
+          <small class="password-hint">Mínimo 6 caracteres</small>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <i class="bi bi-lock-fill"></i>
+            Confirmar contraseña *
+          </label>
+          <input 
+            type="password" 
+            placeholder="Repite tu contraseña" 
+            [(ngModel)]="confirmarContrasena" 
+            name="confirmarContrasena"
+            [class.error-input]="error && confirmarContrasena !== contrasena">
+        </div>
+
+        <button type="submit" [disabled]="loading" class="register-btn">
+          <i class="bi" [class.bi-person-plus-fill]="!loading" [class.bi-hourglass-split]="loading"></i>
+          {{ loading ? 'Registrando...' : 'Registrarse' }}
+        </button>
+      </form>
+
+      <!-- Enlace a login -->
+      <div class="login-link">
+        <p>¿Ya tienes una cuenta?</p>
+        <a routerLink="/login">
+          <i class="bi bi-box-arrow-in-right"></i>
+          Iniciar sesión
+        </a>
+      </div>
     </div>
   </div>
 </div>
