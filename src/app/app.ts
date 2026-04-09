@@ -30,19 +30,15 @@ export class App {
   }
 
   verificarRuta() {
-    // Obtener la ruta actual
+
     const currentUrl = this.router.url;
     
-    // Rutas donde DEBE aparecer el footer (solo login y register)
     const rutasConFooter = ['/login', '/register'];
     
-    // Verificar si la ruta actual es login o register
     const esRutaConFooter = rutasConFooter.includes(currentUrl);
     
-    // También verificar si hay usuario logueado
     const isLoggedIn = !!localStorage.getItem('usuario');
     
-    // Mostrar footer SOLO en login/register Y que NO esté logueado
     this.showFooter = esRutaConFooter && !isLoggedIn;
     
     console.log('showFooter:', this.showFooter, 'ruta:', currentUrl, 'logueado:', isLoggedIn);
